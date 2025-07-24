@@ -1,0 +1,437 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio of Dev Shree Saini, Geomatics Engineering Graduate Student and Climate Science Researcher at ETH Zurich">
+    <meta property="og:title" content="Dev Shree Saini | Geomatics Engineer">
+    <meta property="og:description" content="Explore my work in climate science, geospatial technologies, and flood risk modeling.">
+    <meta property="og:image" content="https://raw.githubusercontent.com/your-username/portfolio-assets/main/dev-shree-preview.jpg">
+    <title>Dev Shree Saini | Portfolio</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/your-username/portfolio-assets/main/favicon.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script async defer data-domain="devshreesaini.com" src="https://plausible.io/js/plausible.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(to bottom, #0a0a23, #1e3a8a);
+            color: #e5e7eb;
+            scroll-behavior: smooth;
+        }
+        .navbar {
+            transition: all 0.3s ease;
+        }
+        .navbar.scrolled {
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+        }
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2);
+        }
+        .active-nav {
+            border-bottom: 2px solid #22d3ee;
+            color: #22d3ee;
+        }
+        .mobile-menu {
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: block;
+            }
+            .desktop-menu {
+                display: none;
+            }
+            .mobile-menu.active {
+                display: block;
+                background: rgba(0, 0, 0, 0.95);
+                height: 100vh;
+            }
+            .hero-title {
+                font-size: 2.5rem !important;
+            }
+        }
+        .earth-bg {
+            background: url('https://raw.githubusercontent.com/your-username/portfolio-assets/main/earth-bg.jpg') no-repeat center/cover;
+            opacity: 0.1;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a23;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .form-message {
+            display: none;
+        }
+        .form-message.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="loader">
+        <p class="text-cyan-400 text-xl animate-pulse">Deploying Satellites...</p>
+    </div>
+    <div class="earth-bg"></div>
+    <nav class="navbar fixed top-0 w-full z-50 py-4">
+        <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-cyan-400">Dev Shree Saini</h1>
+            <button class="mobile-menu md:hidden text-white" id="menu-toggle">☰</button>
+            <ul class="desktop-menu flex space-x-6 text-white">
+                <li><a href="#about" class="hover:text-cyan-400">About</a></li>
+                <li><a href="#education" class="hover:text-cyan-400">Education</a></li>
+                <li><a href="#skills" class="hover:text-cyan-400">Skills</a></li>
+                <li><a href="#projects" class="hover:text-cyan-400">Projects</a></li>
+                <li><a href="#experience" class="hover:text-cyan-400">Experience</a></li>
+                <li><a href="#publications" class="hover:text-cyan-400">Publications</a></li>
+                <li><a href="#achievements" class="hover:text-cyan-400">Achievements</a></li>
+                <li><a href="#connect" class="hover:text-cyan-400">Connect</a></li>
+            </ul>
+            <ul class="mobile-menu hidden flex-col space-y-4 text-white absolute top-16 left-0 w-full p-4" id="mobile-menu">
+                <li><a href="#about" class="hover:text-cyan-400">About</a></li>
+                <li><a href="#education" class="hover:text-cyan-400">Education</a></li>
+                <li><a href="#skills" class="hover:text-cyan-400">Skills</a></li>
+                <li><a href="#projects" class="hover:text-cyan-400">Projects</a></li>
+                <li><a href="#experience" class="hover:text-cyan-400">Experience</a></li>
+                <li><a href="#publications" class="hover:text-cyan-400">Publications</a></li>
+                <li><a href="#achievements" class="hover:text-cyan-400">Achievements</a></li>
+                <li><a href="#connect" class="hover:text-cyan-400">Connect</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="hero" class="min-h-screen flex items-center justify-center text-center pt-32 md:pt-20">
+        <div class="max-w-4xl mx-auto px-4">
+            <img src="https://raw.githubusercontent.com/your-username/portfolio-assets/main/dev-shree-profile.jpg" class="w-28 h-28 rounded-full border-4 border-cyan-400 mx-auto mb-4 shadow-lg" alt="Dev Shree Saini Profile" />
+            <h1 class="text-5xl md:text-5xl hero-title font-bold text-white mb-4">Dev Shree Saini</h1>
+            <p class="text-xl text-gray-300 mb-6">Geomatics Engineer | Climate-Tech Enthusiast | ETH Zurich</p>
+            <p class="text-lg text-gray-400 mb-8">Zurich, Switzerland | 47.3769° N, 8.5417° E</p>
+            <a href="https://raw.githubusercontent.com/your-username/portfolio-assets/main/CV_DevShreeSaini.pdf" class="inline-block bg-cyan-600 hover:bg-cyan-700 hover:scale-105 transform transition duration-300 text-white py-3 px-8 rounded-full shadow-xl text-lg">📄 Download My Resume</a>
+        </div>
+    </section>
+
+    <section id="about" class="py-20 bg-white text-gray-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-8 text-center text-cyan-400">About Me</h2>
+            <p class="text-lg max-w-3xl mx-auto">Passionate graduate student specializing in climate science and environmental data analysis, with hands-on experience in satellite-based flood detection and LULC dynamics. Currently pursuing my Master's in Geomatics Engineering at ETH Zurich, I focus on GNSS-based precipitation prediction and flood risk modeling using advanced geospatial tools.</p>
+        </div>
+    </section>
+
+    <section id="education" class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-8 text-center text-cyan-400">Education</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="card bg-gray-800 p-6 rounded-lg">
+                    <img src="https://raw.githubusercontent.com/your-username/portfolio-assets/main/eth-zurich-logo.png" alt="ETH Zurich Logo" class="h-12 mb-4">
+                    <h3 class="text-xl font-semibold">Master's in Geomatics Engineering</h3>
+                    <p>ETH Zurich, Switzerland • Sept 2024 – Present • CGPA: 5.22/6.0</p>
+                    <p>Specializing in climate science and geospatial technologies.</p>
+                </div>
+                <div class="card bg-gray-800 p-6 rounded-lg">
+                    <img src="https://raw.githubusercontent.com/your-username/portfolio-assets/main/vit-logo.png" alt="VIT Vellore Logo" class="h-12 mb-4">
+                    <h3 class="text-xl font-semibold">Bachelor's in Civil Engineering</h3>
+                    <p>VIT Vellore, India • July 2019 – June 2023 • CGPA: 9.33/10.0</p>
+                    <p>Dept. Rank 2 with Merit Scholarship for 3 years.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="py-20 bg-white text-gray-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-8 text-center text-cyan-400">Technical Skills</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="card bg-gray-100 p-6 rounded-lg">
+                    <h3 class="text-lg font-semibold">Programming</h3>
+                    <p>Python (NumPy, PyTorch), MATLAB</p>
+                    <div class="flex space-x-2 mt-2">
+                        <img src="https://img.shields.io/badge/Python-3670A0?style=for-the-badge&logo=python&logoColor=white" alt="Python Badge">
+                        <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white" alt="PyTorch Badge">
+                    </div>
+                </div>
+                <div class="card bg-gray-100 p-6 rounded-lg">
+                    <h3 class="text-lg font-semibold">GIS & Remote Sensing</h3>
+                    <p>QGIS, ArcGIS, Satellite Data Processing</p>
+                    <div class="flex space-x-2 mt-2">
+                        <img src="https://img.shields.io/badge/QGIS-589632?style=for-the-badge&logo=qgis&logoColor=white" alt="QGIS Badge">
+                        <img src="https://img.shields.io/badge/ArcGIS-004C7B?style=for-the-badge&logo=arcgis&logoColor=white" alt="ArcGIS Badge">
+                    </div>
+                </div>
+                <div class="card bg-gray-100 p-6 rounded-lg">
+                    <h3 class="text-lg font-semibold">Hydrological Modeling</h3>
+                    <p>HEC-RAS, Arc-SWAT, Flood Modeling</p>
+                </div>
+                <div class="card bg-gray-100 p-6 rounded-lg">
+                    <h3 class="text-lg font-semibold">Machine Learning</h3>
+                    <p>Deep Learning, Climate Modeling, U-Net</p>
+                </div>
+                <div class="card bg-gray-100 p-6 rounded-lg">
+                    <h3 class="text-lg font-semibold">Data Analysis</h3>
+                    <p>Spatial Data Analysis, Statistical Modeling</p>
+                </div>
+                <div class="card bg-gray-100 p-6 rounded-lg">
+                    <h3 class="text-lg font-semibold">Tools & Software</h3>
+                    <p>LaTeX, Microsoft Products, GNSS Processing</p>
+                    <div class="flex space-x-2 mt-2">
+                        <img src="https://img.shields.io/badge/LaTeX-008080?style=for-the-badge&logo=latex&logoColor=white" alt="LaTeX Badge">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-8 text-center text-cyan-400">Research Projects</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="card bg-gray-800 p-6 rounded-lg">
+                    <img src="https://raw.githubusercontent.com/your-username/portfolio-assets/main/gnss-project.jpg" alt="GNSS Project Thumbnail" class="h-32 w-full object-cover rounded mb-4">
+                    <h3 class="text-xl font-semibold">GNSS Precipitation Prediction</h3>
+                    <p>ETH Zurich • 2024</p>
+                    <p>ML model for rainfall prediction using GNSS and ERA5 data.</p>
+                    <a href="https://github.com/your-username/gnss-project" class="text-sm text-cyan-300 hover:underline">🌐 View Code</a>
+                </div>
+                <div class="card bg-gray-800 p-6 rounded-lg">
+                    <img src="https://raw.githubusercontent.com/your-username/portfolio-assets/main/flood-project.jpg" alt="Flood Project Thumbnail" class="h-32 w-full object-cover rounded mb-4">
+                    <h3 class="text-xl font-semibold">Flood Risk Assessment</h3>
+                    <p>Dhansiri River Basin, India</p>
+                    <p>SWAT model with NSE: 0.84 and R²: 0.90 for flood risks.</p>
+                    <a href="https://raw.githubusercontent.com/your-username/portfolio-assets/main/flood-demo.mp4" class="text-sm text-cyan-300 hover:underline">🌐 View Demo</a>
+                </div>
+                <div class="card bg-gray-800 p-6 rounded-lg">
+                    <img src="https://raw.githubusercontent.com/your-username/portfolio-assets/main/groundwater-project.jpg" alt="Groundwater Project Thumbnail" class="h-32 w-full object-cover rounded mb-4">
+                    <h3 class="text-xl font-semibold">Groundwater Sustainability</h3>
+                    <p>Ahmedabad, India</p>
+                    <p>AHP analysis, 89% medium to high potential zones.</p>
+                    <a href="https://github.com/your-username/groundwater-project" class="text-sm text-cyan-300 hover:underline">🌐 View Code</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="py-20 bg-white text-gray-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-8 text-center text-cyan-400">Professional Experience</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="card bg-gray-100 p-6 rounded-lg">
+                    <img src="https://raw.githubusercontent.com/your-username/portfolio-assets/main/isro-logo.png" alt="ISRO Logo" class="h-12 mb-4">
+                    <h3 class="text-xl font-semibold">Spatial Data Analyst Intern</h3>
+                    <p>IIRS, ISRO • Dehradun, India • Jan 2023 – Dec 2023</p>
+                    <p>U-Net model for flood detection, 92% accuracy.</p>
+                    <p><strong>Key Skills:</strong> Deep Learning, SAR, Python</p>
+                </div>
+                <div class="card bg-gray-100 p-6 rounded-lg">
+                    <img src="https://raw.githubusercontent.com/your-username/portfolio-assets/main/concordia-logo.png" alt="Concordia Logo" class="h-12 mb-4">
+                    <h3 class="text-xl font-semibold">Research Intern</h3>
+                    <p>Concordia University • Montreal, Canada • 2022</p>
+                    <p>Geotextile filtration, 50% nutrient reduction.</p>
+                </div>
+                <div class="card bg-gray-100 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold">Teaching Assistant</h3>
+                    <p>VIT Vellore • India • 2021 – 2023</p>
+                    <p>Mentored 40 students in GIS and LULC.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="publications" class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-8 text-center text-cyan-400">Research Publications</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="card bg-gray-800 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold">Impact of Short-Duration Precipitation</h3>
+                    <p>Scientific Reports, Nature • 2023</p>
+                    <p>Cauvery Basin hydrology analysis.</p>
+                    <a href="https://raw.githubusercontent.com/your-username/portfolio-assets/main/paper1.pdf" class="text-sm text-cyan-300 hover:underline">📄 Read Paper</a>
+                </div>
+                <div class="card bg-gray-800 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold">HEC-RAS with GIS</h3>
+                    <p>Journal of the Geological Society of India • 2024</p>
+                    <p>Flood detection via river cross-sections.</p>
+                    <a href="https://raw.githubusercontent.com/your-username/portfolio-assets/main/paper2.pdf" class="text-sm text-cyan-300 hover:underline">📄 Read Paper</a>
+                </div>
+                <div class="card bg-gray-800 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold">Chilika Lake LULC Dynamics</h3>
+                    <p>Estuaries and Coasts • 2025</p>
+                    <p>Eutrophication and ecosystem impacts.</p>
+                    <a href="https://raw.githubusercontent.com/your-username/portfolio-assets/main/paper3.pdf" class="text-sm text-cyan-300 hover:underline">📄 Read Paper</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="achievements" class="py-20 bg-white text-gray-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-8 text-center text-cyan-400">Achievements & Recognition</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="card bg-gray-100 p-6 rounded-lg">
+                    <p>GATE 2024 - AIR 52: Top 0.1% Nationally</p>
+                </div>
+                <div class="card bg-gray-100 p-6 rounded-lg">
+                    <p>MITACS Globalink: Canada, 2022</p>
+                </div>
+                <div class="card bg-gray-100 p-6 rounded-lg">
+                    <p>Merit Scholarship: VIT Vellore, 2019-2023</p>
+                </div>
+                <div class="card bg-gray-100 p-6 rounded-lg">
+                    <p>Road Safety Hackathon: Transport Innovation</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="connect" class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-8 text-center text-cyan-400">Let's Connect</h2>
+            <p class="text-lg max-w-3xl mx-auto mb-8 text-center">Passionate about geospatial technologies and climate solutions. Open to research collaborations and impactful projects.</p>
+            <form id="contact-form" action="https://formspree.io/f/xabcdefg" method="POST" class="max-w-lg mx-auto space-y-4">
+                <input type="text" name="name" placeholder="Your Name" class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-cyan-400">
+                <input type="email" name="email" placeholder="Your Email" class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-cyan-400">
+                <textarea name="message" placeholder="Your Message" class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-cyan-400 h-32"></textarea>
+                <button type="submit" class="w-full bg-cyan-600 hover:bg-cyan-700 hover:scale-105 transform transition duration-300 text-white py-3 rounded-full shadow-xl">Send Message</button>
+                <p class="form-message text-sm text-green-300">Message sent successfully!</p>
+            </form>
+            <div class="flex justify-center space-x-6 mt-8">
+                <a href="mailto:devshree@example.com" class="text-cyan-400 hover:text-cyan-300">📧 Email</a>
+                <a href="https://linkedin.com/in/devshree" class="text-cyan-400 hover:text-cyan-300">🔗 LinkedIn</a>
+                <a href="https://github.com/your-username" class="text-cyan-400 hover:text-cyan-300">💻 GitHub</a>
+                <a href="tel:+41767519687" class="text-cyan-400 hover:text-cyan-300">📞 +41-767519687</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-6 bg-gray-800 text-center text-gray-400">
+        <p>Dev Shree Saini | Built with 🌍 and 🚀 | 2025</p>
+    </footer>
+
+    <script>
+        // Loader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelector('.loader').classList.add('hidden');
+            }, 1000);
+        });
+
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+            menuToggle.textContent = mobileMenu.classList.contains('active') ? '✕' : '☰';
+        });
+
+        // Scrollspy
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.desktop-menu a, .mobile-menu a');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 60) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active-nav');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active-nav');
+                }
+            });
+            // Sticky Navbar
+            document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // ScrollReveal Animations
+        ScrollReveal().reveal('.card', {
+            duration: 1000,
+            distance: '20px',
+            origin: 'bottom',
+            interval: 200
+        });
+        ScrollReveal().reveal('section', {
+            duration: 1000,
+            distance: '20px',
+            origin: 'top',
+            delay: 200
+        });
+
+        // Contact Form Submission Feedback
+        const form = document.getElementById('contact-form');
+        const formMessage = document.querySelector('.form-message');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Simulate form submission (replace with actual Formspree logic)
+            setTimeout(() => {
+                formMessage.classList.add('show');
+                form.reset();
+                setTimeout(() => {
+                    formMessage.classList.remove('show');
+                }, 3000);
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
