@@ -1,43 +1,4 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -50,7 +11,7 @@
     <link rel="icon" href="https://raw.githubusercontent.com/your-username/portfolio-assets/main/favicon.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
-    <script async defer data-domain="devshreesaini.com" src="https://plausible.io/js/plausible.js"></script>
+    <script async defer data-domain="your-domain.com" src="https://plausible.io/js/plausible.js"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -347,7 +308,7 @@
         <div class="max-w-7xl mx-auto px-4">
             <h2 class="text-3xl font-bold mb-8 text-center text-cyan-400">Let's Connect</h2>
             <p class="text-lg max-w-3xl mx-auto mb-8 text-center">Passionate about geospatial technologies and climate solutions. Open to research collaborations and impactful projects.</p>
-            <form id="contact-form" action="https://formspree.io/f/xabcdefg" method="POST" class="max-w-lg mx-auto space-y-4">
+            <form id="contact-form" action="https://formspree.io/f/your-form-id" method="POST" class="max-w-lg mx-auto space-y-4">
                 <input type="text" name="name" placeholder="Your Name" class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-cyan-400">
                 <input type="email" name="email" placeholder="Your Email" class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-cyan-400">
                 <textarea name="message" placeholder="Your Message" class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-cyan-400 h-32"></textarea>
@@ -355,8 +316,8 @@
                 <p class="form-message text-sm text-green-300">Message sent successfully!</p>
             </form>
             <div class="flex justify-center space-x-6 mt-8">
-                <a href="mailto:devshree@example.com" class="text-cyan-400 hover:text-cyan-300">📧 Email</a>
-                <a href="https://linkedin.com/in/devshree" class="text-cyan-400 hover:text-cyan-300">🔗 LinkedIn</a>
+                <a href="mailto:your-email@example.com" class="text-cyan-400 hover:text-cyan-300">📧 Email</a>
+                <a href="https://linkedin.com/in/your-linkedin" class="text-cyan-400 hover:text-cyan-300">🔗 LinkedIn</a>
                 <a href="https://github.com/your-username" class="text-cyan-400 hover:text-cyan-300">💻 GitHub</a>
                 <a href="tel:+41767519687" class="text-cyan-400 hover:text-cyan-300">📞 +41-767519687</a>
             </div>
@@ -423,14 +384,23 @@
         const formMessage = document.querySelector('.form-message');
         form.addEventListener('submit', (e) => {
             e.preventDefault();
-            // Simulate form submission (replace with actual Formspree logic)
-            setTimeout(() => {
-                formMessage.classList.add('show');
-                form.reset();
-                setTimeout(() => {
-                    formMessage.classList.remove('show');
-                }, 3000);
-            }, 1000);
+            fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    formMessage.classList.add('show');
+                    form.reset();
+                    setTimeout(() => {
+                        formMessage.classList.remove('show');
+                    }, 3000);
+                }
+            }).catch(error => {
+                console.error('Form submission error:', error);
+            });
         });
     </script>
 </body>
