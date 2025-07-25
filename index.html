@@ -244,15 +244,6 @@
             position: relative;
         }
         
-        /* Satellite Tracking Widget */
-        .satellite-tracker {
-            background: rgba(30, 42, 74, 0.6);
-            border-radius: 0.75rem;
-            padding: 1rem;
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--satellite-gold);
-        }
-        
         /* Remote Sensing Gallery */
         .gallery-grid {
             display: grid;
@@ -293,6 +284,69 @@
             transform: translateY(0);
         }
         
+        /* Field Explanation Section */
+        .field-explanation {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .field-card {
+            transition: all 0.5s ease;
+            perspective: 1000px;
+        }
+        
+        .field-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+        
+        .field-card:hover .field-card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .field-card-front, .field-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            padding: 2rem;
+            border-radius: 0.5rem;
+        }
+        
+        .field-card-back {
+            transform: rotateY(180deg);
+        }
+        
+        .field-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--satellite-gold);
+        }
+        
+        .field-btn {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .field-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.4), transparent);
+            transition: 0.5s;
+        }
+        
+        .field-btn:hover::before {
+            left: 100%;
+        }
+        
         @media (max-width: 768px) {
             .mobile-menu {
                 display: none;
@@ -318,6 +372,20 @@
             .modal-content {
                 width: 90%;
                 margin: 10% auto;
+            }
+            
+            .field-card {
+                margin-bottom: 1rem;
+            }
+            
+            .field-card:hover .field-card-inner {
+                transform: none;
+            }
+            
+            .field-card-front, .field-card-back {
+                position: relative;
+                transform: none;
+                backface-visibility: visible;
             }
         }
     </style>
@@ -349,19 +417,21 @@
             <ul class="hidden md:flex space-x-6 text-white">
                 <li><a href="#about" class="hover:text-cyan-400 transition-colors">About</a></li>
                 <li><a href="#education" class="hover:text-cyan-400 transition-colors">Education</a></li>
+                <li><a href="#experience" class="hover:text-cyan-400 transition-colors">Experience</a></li>
                 <li><a href="#skills" class="hover:text-cyan-400 transition-colors">Skills</a></li>
                 <li><a href="#projects" class="hover:text-cyan-400 transition-colors">Projects</a></li>
-                <li><a href="#experience" class="hover:text-cyan-400 transition-colors">Experience</a></li>
                 <li><a href="#publications" class="hover:text-cyan-400 transition-colors">Publications</a></li>
+                <li><a href="#certificates" class="hover:text-cyan-400 transition-colors">Certificates</a></li>
                 <li><a href="#connect" class="hover:text-cyan-400 transition-colors">Connect</a></li>
             </ul>
             <ul class="mobile-menu hidden" id="mobile-menu">
                 <li class="py-2"><a href="#about" class="block hover:text-cyan-400 transition-colors">About</a></li>
                 <li class="py-2"><a href="#education" class="block hover:text-cyan-400 transition-colors">Education</a></li>
+                <li class="py-2"><a href="#experience" class="block hover:text-cyan-400 transition-colors">Experience</a></li>
                 <li class="py-2"><a href="#skills" class="block hover:text-cyan-400 transition-colors">Skills</a></li>
                 <li class="py-2"><a href="#projects" class="block hover:text-cyan-400 transition-colors">Projects</a></li>
-                <li class="py-2"><a href="#experience" class="block hover:text-cyan-400 transition-colors">Experience</a></li>
                 <li class="py-2"><a href="#publications" class="block hover:text-cyan-400 transition-colors">Publications</a></li>
+                <li class="py-2"><a href="#certificates" class="block hover:text-cyan-400 transition-colors">Certificates</a></li>
                 <li class="py-2"><a href="#connect" class="block hover:text-cyan-400 transition-colors">Connect</a></li>
             </ul>
         </div>
@@ -464,236 +534,213 @@
                         </div>
                     </div>
                     
-                    <!-- Satellite Tracking Widget -->
-                    <div class="satellite-tracker mt-6">
-                        <h4 class="text-lg font-semibold mb-3 flex items-center">
-                            <i class="fas fa-satellite mr-2 text-cyan-400"></i>
-                            Sentinel-1A Tracking
-                        </h4>
-                        <div class="mb-2">
-                            <p class="text-sm">Current Position: Over South America</p>
-                            <p class="text-xs text-gray-400">Next pass over Europe in 92 minutes</p>
-                        </div>
-                        <div class="relative h-2 bg-gray-700 rounded-full mb-2 overflow-hidden">
-                            <div class="absolute h-full bg-gradient-to-r from-cyan-400 to-satellite-gold rounded-full satellite-progress" style="width: 65%"></div>
-                        </div>
-                        <div class="grid grid-cols-3 gap-2 text-sm">
-                            <div>
-                                <p class="text-gray-400">Altitude</p>
-                                <p>693 km</p>
-                            </div>
-                            <div>
-                                <p class="text-gray-400">Velocity</p>
-                                <p>7.5 km/s</p>
-                            </div>
-                            <div>
-                                <p class="text-gray-400">Next Pass</p>
-                                <p>12:47 UTC</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 3D Earth Visualization -->
-            <div class="mt-16">
-                <h3 class="text-2xl font-bold mb-6 text-center text-satellite-gold">
-                    <i class="fas fa-globe-europe mr-2"></i>
-                    Interactive Earth Visualization
-                </h3>
-                <div id="earth-container" class="card">
-                    <!-- Three.js Earth will be rendered here -->
-                </div>
-                <p class="text-center text-sm text-gray-400 mt-2">Rotate and zoom to explore the Earth visualization</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="py-20 px-4 satellite-track">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold mb-12 text-center text-cyan-400 section-heading">
-                <i class="fas fa-satellite-dish mr-2"></i>
-                TECHNICAL SKILLS
-            </h2>
-            
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
-                <div class="card p-6 rounded-lg flex flex-col items-center text-center">
-                    <i class="fas fa-code text-3xl mb-3 text-cyan-400"></i>
-                    <h3 class="text-lg font-semibold">Programming</h3>
-                    <p class="text-sm text-gray-400 mt-1">Python, MATLAB, R, JavaScript</p>
-                </div>
-                <div class="card p-6 rounded-lg flex flex-col items-center text-center">
-                    <i class="fas fa-satellite text-3xl mb-3 text-cyan-400"></i>
-                    <h3 class="text-lg font-semibold">Remote Sensing</h3>
-                    <p class="text-sm text-gray-400 mt-1">SAR, Lidar, Hyperspectral, Multispectral</p>
-                </div>
-                <div class="card p-6 rounded-lg flex flex-col items-center text-center">
-                    <i class="fas fa-map-marked-alt text-3xl mb-3 text-cyan-400"></i>
-                    <h3 class="text-lg font-semibold">GIS</h3>
-                    <p class="text-sm text-gray-400 mt-1">QGIS, ArcGIS, PostGIS, GeoServer</p>
-                </div>
-                <div class="card p-6 rounded-lg flex flex-col items-center text-center">
-                    <i class="fas fa-robot text-3xl mb-3 text-cyan-400"></i>
-                    <h3 class="text-lg font-semibold">Machine Learning</h3>
-                    <p class="text-sm text-gray-400 mt-1">PyTorch, TensorFlow, Scikit-learn</p>
-                </div>
-                <div class="card p-6 rounded-lg flex flex-col items-center text-center">
-                    <i class="fas fa-water text-3xl mb-3 text-cyan-400"></i>
-                    <h3 class="text-lg font-semibold">Hydrology</h3>
-                    <p class="text-sm text-gray-400 mt-1">HEC-RAS, SWAT, MODFLOW</p>
-                </div>
-                <div class="card p-6 rounded-lg flex flex-col items-center text-center">
-                    <i class="fas fa-chart-network text-3xl mb-3 text-cyan-400"></i>
-                    <h3 class="text-lg font-semibold">Data Analysis</h3>
-                    <p class="text-sm text-gray-400 mt-1">Pandas, GeoPandas, Rasterio</p>
-                </div>
-                <div class="card p-6 rounded-lg flex flex-col items-center text-center">
-                    <i class="fas fa-database text-3xl mb-3 text-cyan-400"></i>
-                    <h3 class="text-lg font-semibold">Spatial Databases</h3>
-                    <p class="text-sm text-gray-400 mt-1">PostgreSQL, MongoDB, Google Earth Engine</p>
-                </div>
-                <div class="card p-6 rounded-lg flex flex-col items-center text-center">
-                    <i class="fas fa-cloud text-3xl mb-3 text-cyan-400"></i>
-                    <h3 class="text-lg font-semibold">Cloud Computing</h3>
-                    <p class="text-sm text-gray-400 mt-1">AWS, Google Cloud, Docker</p>
-                </div>
-            </div>
-            
-            <!-- Remote Sensing Gallery -->
-            <h3 class="text-2xl font-bold mb-6 text-center text-satellite-gold">
-                <i class="fas fa-images mr-2"></i>
-                Remote Sensing Analysis Examples
-            </h3>
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Sentinel-1_SAR_Image.jpg/800px-Sentinel-1_SAR_Image.jpg" alt="SAR Flood Detection">
-                    <div class="gallery-caption">
-                        <p class="text-sm font-medium">SAR Flood Detection</p>
-                        <p class="text-xs text-gray-400">Using Sentinel-1 for water body mapping</p>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Landsat_8_false_color_composite.jpg/800px-Landsat_8_false_color_composite.jpg" alt="Landsat 8 False Color">
-                    <div class="gallery-caption">
-                        <p class="text-sm font-medium">Landsat 8 False Color</p>
-                        <p class="text-xs text-gray-400">Vegetation analysis (NIR, SWIR, Red)</p>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/LiDAR_point_cloud.jpg/800px-LiDAR_point_cloud.jpg" alt="LiDAR Point Cloud">
-                    <div class="gallery-caption">
-                        <p class="text-sm font-medium">LiDAR Point Cloud</p>
-                        <p class="text-xs text-gray-400">Topographic mapping and 3D modeling</p>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/NDVI_time_series.jpg/800px-NDVI_time_series.jpg" alt="NDVI Time Series">
-                    <div class="gallery-caption">
-                        <p class="text-sm font-medium">NDVI Time Series</p>
-                        <p class="text-xs text-gray-400">Vegetation health monitoring over time</p>
+                    <!-- 3D Earth Visualization -->
+                    <div id="earth-container" class="mt-6 h-64 rounded-lg">
+                        <!-- Three.js Earth will be rendered here -->
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="py-20 px-4 bg-space-blue bg-opacity-30 satellite-track">
+    <!-- Field Explanation Section -->
+    <section id="field-explanation" class="py-20 px-4 bg-space-blue bg-opacity-30">
         <div class="max-w-7xl mx-auto">
             <h2 class="text-3xl font-bold mb-12 text-center text-cyan-400 section-heading">
-                <i class="fas fa-project-diagram mr-2"></i>
-                RESEARCH PROJECTS
+                <i class="fas fa-question-circle mr-2"></i>
+                WHAT IS GEOSPATIAL ENGINEERING?
             </h2>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Project 1 -->
-                <div class="card rounded-lg overflow-hidden group project-card" data-project="gnss">
-                    <div class="relative overflow-hidden h-48">
-                        <img src="https://raw.githubusercontent.com/devam29/Resume2/main/1596.jpg" 
-                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
-                             alt="GNSS Project">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
-                        <div class="absolute bottom-4 left-4">
-                            <span class="bg-cyan-600 text-white text-xs px-2 py-1 rounded">Machine Learning</span>
+            <div class="text-center mb-12 max-w-3xl mx-auto">
+                <p class="text-xl mb-6">
+                    Not familiar with geospatial engineering? Here's a quick interactive introduction to my field of work!
+                </p>
+                <button id="explain-field-btn" class="field-btn px-6 py-3 bg-transparent border border-cyan-400 hover:bg-cyan-400 hover:bg-opacity-10 text-cyan-400 rounded-full transition-colors">
+                    <i class="fas fa-play mr-2"></i>
+                    Show Me What You Do!
+                </button>
+            </div>
+            
+            <div id="field-explanation-content" class="hidden">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                    <div class="field-card">
+                        <div class="field-card-inner">
+                            <div class="field-card-front card p-6 rounded-lg flex flex-col items-center text-center h-full">
+                                <div class="field-icon">
+                                    <i class="fas fa-satellite"></i>
+                                </div>
+                                <h3 class="text-xl font-bold mb-3">Satellite Data</h3>
+                                <p class="text-space-light opacity-90">
+                                    We use data from satellites orbiting Earth to monitor environmental changes.
+                                </p>
+                            </div>
+                            <div class="field-card-back card p-6 rounded-lg bg-space-blue bg-opacity-80 flex flex-col items-center justify-center text-center h-full">
+                                <p class="text-space-light opacity-90">
+                                    Like a doctor uses X-rays to see inside the body, we use satellite images to see Earth's health from space.
+                                </p>
+                            </div>
                         </div>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">GNSS Precipitation Prediction</h3>
-                        <p class="text-sm text-gray-400 mb-3">ETH Zurich • 2024</p>
-                        <p class="text-space-light opacity-90 mb-4">
-                            Machine learning model for rainfall prediction using GNSS signal delay and ERA5 datasets with satellite-derived atmospheric data.
-                        </p>
-                        <button class="view-project-btn inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors">
-                            <i class="fas fa-search mr-2"></i>
-                            View Details
-                        </button>
+                    
+                    <div class="field-card">
+                        <div class="field-card-inner">
+                            <div class="field-card-front card p-6 rounded-lg flex flex-col items-center text-center h-full">
+                                <div class="field-icon">
+                                    <i class="fas fa-map-marked-alt"></i>
+                                </div>
+                                <h3 class="text-xl font-bold mb-3">Mapping & Analysis</h3>
+                                <p class="text-space-light opacity-90">
+                                    We create intelligent maps that help understand complex environmental patterns.
+                                </p>
+                            </div>
+                            <div class="field-card-back card p-6 rounded-lg bg-space-blue bg-opacity-80 flex flex-col items-center justify-center text-center h-full">
+                                <p class="text-space-light opacity-90">
+                                    Think of Google Maps, but with superpowers to predict floods, track deforestation, and monitor climate change.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="field-card">
+                        <div class="field-card-inner">
+                            <div class="field-card-front card p-6 rounded-lg flex flex-col items-center text-center h-full">
+                                <div class="field-icon">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <h3 class="text-xl font-bold mb-3">AI Solutions</h3>
+                                <p class="text-space-light opacity-90">
+                                    We train computers to automatically detect environmental changes from satellite data.
+                                </p>
+                            </div>
+                            <div class="field-card-back card p-6 rounded-lg bg-space-blue bg-opacity-80 flex flex-col items-center justify-center text-center h-full">
+                                <p class="text-space-light opacity-90">
+                                    Similar to facial recognition, but for Earth's features - identifying floods, droughts, and urban growth patterns.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
-                <!-- Project 2 -->
-                <div class="card rounded-lg overflow-hidden group project-card" data-project="flood">
-                    <div class="relative overflow-hidden h-48">
-                        <img src="https://raw.githubusercontent.com/devam29/Resume2/main/flood.jpg" 
-                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
-                             alt="Flood Project">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
-                        <div class="absolute bottom-4 left-4">
-                            <span class="bg-cyan-600 text-white text-xs px-2 py-1 rounded">Hydrology</span>
+                <div class="card p-8 rounded-lg">
+                    <div class="flex flex-col md:flex-row items-center">
+                        <div class="md:w-1/2 mb-6 md:mb-0 md:pr-6">
+                            <h3 class="text-2xl font-bold mb-4 text-cyan-400">Why It Matters</h3>
+                            <p class="text-space-light opacity-90 mb-4">
+                                Geospatial engineering helps solve some of the world's most pressing challenges:
+                            </p>
+                            <ul class="list-disc pl-5 space-y-2 text-space-light opacity-90">
+                                <li>Predicting natural disasters before they happen</li>
+                                <li>Monitoring climate change impacts in real-time</li>
+                                <li>Optimizing renewable energy deployment</li>
+                                <li>Protecting endangered ecosystems</li>
+                                <li>Improving urban planning for sustainable cities</li>
+                            </ul>
                         </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Flood Risk Assessment</h3>
-                        <p class="text-sm text-gray-400 mb-3">Dhansiri River Basin, India</p>
-                        <p class="text-space-light opacity-90 mb-4">
-                            SWAT model with NSE: 0.84 and R²: 0.90 for flood risk analysis using satellite imagery and hydrological modeling.
-                        </p>
-                        <button class="view-project-btn inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors">
-                            <i class="fas fa-search mr-2"></i>
-                            View Details
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Project 3 -->
-                <div class="card rounded-lg overflow-hidden group project-card" data-project="groundwater">
-                    <div class="relative overflow-hidden h-48">
-                        <img src="https://raw.githubusercontent.com/devam29/Resume2/main/groundwater.jpg" 
-                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
-                             alt="Groundwater Project">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
-                        <div class="absolute bottom-4 left-4">
-                            <span class="bg-cyan-600 text-white text-xs px-2 py-1 rounded">GIS Analysis</span>
+                        <div class="md:w-1/2">
+                            <div class="bg-space-blue rounded-lg p-4 border border-cyan-400 border-opacity-30">
+                                <h4 class="text-lg font-semibold mb-3 text-satellite-gold">
+                                    <i class="fas fa-lightbulb mr-2"></i>
+                                    Real-World Example
+                                </h4>
+                                <p class="text-space-light opacity-90">
+                                    When a flood occurs, our systems can automatically detect the affected areas from satellite images within hours, helping emergency responders save lives and allocate resources efficiently.
+                                </p>
+                                <div class="mt-4 flex justify-center">
+                                    <div class="inline-flex items-center px-4 py-2 bg-cyan-600 bg-opacity-20 text-cyan-400 rounded-full border border-cyan-400">
+                                        <i class="fas fa-satellite-dish mr-2"></i>
+                                        That's what I work on!
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Groundwater Sustainability</h3>
-                        <p class="text-sm text-gray-400 mb-3">Ahmedabad, India</p>
-                        <p class="text-space-light opacity-90 mb-4">
-                            AHP analysis using satellite data and GIS to identify 89% medium to high potential groundwater zones.
-                        </p>
-                        <button class="view-project-btn inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors">
-                            <i class="fas fa-search mr-2"></i>
-                            View Details
-                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Project Modals -->
-    <div id="project-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div id="modal-content">
-                <!-- Dynamic content will be loaded here -->
+    <!-- Education Section -->
+    <section id="education" class="py-20 px-4 satellite-track">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center text-cyan-400 section-heading">
+                <i class="fas fa-graduation-cap mr-2"></i>
+                EDUCATION
+            </h2>
+            
+            <div class="space-y-8">
+                <div class="timeline-item">
+                    <div class="card p-8 rounded-lg">
+                        <div class="flex flex-col md:flex-row md:items-center mb-6">
+                            <div class="flex items-center mb-4 md:mb-0 md:w-1/3">
+                                <img src="https://raw.githubusercontent.com/devam29/Resume2/main/eth.png" 
+                                     alt="ETH Zurich Logo" 
+                                     class="h-12 mr-4">
+                                <div>
+                                    <h3 class="text-xl font-bold">ETH Zurich</h3>
+                                    <p class="text-sm text-gray-400">MSc in Geomatics Engineering</p>
+                                </div>
+                            </div>
+                            <div class="md:w-2/3">
+                                <div class="flex items-center text-sm mb-4">
+                                    <i class="fas fa-map-marker-alt mr-2 text-satellite-gold"></i>
+                                    <span>Zurich, Switzerland</span>
+                                    <i class="fas fa-calendar-alt ml-4 mr-2 text-satellite-gold"></i>
+                                    <span>2023 – Present</span>
+                                </div>
+                                <ul class="list-disc pl-5 space-y-2 text-space-light opacity-90">
+                                    <li>Specialization in Remote Sensing and Climate Science</li>
+                                    <li>Thesis: "GNSS-based Precipitation Prediction using Machine Learning"</li>
+                                    <li>Coursework: Advanced Geodesy, Satellite Positioning, Environmental Monitoring</li>
+                                </ul>
+                                <div class="flex flex-wrap mt-4">
+                                    <span class="skill-badge">Remote Sensing</span>
+                                    <span class="skill-badge">Machine Learning</span>
+                                    <span class="skill-badge">Climate Science</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="card p-8 rounded-lg">
+                        <div class="flex flex-col md:flex-row md:items-center mb-6">
+                            <div class="flex items-center mb-4 md:mb-0 md:w-1/3">
+                                <img src="https://raw.githubusercontent.com/devam29/Resume2/main/vit.png" 
+                                     alt="VIT Logo" 
+                                     class="h-12 mr-4">
+                                <div>
+                                    <h3 class="text-xl font-bold">VIT University</h3>
+                                    <p class="text-sm text-gray-400">BTech in Civil Engineering</p>
+                                </div>
+                            </div>
+                            <div class="md:w-2/3">
+                                <div class="flex items-center text-sm mb-4">
+                                    <i class="fas fa-map-marker-alt mr-2 text-satellite-gold"></i>
+                                    <span>Vellore, India</span>
+                                    <i class="fas fa-calendar-alt ml-4 mr-2 text-satellite-gold"></i>
+                                    <span>2019 – 2023</span>
+                                </div>
+                                <ul class="list-disc pl-5 space-y-2 text-space-light opacity-90">
+                                    <li>Specialized in Geospatial Technology and Water Resources</li>
+                                    <li>Thesis: "Flood Risk Assessment using SWAT Model and Remote Sensing"</li>
+                                    <li>CGPA: 9.12/10.0 (Top 5% of Department)</li>
+                                </ul>
+                                <div class="flex flex-wrap mt-4">
+                                    <span class="skill-badge">GIS</span>
+                                    <span class="skill-badge">Hydrology</span>
+                                    <span class="skill-badge">Environmental Eng.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 
     <!-- Experience Section -->
-    <section id="experience" class="py-20 px-4 satellite-track">
+    <section id="experience" class="py-20 px-4 bg-space-blue bg-opacity-30 satellite-track">
         <div class="max-w-7xl mx-auto">
             <h2 class="text-3xl font-bold mb-12 text-center text-cyan-400 section-heading">
                 <i class="fas fa-briefcase mr-2"></i>
@@ -807,8 +854,155 @@
         </div>
     </section>
 
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 px-4 satellite-track">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center text-cyan-400 section-heading">
+                <i class="fas fa-satellite-dish mr-2"></i>
+                TECHNICAL SKILLS
+            </h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
+                <div class="card p-6 rounded-lg flex flex-col items-center text-center">
+                    <i class="fas fa-code text-3xl mb-3 text-cyan-400"></i>
+                    <h3 class="text-lg font-semibold">Programming</h3>
+                    <p class="text-sm text-gray-400 mt-1">Python, MATLAB, R, JavaScript</p>
+                </div>
+                <div class="card p-6 rounded-lg flex flex-col items-center text-center">
+                    <i class="fas fa-satellite text-3xl mb-3 text-cyan-400"></i>
+                    <h3 class="text-lg font-semibold">Remote Sensing</h3>
+                    <p class="text-sm text-gray-400 mt-1">SAR, Lidar, Hyperspectral, Multispectral</p>
+                </div>
+                <div class="card p-6 rounded-lg flex flex-col items-center text-center">
+                    <i class="fas fa-map-marked-alt text-3xl mb-3 text-cyan-400"></i>
+                    <h3 class="text-lg font-semibold">GIS</h3>
+                    <p class="text-sm text-gray-400 mt-1">QGIS, ArcGIS, PostGIS, GeoServer</p>
+                </div>
+                <div class="card p-6 rounded-lg flex flex-col items-center text-center">
+                    <i class="fas fa-robot text-3xl mb-3 text-cyan-400"></i>
+                    <h3 class="text-lg font-semibold">Machine Learning</h3>
+                    <p class="text-sm text-gray-400 mt-1">PyTorch, TensorFlow, Scikit-learn</p>
+                </div>
+                <div class="card p-6 rounded-lg flex flex-col items-center text-center">
+                    <i class="fas fa-water text-3xl mb-3 text-cyan-400"></i>
+                    <h3 class="text-lg font-semibold">Hydrology</h3>
+                    <p class="text-sm text-gray-400 mt-1">HEC-RAS, SWAT, MODFLOW</p>
+                </div>
+                <div class="card p-6 rounded-lg flex flex-col items-center text-center">
+                    <i class="fas fa-chart-network text-3xl mb-3 text-cyan-400"></i>
+                    <h3 class="text-lg font-semibold">Data Analysis</h3>
+                    <p class="text-sm text-gray-400 mt-1">Pandas, GeoPandas, Rasterio</p>
+                </div>
+                <div class="card p-6 rounded-lg flex flex-col items-center text-center">
+                    <i class="fas fa-database text-3xl mb-3 text-cyan-400"></i>
+                    <h3 class="text-lg font-semibold">Spatial Databases</h3>
+                    <p class="text-sm text-gray-400 mt-1">PostgreSQL, MongoDB, Google Earth Engine</p>
+                </div>
+                <div class="card p-6 rounded-lg flex flex-col items-center text-center">
+                    <i class="fas fa-cloud text-3xl mb-3 text-cyan-400"></i>
+                    <h3 class="text-lg font-semibold">Cloud Computing</h3>
+                    <p class="text-sm text-gray-400 mt-1">AWS, Google Cloud, Docker</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 px-4 bg-space-blue bg-opacity-30 satellite-track">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center text-cyan-400 section-heading">
+                <i class="fas fa-project-diagram mr-2"></i>
+                RESEARCH PROJECTS
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="card rounded-lg overflow-hidden group project-card" data-project="gnss">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="https://raw.githubusercontent.com/devam29/Resume2/main/1596.jpg" 
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                             alt="GNSS Project">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-cyan-600 text-white text-xs px-2 py-1 rounded">Machine Learning</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">GNSS Precipitation Prediction</h3>
+                        <p class="text-sm text-gray-400 mb-3">ETH Zurich • 2024</p>
+                        <p class="text-space-light opacity-90 mb-4">
+                            Machine learning model for rainfall prediction using GNSS signal delay and ERA5 datasets with satellite-derived atmospheric data.
+                        </p>
+                        <button class="view-project-btn inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors">
+                            <i class="fas fa-search mr-2"></i>
+                            View Details
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="card rounded-lg overflow-hidden group project-card" data-project="flood">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="https://raw.githubusercontent.com/devam29/Resume2/main/flood.jpg" 
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                             alt="Flood Project">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-cyan-600 text-white text-xs px-2 py-1 rounded">Hydrology</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Flood Risk Assessment</h3>
+                        <p class="text-sm text-gray-400 mb-3">Dhansiri River Basin, India</p>
+                        <p class="text-space-light opacity-90 mb-4">
+                            SWAT model with NSE: 0.84 and R²: 0.90 for flood risk analysis using satellite imagery and hydrological modeling.
+                        </p>
+                        <button class="view-project-btn inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors">
+                            <i class="fas fa-search mr-2"></i>
+                            View Details
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="card rounded-lg overflow-hidden group project-card" data-project="groundwater">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="https://raw.githubusercontent.com/devam29/Resume2/main/groundwater.jpg" 
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                             alt="Groundwater Project">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-cyan-600 text-white text-xs px-2 py-1 rounded">GIS Analysis</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Groundwater Sustainability</h3>
+                        <p class="text-sm text-gray-400 mb-3">Ahmedabad, India</p>
+                        <p class="text-space-light opacity-90 mb-4">
+                            AHP analysis using satellite data and GIS to identify 89% medium to high potential groundwater zones.
+                        </p>
+                        <button class="view-project-btn inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors">
+                            <i class="fas fa-search mr-2"></i>
+                            View Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Modals -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="modal-content">
+                <!-- Dynamic content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
     <!-- Publications Section -->
-    <section id="publications" class="py-20 px-4 bg-space-blue bg-opacity-30 satellite-track">
+    <section id="publications" class="py-20 px-4 satellite-track">
         <div class="max-w-7xl mx-auto">
             <h2 class="text-3xl font-bold mb-12 text-center text-cyan-400 section-heading">
                 <i class="fas fa-book mr-2"></i>
@@ -871,6 +1065,78 @@
                                class="inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors">
                                 <i class="fas fa-external-link-alt mr-2"></i>
                                 Read Paper
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certificates Section -->
+    <section id="certificates" class="py-20 px-4 bg-space-blue bg-opacity-30 satellite-track">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center text-cyan-400 section-heading">
+                <i class="fas fa-certificate mr-2"></i>
+                CERTIFICATIONS
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card p-8 rounded-lg">
+                    <div class="flex items-start mb-4">
+                        <div class="bg-satellite-gold p-3 rounded-full mr-4 text-space-dark">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Google Earth Engine Certification</h3>
+                            <p class="text-sm text-gray-400 mb-3">Google • 2023</p>
+                            <p class="text-space-light opacity-90 mb-4">
+                                Advanced geospatial analysis using Google's cloud-based platform for planetary-scale environmental data.
+                            </p>
+                            <a href="#" 
+                               class="inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors">
+                                <i class="fas fa-external-link-alt mr-2"></i>
+                                View Certificate
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card p-8 rounded-lg">
+                    <div class="flex items-start mb-4">
+                        <div class="bg-cyan-600 p-3 rounded-full mr-4">
+                            <i class="fas fa-certificate text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Deep Learning for Remote Sensing</h3>
+                            <p class="text-sm text-gray-400 mb-3">IEEE GRSS • 2022</p>
+                            <p class="text-space-light opacity-90 mb-4">
+                                Specialized training in applying deep learning techniques to satellite imagery analysis.
+                            </p>
+                            <a href="#" 
+                               class="inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors">
+                                <i class="fas fa-external-link-alt mr-2"></i>
+                                View Certificate
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card p-8 rounded-lg">
+                    <div class="flex items-start mb-4">
+                        <div class="bg-satellite-gold p-3 rounded-full mr-4 text-space-dark">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Geospatial Python Developer</h3>
+                            <p class="text-sm text-gray-400 mb-3">Udemy • 2021</p>
+                            <p class="text-space-light opacity-90 mb-4">
+                                Comprehensive training in geospatial data processing and analysis using Python.
+                            </p>
+                            <a href="#" 
+                               class="inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors">
+                                <i class="fas fa-external-link-alt mr-2"></i>
+                                View Certificate
                             </a>
                         </div>
                     </div>
@@ -1429,24 +1695,16 @@
         
         earthObserver.observe(document.getElementById('earth-container'));
 
-        // Satellite Tracker Animation
-        const animateSatelliteProgress = () => {
-            const progress = document.querySelector('.satellite-progress');
-            let width = 0;
-            const interval = setInterval(() => {
-                width += 1;
-                progress.style.width = `${width}%`;
-                if (width >= 100) {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        progress.style.width = '0%';
-                        animateSatelliteProgress();
-                    }, 1000);
-                }
-            }, 50);
-        };
+        // Field Explanation Toggle
+        const explainBtn = document.getElementById('explain-field-btn');
+        const fieldContent = document.getElementById('field-explanation-content');
         
-        animateSatelliteProgress();
+        explainBtn.addEventListener('click', () => {
+            fieldContent.classList.toggle('hidden');
+            explainBtn.innerHTML = fieldContent.classList.contains('hidden') ? 
+                '<i class="fas fa-play mr-2"></i> Show Me What You Do!' : 
+                '<i class="fas fa-times mr-2"></i> Hide Explanation';
+        });
     </script>
 </body>
 </html>
