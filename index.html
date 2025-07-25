@@ -11,9 +11,6 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><text x='0' y='20' font-size='20'>🛰️</text></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/GLTFLoader.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -199,207 +196,17 @@
             100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
         }
         
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            overflow-y: auto;
-        }
-        
-        .modal-content {
-            background: var(--space-blue);
-            margin: 5% auto;
-            padding: 2rem;
-            border-radius: 0.5rem;
-            max-width: 800px;
-            position: relative;
-            animation: modalFadeIn 0.3s ease-out;
-        }
-        
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: translateY(-50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .close-modal {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--satellite-gold);
-        }
-        
-        /* 3D Earth Container */
-        #earth-container {
-            width: 100%;
-            height: 400px;
-            border-radius: 0.75rem;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        /* Language Switcher */
-        .language-switcher {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            z-index: 100;
-            background: rgba(30, 42, 74, 0.8);
-            border-radius: 9999px;
-            padding: 0.5rem;
-            backdrop-filter: blur(10px);
-        }
-        
-        .language-btn {
-            background: transparent;
-            border: none;
-            color: var(--space-light);
-            cursor: pointer;
-            padding: 0.5rem 1rem;
-            border-radius: 9999px;
-            transition: all 0.3s ease;
-        }
-        
-        .language-btn.active {
-            background: var(--earth-blue);
-            color: white;
-        }
-        
-        /* Particle Container */
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: -1;
-        }
-        
-        /* Weather Widget */
-        .weather-widget {
-            background: rgba(30, 42, 74, 0.6);
-            border-radius: 0.75rem;
-            padding: 1rem;
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--earth-blue);
-        }
-        
-        /* Satellite Tracking Widget */
-        .satellite-tracker {
-            background: rgba(30, 42, 74, 0.6);
-            border-radius: 0.75rem;
-            padding: 1rem;
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--satellite-gold);
-        }
-        
-        /* Certificate Card */
-        .certificate-card {
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .certificate-card:hover .certificate-overlay {
-            opacity: 1;
-        }
-        
-        .certificate-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(11, 13, 23, 0.8);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        /* PDF Export Button */
-        .pdf-export {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 100;
-            background: var(--earth-blue);
-            color: white;
-            border: none;
-            border-radius: 9999px;
-            padding: 0.75rem 1.25rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .pdf-export:hover {
-            background: var(--satellite-gold);
-            color: var(--space-dark);
-        }
-        
-        /* Conference Paper Badge */
-        .conference-badge {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: var(--satellite-gold);
-            color: var(--space-dark);
-            padding: 0.25rem 0.5rem;
+        .progress-bar {
+            height: 0.5rem;
+            background: rgba(208, 214, 249, 0.2);
             border-radius: 0.25rem;
-            font-size: 0.75rem;
-            font-weight: bold;
-        }
-        
-        /* Remote Sensing Gallery */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1rem;
-        }
-        
-        .gallery-item {
-            position: relative;
             overflow: hidden;
-            border-radius: 0.5rem;
-            height: 200px;
         }
         
-        .gallery-item img {
-            width: 100%;
+        .progress-fill {
             height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-        
-        .gallery-item:hover img {
-            transform: scale(1.1);
-        }
-        
-        .gallery-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(11, 13, 23, 0.8);
-            padding: 0.5rem;
-            transform: translateY(100%);
-            transition: transform 0.3s ease;
-        }
-        
-        .gallery-item:hover .gallery-caption {
-            transform: translateY(0);
+            background: linear-gradient(90deg, var(--earth-blue), var(--satellite-gold));
+            border-radius: 0.25rem;
         }
         
         @media (max-width: 768px) {
@@ -419,30 +226,17 @@
             .hero-title {
                 font-size: 2.5rem !important;
             }
-            
-            #earth-container {
-                height: 300px;
-            }
-            
-            .modal-content {
-                width: 90%;
-                margin: 10% auto;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- Loading Screen with Particle Background -->
+    <!-- Loading Screen -->
     <div class="loader">
-        <div id="particles-js"></div>
         <div class="loader-content">
             <div class="loader-satellite">
                 <i class="fas fa-satellite"></i>
             </div>
             <p class="text-xl text-cyan-400 animate-pulse">Initializing Satellite Systems...</p>
-            <div class="w-64 h-1 bg-gray-700 rounded-full mt-4 overflow-hidden">
-                <div class="h-full bg-cyan-400 rounded-full progress-bar-loading"></div>
-            </div>
         </div>
     </div>
 
@@ -463,7 +257,6 @@
                 <li><a href="#projects" class="hover:text-cyan-400 transition-colors">Projects</a></li>
                 <li><a href="#experience" class="hover:text-cyan-400 transition-colors">Experience</a></li>
                 <li><a href="#publications" class="hover:text-cyan-400 transition-colors">Publications</a></li>
-                <li><a href="#certificates" class="hover:text-cyan-400 transition-colors">Certificates</a></li>
                 <li><a href="#connect" class="hover:text-cyan-400 transition-colors">Connect</a></li>
             </ul>
             <ul class="mobile-menu hidden" id="mobile-menu">
@@ -473,18 +266,17 @@
                 <li class="py-2"><a href="#projects" class="block hover:text-cyan-400 transition-colors">Projects</a></li>
                 <li class="py-2"><a href="#experience" class="block hover:text-cyan-400 transition-colors">Experience</a></li>
                 <li class="py-2"><a href="#publications" class="block hover:text-cyan-400 transition-colors">Publications</a></li>
-                <li class="py-2"><a href="#certificates" class="block hover:text-cyan-400 transition-colors">Certificates</a></li>
                 <li class="py-2"><a href="#connect" class="block hover:text-cyan-400 transition-colors">Connect</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Hero Section with Enhanced Branding -->
+    <!-- Hero Section -->
     <section id="hero" class="min-h-screen flex items-center justify-center text-center pt-24 md:pt-16 px-4">
         <div class="max-w-4xl mx-auto">
             <div class="relative inline-block mb-8">
                 <img src="https://raw.githubusercontent.com/devam29/Resume2/main/dsaini.jpg" 
-                     class="w-40 h-40 rounded-full border-4 border-cyan-400 earth-glow object-cover" 
+                     class="w-32 h-32 rounded-full border-4 border-cyan-400 earth-glow object-cover" 
                      alt="Dev Shree Saini">
                 <div class="absolute -bottom-2 -right-2 bg-space-blue rounded-full p-2 border border-space-light">
                     <i class="fas fa-satellite text-satellite-gold"></i>
@@ -516,19 +308,15 @@
                 </a>
             </div>
             
-            <div class="mt-8 max-w-2xl mx-auto bg-space-blue bg-opacity-50 p-6 rounded-lg border border-cyan-400 border-opacity-30">
-                <h3 class="text-lg font-semibold text-cyan-400 mb-2">Professional Branding Statement</h3>
-                <p class="text-space-light">
-                    <i class="fas fa-quote-left text-satellite-gold mr-1"></i>
-                    Satellite data specialist developing climate resilience solutions through geospatial AI and Earth observation technologies. 
-                    Bridging the gap between environmental science and engineering with a passion for sustainable development.
-                    <i class="fas fa-quote-right text-satellite-gold ml-1"></i>
-                </p>
-            </div>
+            <p class="mt-8 text-space-light opacity-80 max-w-2xl mx-auto">
+                <i class="fas fa-quote-left text-satellite-gold mr-1"></i>
+                Developing geospatial solutions to climate challenges through satellite technology and machine learning
+                <i class="fas fa-quote-right text-satellite-gold ml-1"></i>
+            </p>
         </div>
     </section>
 
-    <!-- About Section with Enhanced Content -->
+    <!-- About Section -->
     <section id="about" class="py-20 px-4 satellite-track">
         <div class="max-w-7xl mx-auto">
             <h2 class="text-3xl font-bold mb-12 text-center text-cyan-400 section-heading">
@@ -549,18 +337,6 @@
                             </p>
                         </div>
                     </div>
-                    
-                    <div class="flex items-start">
-                        <div class="bg-satellite-gold p-3 rounded-full mr-4 text-space-dark">
-                            <i class="fas fa-bullseye"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2">Career Objective</h3>
-                            <p class="text-space-light opacity-90">
-                                To apply my expertise in geospatial analysis and remote sensing to develop innovative solutions for climate change adaptation and disaster risk reduction, while contributing to interdisciplinary research at the intersection of technology and environmental science.
-                            </p>
-                        </div>
-                    </div>
                 </div>
                 
                 <div class="card p-8 rounded-lg">
@@ -575,32 +351,6 @@
                             </p>
                         </div>
                     </div>
-                    
-                    <!-- Weather Widget -->
-                    <div class="weather-widget mt-6 p-4">
-                        <h4 class="text-lg font-semibold mb-2 flex items-center">
-                            <i class="fas fa-cloud-sun mr-2 text-cyan-400"></i>
-                            Current Weather in Zurich
-                        </h4>
-                        <div class="flex items-center justify-between">
-                            <div class="text-4xl font-bold">18°C</div>
-                            <div class="text-right">
-                                <p class="text-sm">Partly Cloudy</p>
-                                <p class="text-xs text-gray-400">Humidity: 65%</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 3D Earth Visualization -->
-            <div class="mt-16">
-                <h3 class="text-2xl font-bold mb-6 text-center text-satellite-gold">
-                    <i class="fas fa-globe-europe mr-2"></i>
-                    Interactive Earth Visualization
-                </h3>
-                <div id="earth-container" class="card">
-                    <!-- Three.js Earth will be rendered here -->
                 </div>
             </div>
         </div>
@@ -639,7 +389,6 @@
                         <span class="skill-badge">Satellite Data</span>
                         <span class="skill-badge">Climate Modeling</span>
                         <span class="skill-badge">Machine Learning</span>
-                        <span class="skill-badge">GNSS</span>
                     </div>
                 </div>
                 
@@ -667,7 +416,6 @@
                         <span class="skill-badge">GIS Applications</span>
                         <span class="skill-badge">Hydrology</span>
                         <span class="skill-badge">Structural Analysis</span>
-                        <span class="skill-badge">Environmental Eng.</span>
                     </div>
                 </div>
             </div>
@@ -682,122 +430,82 @@
                 TECHNICAL SKILLS
             </h2>
             
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-12">
                 <div class="card p-6 rounded-lg flex flex-col items-center text-center">
                     <i class="fas fa-code text-3xl mb-3 text-cyan-400"></i>
                     <h3 class="text-lg font-semibold">Programming</h3>
-                    <p class="text-sm text-gray-400 mt-1">Python, MATLAB, R, JavaScript</p>
+                    <p class="text-sm text-gray-400 mt-1">Python, MATLAB, R</p>
                 </div>
                 <div class="card p-6 rounded-lg flex flex-col items-center text-center">
                     <i class="fas fa-satellite text-3xl mb-3 text-cyan-400"></i>
                     <h3 class="text-lg font-semibold">Remote Sensing</h3>
-                    <p class="text-sm text-gray-400 mt-1">SAR, Lidar, Hyperspectral, Multispectral</p>
+                    <p class="text-sm text-gray-400 mt-1">SAR, Lidar, Hyperspectral</p>
                 </div>
                 <div class="card p-6 rounded-lg flex flex-col items-center text-center">
                     <i class="fas fa-map-marked-alt text-3xl mb-3 text-cyan-400"></i>
                     <h3 class="text-lg font-semibold">GIS</h3>
-                    <p class="text-sm text-gray-400 mt-1">QGIS, ArcGIS, PostGIS, GeoServer</p>
+                    <p class="text-sm text-gray-400 mt-1">QGIS, ArcGIS, PostGIS</p>
                 </div>
                 <div class="card p-6 rounded-lg flex flex-col items-center text-center">
                     <i class="fas fa-robot text-3xl mb-3 text-cyan-400"></i>
                     <h3 class="text-lg font-semibold">Machine Learning</h3>
-                    <p class="text-sm text-gray-400 mt-1">PyTorch, TensorFlow, Scikit-learn</p>
+                    <p class="text-sm text-gray-400 mt-1">PyTorch, TensorFlow</p>
                 </div>
                 <div class="card p-6 rounded-lg flex flex-col items-center text-center">
                     <i class="fas fa-water text-3xl mb-3 text-cyan-400"></i>
                     <h3 class="text-lg font-semibold">Hydrology</h3>
-                    <p class="text-sm text-gray-400 mt-1">HEC-RAS, SWAT, MODFLOW</p>
+                    <p class="text-sm text-gray-400 mt-1">HEC-RAS, SWAT</p>
                 </div>
                 <div class="card p-6 rounded-lg flex flex-col items-center text-center">
                     <i class="fas fa-chart-network text-3xl mb-3 text-cyan-400"></i>
                     <h3 class="text-lg font-semibold">Data Analysis</h3>
-                    <p class="text-sm text-gray-400 mt-1">Pandas, GeoPandas, Rasterio</p>
-                </div>
-                <div class="card p-6 rounded-lg flex flex-col items-center text-center">
-                    <i class="fas fa-database text-3xl mb-3 text-cyan-400"></i>
-                    <h3 class="text-lg font-semibold">Spatial Databases</h3>
-                    <p class="text-sm text-gray-400 mt-1">PostgreSQL, MongoDB, Google Earth Engine</p>
-                </div>
-                <div class="card p-6 rounded-lg flex flex-col items-center text-center">
-                    <i class="fas fa-cloud text-3xl mb-3 text-cyan-400"></i>
-                    <h3 class="text-lg font-semibold">Cloud Computing</h3>
-                    <p class="text-sm text-gray-400 mt-1">AWS, Google Cloud, Docker</p>
+                    <p class="text-sm text-gray-400 mt-1">Pandas, GeoPandas</p>
                 </div>
             </div>
             
-            <!-- Satellite Tracking Widget -->
-            <div class="satellite-tracker max-w-2xl mx-auto p-6 mb-12">
-                <h3 class="text-xl font-semibold mb-4 text-center text-satellite-gold">
-                    <i class="fas fa-satellite-dish mr-2"></i>
-                    Live Satellite Tracking
-                </h3>
-                <div class="flex justify-between items-center mb-4">
-                    <div>
-                        <h4 class="font-medium">Sentinel-1A</h4>
-                        <p class="text-sm text-gray-400">ESA Earth Observation</p>
+            <h3 class="text-xl font-semibold mb-6 text-center text-satellite-gold">Skill Proficiency</h3>
+            <div class="max-w-2xl mx-auto space-y-6">
+                <div>
+                    <div class="flex justify-between mb-2">
+                        <span class="text-space-light">Python Programming</span>
+                        <span class="text-cyan-400">90%</span>
                     </div>
-                    <div class="text-cyan-400">
-                        <i class="fas fa-circle animate-pulse"></i> Live
+                    <div class="progress-bar">
+                        <div class="progress-fill w-[90%]"></div>
                     </div>
                 </div>
-                <div class="relative h-2 bg-gray-700 rounded-full mb-4 overflow-hidden">
-                    <div class="absolute h-full bg-gradient-to-r from-cyan-400 to-satellite-gold rounded-full satellite-progress" style="width: 65%"></div>
-                </div>
-                <div class="grid grid-cols-3 gap-4 text-center">
-                    <div>
-                        <p class="text-sm text-gray-400">Altitude</p>
-                        <p class="font-medium">693 km</p>
+                <div>
+                    <div class="flex justify-between mb-2">
+                        <span class="text-space-light">GIS & Remote Sensing</span>
+                        <span class="text-cyan-400">85%</span>
                     </div>
-                    <div>
-                        <p class="text-sm text-gray-400">Velocity</p>
-                        <p class="font-medium">7.5 km/s</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-400">Next Pass</p>
-                        <p class="font-medium">12:47 UTC</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill w-[85%]"></div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Remote Sensing Gallery -->
-            <h3 class="text-2xl font-bold mb-6 text-center text-satellite-gold">
-                <i class="fas fa-images mr-2"></i>
-                Remote Sensing Gallery
-            </h3>
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="https://raw.githubusercontent.com/devam29/Resume2/main/sentinel.jpg" alt="Sentinel-1 SAR Image">
-                    <div class="gallery-caption">
-                        <p class="text-sm font-medium">Sentinel-1 SAR Image</p>
-                        <p class="text-xs text-gray-400">Flood detection in Bangladesh</p>
+                <div>
+                    <div class="flex justify-between mb-2">
+                        <span class="text-space-light">Machine Learning</span>
+                        <span class="text-cyan-400">80%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill w-[80%]"></div>
                     </div>
                 </div>
-                <div class="gallery-item">
-                    <img src="https://raw.githubusercontent.com/devam29/Resume2/main/landsat.jpg" alt="Landsat 8 False Color">
-                    <div class="gallery-caption">
-                        <p class="text-sm font-medium">Landsat 8 False Color</p>
-                        <p class="text-xs text-gray-400">Vegetation analysis</p>
+                <div>
+                    <div class="flex justify-between mb-2">
+                        <span class="text-space-light">Satellite Data Processing</span>
+                        <span class="text-cyan-400">75%</span>
                     </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://raw.githubusercontent.com/devam29/Resume2/main/lidar.jpg" alt="LiDAR Point Cloud">
-                    <div class="gallery-caption">
-                        <p class="text-sm font-medium">LiDAR Point Cloud</p>
-                        <p class="text-xs text-gray-400">Topographic mapping</p>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://raw.githubusercontent.com/devam29/Resume2/main/ndvi.jpg" alt="NDVI Time Series">
-                    <div class="gallery-caption">
-                        <p class="text-sm font-medium">NDVI Time Series</p>
-                        <p class="text-xs text-gray-400">Vegetation health monitoring</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill w-[75%]"></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Projects Section with Modals -->
+    <!-- Projects Section -->
     <section id="projects" class="py-20 px-4 bg-space-blue bg-opacity-30 satellite-track">
         <div class="max-w-7xl mx-auto">
             <h2 class="text-3xl font-bold mb-12 text-center text-cyan-400 section-heading">
@@ -806,8 +514,7 @@
             </h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Project 1 -->
-                <div class="card rounded-lg overflow-hidden group project-card" data-project="gnss">
+                <div class="card rounded-lg overflow-hidden group">
                     <div class="relative overflow-hidden h-48">
                         <img src="https://raw.githubusercontent.com/devam29/Resume2/main/1596.jpg" 
                              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
@@ -823,15 +530,15 @@
                         <p class="text-space-light opacity-90 mb-4">
                             Machine learning model for rainfall prediction using GNSS signal delay and ERA5 datasets with satellite-derived atmospheric data.
                         </p>
-                        <button class="view-project-btn inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors">
-                            <i class="fas fa-search mr-2"></i>
-                            View Details
-                        </button>
+                        <a href="https://github.com/devam29/gnss-project" 
+                           class="inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors">
+                            <i class="fas fa-external-link-alt mr-2"></i>
+                            View Project
+                        </a>
                     </div>
                 </div>
                 
-                <!-- Project 2 -->
-                <div class="card rounded-lg overflow-hidden group project-card" data-project="flood">
+                <div class="card rounded-lg overflow-hidden group">
                     <div class="relative overflow-hidden h-48">
                         <img src="https://raw.githubusercontent.com/devam29/Resume2/main/flood.jpg" 
                              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
@@ -847,15 +554,15 @@
                         <p class="text-space-light opacity-90 mb-4">
                             SWAT model with NSE: 0.84 and R²: 0.90 for flood risk analysis using satellite imagery and hydrological modeling.
                         </p>
-                        <button class="view-project-btn inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors">
-                            <i class="fas fa-search mr-2"></i>
-                            View Details
-                        </button>
+                        <a href="https://github.com/devam29/flood-project" 
+                           class="inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors">
+                            <i class="fas fa-external-link-alt mr-2"></i>
+                            View Project
+                        </a>
                     </div>
                 </div>
                 
-                <!-- Project 3 -->
-                <div class="card rounded-lg overflow-hidden group project-card" data-project="groundwater">
+                <div class="card rounded-lg overflow-hidden group">
                     <div class="relative overflow-hidden h-48">
                         <img src="https://raw.githubusercontent.com/devam29/Resume2/main/groundwater.jpg" 
                              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
@@ -871,25 +578,16 @@
                         <p class="text-space-light opacity-90 mb-4">
                             AHP analysis using satellite data and GIS to identify 89% medium to high potential groundwater zones.
                         </p>
-                        <button class="view-project-btn inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors">
-                            <i class="fas fa-search mr-2"></i>
-                            View Details
-                        </button>
+                        <a href="https://github.com/devam29/groundwater-project" 
+                           class="inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors">
+                            <i class="fas fa-external-link-alt mr-2"></i>
+                            View Project
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- Project Modals -->
-    <div id="project-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div id="modal-content">
-                <!-- Dynamic content will be loaded here -->
-            </div>
-        </div>
-    </div>
 
     <!-- Experience Section -->
     <section id="experience" class="py-20 px-4 satellite-track">
@@ -1006,7 +704,7 @@
         </div>
     </section>
 
-    <!-- Publications Section with Conference Paper -->
+    <!-- Publications Section -->
     <section id="publications" class="py-20 px-4 bg-space-blue bg-opacity-30 satellite-track">
         <div class="max-w-7xl mx-auto">
             <h2 class="text-3xl font-bold mb-12 text-center text-cyan-400 section-heading">
@@ -1015,7 +713,7 @@
             </h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="card p-8 rounded-lg relative">
+                <div class="card p-8 rounded-lg">
                     <div class="flex items-start mb-4">
                         <div class="bg-cyan-600 p-3 rounded-full mr-4">
                             <i class="fas fa-file-alt text-white"></i>
@@ -1035,7 +733,7 @@
                     </div>
                 </div>
                 
-                <div class="card p-8 rounded-lg relative">
+                <div class="card p-8 rounded-lg">
                     <div class="flex items-start mb-4">
                         <div class="bg-satellite-gold p-3 rounded-full mr-4 text-space-dark">
                             <i class="fas fa-file-alt"></i>
@@ -1055,7 +753,7 @@
                     </div>
                 </div>
                 
-                <div class="card p-8 rounded-lg relative">
+                <div class="card p-8 rounded-lg">
                     <div class="flex items-start mb-4">
                         <div class="bg-cyan-600 p-3 rounded-full mr-4">
                             <i class="fas fa-file-alt text-white"></i>
@@ -1074,88 +772,12 @@
                         </div>
                     </div>
                 </div>
-                
-                <!-- Conference Paper -->
-                <div class="card p-8 rounded-lg relative">
-                    <span class="conference-badge">Conference Paper</span>
-                    <div class="flex items-start mb-4">
-                        <div class="bg-satellite-gold p-3 rounded-full mr-4 text-space-dark">
-                            <i class="fas fa-microphone"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2">SAR-based Flood Detection</h3>
-                            <p class="text-sm text-gray-400 mb-3">IGARSS 2023 • Kuala Lumpur</p>
-                            <p class="text-space-light opacity-90 mb-4">
-                                Presented deep learning approach for near-real-time flood mapping using Sentinel-1 SAR data at IEEE International Geoscience and Remote Sensing Symposium.
-                            </p>
-                            <a href="#" 
-                               class="inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors">
-                                <i class="fas fa-external-link-alt mr-2"></i>
-                                View Presentation
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Certificates Section -->
-    <section id="certificates" class="py-20 px-4 satellite-track">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold mb-12 text-center text-cyan-400 section-heading">
-                <i class="fas fa-certificate mr-2"></i>
-                CERTIFICATES
-            </h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="certificate-card card rounded-lg overflow-hidden">
-                    <img src="https://raw.githubusercontent.com/devam29/Resume2/main/gis-cert.jpg" 
-                         class="w-full h-48 object-cover" 
-                         alt="GIS Certificate">
-                    <div class="certificate-overlay">
-                        <h3 class="text-xl font-bold mb-2 text-center">Advanced GIS Applications</h3>
-                        <p class="text-sm text-center mb-4">Coursera • University of California</p>
-                        <a href="#" class="inline-flex items-center px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-full transition-colors">
-                            <i class="fas fa-download mr-2"></i>
-                            Download Certificate
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="certificate-card card rounded-lg overflow-hidden">
-                    <img src="https://raw.githubusercontent.com/devam29/Resume2/main/ml-cert.jpg" 
-                         class="w-full h-48 object-cover" 
-                         alt="Machine Learning Certificate">
-                    <div class="certificate-overlay">
-                        <h3 class="text-xl font-bold mb-2 text-center">Machine Learning for Geospatial Data</h3>
-                        <p class="text-sm text-center mb-4">Udemy • 2023</p>
-                        <a href="#" class="inline-flex items-center px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-full transition-colors">
-                            <i class="fas fa-download mr-2"></i>
-                            Download Certificate
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="certificate-card card rounded-lg overflow-hidden">
-                    <img src="https://raw.githubusercontent.com/devam29/Resume2/main/remote-cert.jpg" 
-                         class="w-full h-48 object-cover" 
-                         alt="Remote Sensing Certificate">
-                    <div class="certificate-overlay">
-                        <h3 class="text-xl font-bold mb-2 text-center">Remote Sensing Fundamentals</h3>
-                        <p class="text-sm text-center mb-4">edX • University of Maryland</p>
-                        <a href="#" class="inline-flex items-center px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-full transition-colors">
-                            <i class="fas fa-download mr-2"></i>
-                            Download Certificate
-                        </a>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
 
     <!-- Achievements Section -->
-    <section id="achievements" class="py-20 px-4 bg-space-blue bg-opacity-30 satellite-track">
+    <section id="achievements" class="py-20 px-4 satellite-track">
         <div class="max-w-7xl mx-auto">
             <h2 class="text-3xl font-bold mb-12 text-center text-cyan-400 section-heading">
                 <i class="fas fa-trophy mr-2"></i>
@@ -1207,7 +829,7 @@
     </section>
 
     <!-- Connect Section -->
-    <section id="connect" class="py-20 px-4 satellite-track">
+    <section id="connect" class="py-20 px-4 bg-space-blue bg-opacity-30 satellite-track">
         <div class="max-w-7xl mx-auto">
             <h2 class="text-3xl font-bold mb-12 text-center text-cyan-400 section-heading">
                 <i class="fas fa-rocket mr-2"></i>
@@ -1260,7 +882,7 @@
     </section>
 
     <!-- Map Section -->
-    <section id="work-locations" class="py-20 px-4 bg-space-blue bg-opacity-30">
+    <section id="work-locations" class="py-20 px-4">
         <div class="max-w-7xl mx-auto">
             <h2 class="text-3xl font-bold mb-12 text-center text-cyan-400 section-heading">
                 <i class="fas fa-map-marked-alt mr-2"></i>
@@ -1306,40 +928,14 @@
         <i class="fas fa-arrow-up"></i>
     </a>
 
-    <!-- Language Switcher -->
-    <div class="language-switcher">
-        <button class="language-btn active" data-lang="en">EN</button>
-        <button class="language-btn" data-lang="de">DE</button>
-        <button class="language-btn" data-lang="fr">FR</button>
-        <button class="language-btn" data-lang="es">ES</button>
-        <button class="language-btn" data-lang="it">IT</button>
-        <button class="language-btn" data-lang="hi">HI</button>
-    </div>
-
-    <!-- PDF Export Button -->
-    <button class="pdf-export" id="pdf-export">
-        <i class="fas fa-file-pdf mr-2"></i>
-        Export PDF
-    </button>
-
     <!-- JavaScript -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        // Loader with Progress Bar
+        // Loader
         window.addEventListener('load', () => {
-            const progressBar = document.querySelector('.progress-bar-loading');
-            let width = 0;
-            const interval = setInterval(() => {
-                width += 5;
-                progressBar.style.width = `${width}%`;
-                if (width >= 100) {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        document.querySelector('.loader').classList.add('hidden');
-                    }, 300);
-                }
-            }, 100);
+            setTimeout(() => {
+                document.querySelector('.loader').classList.add('hidden');
+            }, 1500);
         });
 
         // Mobile Menu Toggle
@@ -1404,129 +1000,19 @@
             });
         });
 
-        // ScrollReveal Animations with advanced settings
+        // ScrollReveal Animations
         ScrollReveal().reveal('.card', {
             duration: 1000,
             distance: '20px',
             origin: 'bottom',
-            interval: 200,
-            easing: 'cubic-bezier(0.5, 0, 0, 1)',
-            rotate: { x: 5, y: 5, z: 0 }
+            interval: 200
         });
 
         ScrollReveal().reveal('section', {
             duration: 1000,
             distance: '20px',
             origin: 'top',
-            delay: 200,
-            easing: 'ease-in-out'
-        });
-
-        // Particle.js Configuration
-        particlesJS('particles-js', {
-            "particles": {
-                "number": {
-                    "value": 80,
-                    "density": {
-                        "enable": true,
-                        "value_area": 800
-                    }
-                },
-                "color": {
-                    "value": "#2C7BE5"
-                },
-                "shape": {
-                    "type": "circle",
-                    "stroke": {
-                        "width": 0,
-                        "color": "#000000"
-                    },
-                    "polygon": {
-                        "nb_sides": 5
-                    }
-                },
-                "opacity": {
-                    "value": 0.5,
-                    "random": false,
-                    "anim": {
-                        "enable": false,
-                        "speed": 1,
-                        "opacity_min": 0.1,
-                        "sync": false
-                    }
-                },
-                "size": {
-                    "value": 3,
-                    "random": true,
-                    "anim": {
-                        "enable": false,
-                        "speed": 40,
-                        "size_min": 0.1,
-                        "sync": false
-                    }
-                },
-                "line_linked": {
-                    "enable": true,
-                    "distance": 150,
-                    "color": "#2C7BE5",
-                    "opacity": 0.4,
-                    "width": 1
-                },
-                "move": {
-                    "enable": true,
-                    "speed": 2,
-                    "direction": "none",
-                    "random": false,
-                    "straight": false,
-                    "out_mode": "out",
-                    "bounce": false,
-                    "attract": {
-                        "enable": false,
-                        "rotateX": 600,
-                        "rotateY": 1200
-                    }
-                }
-            },
-            "interactivity": {
-                "detect_on": "canvas",
-                "events": {
-                    "onhover": {
-                        "enable": true,
-                        "mode": "grab"
-                    },
-                    "onclick": {
-                        "enable": true,
-                        "mode": "push"
-                    },
-                    "resize": true
-                },
-                "modes": {
-                    "grab": {
-                        "distance": 140,
-                        "line_linked": {
-                            "opacity": 1
-                        }
-                    },
-                    "bubble": {
-                        "distance": 400,
-                        "size": 40,
-                        "duration": 2,
-                        "opacity": 8,
-                        "speed": 3
-                    },
-                    "repulse": {
-                        "distance": 200,
-                        "duration": 0.4
-                    },
-                    "push": {
-                        "particles_nb": 4
-                    },
-                    "remove": {
-                        "particles_nb": 2
-                    }
-                }
-            },
-            "retina_detect": true
+            delay: 200
         });
 
         // Contact Form Submission
@@ -1621,312 +1107,6 @@
                 dashArray: '5, 5'
             }
         ).addTo(map);
-
-        // Project Modals
-        const modal = document.getElementById('project-modal');
-        const modalContent = document.getElementById('modal-content');
-        const closeModal = document.querySelector('.close-modal');
-        const projectCards = document.querySelectorAll('.project-card');
-        
-        // Project data
-        const projects = {
-            gnss: {
-                title: "GNSS Precipitation Prediction",
-                subtitle: "ETH Zurich • 2024",
-                image: "https://raw.githubusercontent.com/devam29/Resume2/main/1596.jpg",
-                description: "Developed a machine learning model for rainfall prediction using GNSS signal delay and ERA5 datasets with satellite-derived atmospheric data. The model achieved 85% accuracy in predicting short-duration precipitation events, which is crucial for flood early warning systems.",
-                details: [
-                    "Processed and analyzed GNSS signal delay data from 50+ stations",
-                    "Integrated ERA5 reanalysis data for atmospheric variables",
-                    "Implemented Random Forest and LSTM models for prediction",
-                    "Achieved 85% accuracy in precipitation event detection"
-                ],
-                skills: ["Python", "Machine Learning", "GNSS", "ERA5", "PyTorch"],
-                links: [
-                    {
-                        icon: "fa-github",
-                        text: "View Code",
-                        url: "https://github.com/devam29/gnss-project"
-                    },
-                    {
-                        icon: "fa-file-pdf",
-                        text: "Download Report",
-                        url: "#"
-                    }
-                ]
-            },
-            flood: {
-                title: "Flood Risk Assessment",
-                subtitle: "Dhansiri River Basin, India",
-                image: "https://raw.githubusercontent.com/devam29/Resume2/main/flood.jpg",
-                description: "Conducted comprehensive flood risk analysis using SWAT hydrological model with NSE: 0.84 and R²: 0.90. The project integrated satellite imagery and hydrological modeling to identify high-risk zones and recommend mitigation strategies.",
-                details: [
-                    "Calibrated SWAT model with NSE: 0.84 and R²: 0.90",
-                    "Processed Sentinel-2 imagery for land use classification",
-                    "Developed flood risk maps for the Dhansiri River Basin",
-                    "Recommended mitigation strategies for high-risk areas"
-                ],
-                skills: ["SWAT", "QGIS", "Hydrology", "Remote Sensing", "Python"],
-                links: [
-                    {
-                        icon: "fa-github",
-                        text: "View Code",
-                        url: "https://github.com/devam29/flood-project"
-                    },
-                    {
-                        icon: "fa-file-pdf",
-                        text: "Download Report",
-                        url: "#"
-                    }
-                ]
-            },
-            groundwater: {
-                title: "Groundwater Sustainability",
-                subtitle: "Ahmedabad, India",
-                image: "https://raw.githubusercontent.com/devam29/Resume2/main/groundwater.jpg",
-                description: "AHP analysis using satellite data and GIS to identify 89% medium to high potential groundwater zones. The study helped local authorities in sustainable water resource management and planning.",
-                details: [
-                    "Analyzed satellite-derived groundwater indicators",
-                    "Applied Analytical Hierarchy Process (AHP) for zoning",
-                    "Identified 89% medium to high potential zones",
-                    "Validated results with field measurements"
-                ],
-                skills: ["GIS", "AHP", "Remote Sensing", "Water Resources", "Python"],
-                links: [
-                    {
-                        icon: "fa-github",
-                        text: "View Code",
-                        url: "https://github.com/devam29/groundwater-project"
-                    },
-                    {
-                        icon: "fa-file-pdf",
-                        text: "Download Report",
-                        url: "#"
-                    }
-                ]
-            }
-        };
-
-        // Open modal when project card is clicked
-        projectCards.forEach(card => {
-            card.addEventListener('click', () => {
-                const projectId = card.getAttribute('data-project');
-                const project = projects[projectId];
-                
-                // Create modal content
-                let content = `
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div>
-                            <img src="${project.image}" alt="${project.title}" class="w-full h-auto rounded-lg mb-4">
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                ${project.skills.map(skill => `<span class="skill-badge">${skill}</span>`).join('')}
-                            </div>
-                            <div class="space-y-2">
-                                ${project.links.map(link => `
-                                    <a href="${link.url}" class="inline-flex items-center px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-full transition-colors mr-2">
-                                        <i class="fas ${link.icon} mr-2"></i>
-                                        ${link.text}
-                                    </a>
-                                `).join('')}
-                            </div>
-                        </div>
-                        <div>
-                            <h3 class="text-2xl font-bold mb-2">${project.title}</h3>
-                            <p class="text-sm text-gray-400 mb-4">${project.subtitle}</p>
-                            <p class="text-space-light opacity-90 mb-6">${project.description}</p>
-                            <h4 class="text-lg font-semibold mb-2 text-cyan-400">Project Details</h4>
-                            <ul class="list-disc pl-5 space-y-2 text-space-light opacity-90 mb-6">
-                                ${project.details.map(detail => `<li>${detail}</li>`).join('')}
-                            </ul>
-                        </div>
-                    </div>
-                `;
-                
-                modalContent.innerHTML = content;
-                modal.style.display = 'block';
-                document.body.style.overflow = 'hidden';
-            });
-        });
-
-        // Close modal
-        closeModal.addEventListener('click', () => {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        });
-
-        // Close modal when clicking outside
-        window.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        });
-
-        // 3D Earth Visualization with Three.js
-        const initEarth = () => {
-            const container = document.getElementById('earth-container');
-            const width = container.clientWidth;
-            const height = container.clientHeight;
-            
-            // Create scene
-            const scene = new THREE.Scene();
-            
-            // Create camera
-            const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-            camera.position.z = 2.5;
-            
-            // Create renderer
-            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            renderer.setSize(width, height);
-            container.appendChild(renderer.domElement);
-            
-            // Add controls
-            const controls = new THREE.OrbitControls(camera, renderer.domElement);
-            controls.enableDamping = true;
-            controls.dampingFactor = 0.05;
-            controls.autoRotate = true;
-            controls.autoRotateSpeed = 0.5;
-            
-            // Create Earth geometry
-            const geometry = new THREE.SphereGeometry(1, 64, 64);
-            
-            // Load Earth texture
-            const textureLoader = new THREE.TextureLoader();
-            const texture = textureLoader.load('https://raw.githubusercontent.com/devam29/Resume2/main/earth-texture.jpg');
-            const bumpMap = textureLoader.load('https://raw.githubusercontent.com/devam29/Resume2/main/earth-bump.jpg');
-            const specularMap = textureLoader.load('https://raw.githubusercontent.com/devam29/Resume2/main/earth-specular.jpg');
-            
-            // Create Earth material
-            const material = new THREE.MeshPhongMaterial({
-                map: texture,
-                bumpMap: bumpMap,
-                bumpScale: 0.05,
-                specularMap: specularMap,
-                specular: new THREE.Color('grey'),
-                shininess: 5
-            });
-            
-            // Create Earth mesh
-            const earth = new THREE.Mesh(geometry, material);
-            scene.add(earth);
-            
-            // Add ambient light
-            const ambientLight = new THREE.AmbientLight(0x333333);
-            scene.add(ambientLight);
-            
-            // Add directional light
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-            directionalLight.position.set(5, 3, 5);
-            scene.add(directionalLight);
-            
-            // Add stars
-            const starsGeometry = new THREE.BufferGeometry();
-            const starsMaterial = new THREE.PointsMaterial({
-                color: 0xffffff,
-                size: 0.05,
-                transparent: true
-            });
-            
-            const starsVertices = [];
-            for (let i = 0; i < 10000; i++) {
-                const x = (Math.random() - 0.5) * 2000;
-                const y = (Math.random() - 0.5) * 2000;
-                const z = (Math.random() - 0.5) * 2000;
-                starsVertices.push(x, y, z);
-            }
-            
-            starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starsVertices, 3));
-            const stars = new THREE.Points(starsGeometry, starsMaterial);
-            scene.add(stars);
-            
-            // Add cloud layer
-            const cloudGeometry = new THREE.SphereGeometry(1.01, 64, 64);
-            const cloudTexture = textureLoader.load('https://raw.githubusercontent.com/devam29/Resume2/main/earth-clouds.png');
-            const cloudMaterial = new THREE.MeshPhongMaterial({
-                map: cloudTexture,
-                transparent: true,
-                opacity: 0.4
-            });
-            const clouds = new THREE.Mesh(cloudGeometry, cloudMaterial);
-            scene.add(clouds);
-            
-            // Animation loop
-            const animate = () => {
-                requestAnimationFrame(animate);
-                earth.rotation.y += 0.0005;
-                clouds.rotation.y += 0.0007;
-                controls.update();
-                renderer.render(scene, camera);
-            };
-            
-            animate();
-            
-            // Handle window resize
-            window.addEventListener('resize', () => {
-                const width = container.clientWidth;
-                const height = container.clientHeight;
-                camera.aspect = width / height;
-                camera.updateProjectionMatrix();
-                renderer.setSize(width, height);
-            });
-        };
-        
-        // Initialize Earth when the section is in view
-        const earthObserver = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) {
-                initEarth();
-                earthObserver.disconnect();
-            }
-        }, { threshold: 0.1 });
-        
-        earthObserver.observe(document.getElementById('earth-container'));
-
-        // Satellite Tracker Animation
-        const animateSatelliteProgress = () => {
-            const progress = document.querySelector('.satellite-progress');
-            let width = 0;
-            const interval = setInterval(() => {
-                width += 1;
-                progress.style.width = `${width}%`;
-                if (width >= 100) {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        progress.style.width = '0%';
-                        animateSatelliteProgress();
-                    }, 1000);
-                }
-            }, 50);
-        };
-        
-        animateSatelliteProgress();
-
-        // Language Switcher
-        const languageBtns = document.querySelectorAll('.language-btn');
-        languageBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                languageBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                // In a real implementation, you would load translations here
-                console.log(`Switched to ${btn.dataset.lang} language`);
-            });
-        });
-
-        // PDF Export (simulated)
-        document.getElementById('pdf-export').addEventListener('click', () => {
-            const btn = document.getElementById('pdf-export');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Generating PDF...';
-            
-            setTimeout(() => {
-                btn.innerHTML = '<i class="fas fa-check mr-2"></i> PDF Ready!';
-                setTimeout(() => {
-                    btn.innerHTML = originalText;
-                }, 2000);
-                
-                // In a real implementation, you would generate and download the PDF here
-                console.log('PDF export functionality would be implemented here');
-            }, 2000);
-        });
     </script>
 </body>
 </html>
