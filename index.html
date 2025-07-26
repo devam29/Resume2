@@ -244,83 +244,33 @@
             position: relative;
         }
         
-        /* Field Explanation Section */
-        .field-explanation {
-            position: relative;
+        /* Accordion Styles */
+        .accordion-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .accordion-btn:hover {
+            background: rgba(44, 123, 229, 0.1);
+        }
+        
+        .accordion-btn.active i.fa-chevron-down {
+            transform: rotate(180deg);
+        }
+        
+        .accordion-content {
+            transition: all 0.3s ease-out;
+            max-height: 0;
             overflow: hidden;
         }
         
-        .field-card {
-            transition: all 0.5s ease;
-            perspective: 1000px;
-            height: 100%;
-            margin-bottom: 1.5rem;
-        }
-        
-        .field-card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transition: transform 0.8s;
-            transform-style: preserve-3d;
-        }
-        
-        .field-card:hover .field-card-inner {
-            transform: rotateY(180deg);
-        }
-        
-        .field-card-front, .field-card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            padding: 2rem;
-            border-radius: 0.5rem;
-        }
-        
-        .field-card-back {
-            transform: rotateY(180deg);
-        }
-        
-        .field-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: var(--satellite-gold);
-        }
-        
-        .field-btn {
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
-        
-        .field-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.4), transparent);
-            transition: 0.5s;
-        }
-        
-        .field-btn:hover::before {
-            left: 100%;
+        .accordion-content.open {
+            max-height: 500px;
         }
         
         /* Improved timeline layout */
         .timeline-content {
             display: flex;
             flex-direction: column;
-        }
-        
-        /* Flashcard grid layout */
-        .flashcards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 3rem;
         }
         
         /* Contact links styling */
@@ -409,10 +359,6 @@
             
             .field-explanation-content {
                 padding-bottom: 2rem;
-            }
-            
-            .flashcards-grid {
-                grid-template-columns: 1fr;
             }
             
             .contact-links {
@@ -592,106 +538,85 @@
                 WHAT IS GEOSPATIAL ENGINEERING?
             </h2>
             
-            <div class="text-center mb-12 max-w-3xl mx-auto">
-                <p class="text-xl mb-6">
-                    Not familiar with geospatial engineering? Here's a quick interactive introduction to my field of work!
-                </p>
-                <button id="explain-field-btn" class="field-btn px-6 py-3 bg-transparent border border-cyan-400 hover:bg-cyan-400 hover:bg-opacity-10 text-cyan-400 rounded-full transition-colors">
-                    <i class="fas fa-play mr-2"></i>
-                    Show Me What You Do!
-                </button>
-            </div>
-            
-            <div id="field-explanation-content" class="hidden">
-                <div class="flashcards-grid">
-                    <div class="field-card">
-                        <div class="field-card-inner">
-                            <div class="field-card-front card p-6 rounded-lg flex flex-col items-center text-center h-full">
-                                <div class="field-icon">
-                                    <i class="fas fa-satellite"></i>
-                                </div>
-                                <h3 class="text-xl font-bold mb-3">Satellite Data</h3>
-                                <p class="text-space-light opacity-90">
-                                    We use data from satellites orbiting Earth to monitor environmental changes.
-                                </p>
-                            </div>
-                            <div class="field-card-back card p-6 rounded-lg bg-space-blue bg-opacity-80 flex flex-col items-center justify-center text-center h-full">
-                                <p class="text-space-light opacity-90">
-                                    Like a doctor uses X-rays to see inside the body, we use satellite images to see Earth's health from space.
-                                </p>
-                            </div>
+            <div class="space-y-4 max-w-3xl mx-auto">
+                <!-- Item 1 -->
+                <div class="card overflow-hidden">
+                    <button class="accordion-btn w-full flex justify-between items-center p-6 text-left">
+                        <div class="flex items-center">
+                            <i class="fas fa-satellite text-2xl mr-4 text-satellite-gold"></i>
+                            <h3 class="text-xl font-bold">Satellite Data</h3>
                         </div>
-                    </div>
-                    
-                    <div class="field-card">
-                        <div class="field-card-inner">
-                            <div class="field-card-front card p-6 rounded-lg flex flex-col items-center text-center h-full">
-                                <div class="field-icon">
-                                    <i class="fas fa-map-marked-alt"></i>
-                                </div>
-                                <h3 class="text-xl font-bold mb-3">Mapping & Analysis</h3>
-                                <p class="text-space-light opacity-90">
-                                    We create intelligent maps that help understand complex environmental patterns.
-                                </p>
-                            </div>
-                            <div class="field-card-back card p-6 rounded-lg bg-space-blue bg-opacity-80 flex flex-col items-center justify-center text-center h-full">
-                                <p class="text-space-light opacity-90">
-                                    Think of Google Maps, but with superpowers to predict floods, track deforestation, and monitor climate change.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="field-card">
-                        <div class="field-card-inner">
-                            <div class="field-card-front card p-6 rounded-lg flex flex-col items-center text-center h-full">
-                                <div class="field-icon">
-                                    <i class="fas fa-robot"></i>
-                                </div>
-                                <h3 class="text-xl font-bold mb-3">AI Solutions</h3>
-                                <p class="text-space-light opacity-90">
-                                    We train computers to automatically detect environmental changes from satellite data.
-                                </p>
-                            </div>
-                            <div class="field-card-back card p-6 rounded-lg bg-space-blue bg-opacity-80 flex flex-col items-center justify-center text-center h-full">
-                                <p class="text-space-light opacity-90">
-                                    Similar to facial recognition, but for Earth's features - identifying floods, droughts, and urban growth patterns.
-                                </p>
-                            </div>
-                        </div>
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content px-6 pb-6">
+                        <p class="text-space-light opacity-90">
+                            Like a doctor uses X-rays to see inside the body, we use satellite images to see Earth's health from space. We process data from various satellite sensors (optical, radar, LiDAR) to monitor environmental changes, track deforestation, measure sea level rise, and detect urban expansion.
+                        </p>
                     </div>
                 </div>
                 
-                <div class="why-it-matters-container">
-                    <div class="card p-8 rounded-lg">
-                        <div class="timeline-content">
-                            <div class="md:pr-6">
-                                <h3 class="text-2xl font-bold mb-4 text-cyan-400">Why It Matters</h3>
-                                <p class="text-space-light opacity-90 mb-4">
-                                    Geospatial engineering helps solve some of the world's most pressing challenges:
+                <!-- Item 2 -->
+                <div class="card overflow-hidden">
+                    <button class="accordion-btn w-full flex justify-between items-center p-6 text-left">
+                        <div class="flex items-center">
+                            <i class="fas fa-map-marked-alt text-2xl mr-4 text-satellite-gold"></i>
+                            <h3 class="text-xl font-bold">Mapping & Analysis</h3>
+                        </div>
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content px-6 pb-6">
+                        <p class="text-space-light opacity-90">
+                            Think of Google Maps, but with superpowers to predict floods, track deforestation, and monitor climate change. We create intelligent maps that help understand complex environmental patterns, analyze spatial relationships, and make data-driven decisions for sustainable development.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Item 3 -->
+                <div class="card overflow-hidden">
+                    <button class="accordion-btn w-full flex justify-between items-center p-6 text-left">
+                        <div class="flex items-center">
+                            <i class="fas fa-robot text-2xl mr-4 text-satellite-gold"></i>
+                            <h3 class="text-xl font-bold">AI Solutions</h3>
+                        </div>
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content px-6 pb-6">
+                        <p class="text-space-light opacity-90">
+                            Similar to facial recognition, but for Earth's features - identifying floods, droughts, and urban growth patterns. We train computers to automatically detect environmental changes from satellite data using deep learning models like CNNs and transformers, enabling real-time monitoring at global scales.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="why-it-matters-container mt-12">
+                <div class="card p-8 rounded-lg">
+                    <div class="timeline-content">
+                        <div class="md:pr-6">
+                            <h3 class="text-2xl font-bold mb-4 text-cyan-400">Why It Matters</h3>
+                            <p class="text-space-light opacity-90 mb-4">
+                                Geospatial engineering helps solve some of the world's most pressing challenges:
+                            </p>
+                            <ul class="list-disc pl-5 space-y-2 text-space-light opacity-90">
+                                <li>Predicting natural disasters before they happen</li>
+                                <li>Monitoring climate change impacts in real-time</li>
+                                <li>Optimizing renewable energy deployment</li>
+                                <li>Protecting endangered ecosystems</li>
+                                <li>Improving urban planning for sustainable cities</li>
+                            </ul>
+                        </div>
+                        <div class="why-it-matters md:pl-6">
+                            <div class="bg-space-blue rounded-lg p-4 border border-cyan-400 border-opacity-30 h-full">
+                                <h4 class="text-lg font-semibold mb-3 text-satellite-gold">
+                                    <i class="fas fa-lightbulb mr-2"></i>
+                                    Real-World Example
+                                </h4>
+                                <p class="text-space-light opacity-90">
+                                    When a flood occurs, our systems can automatically detect the affected areas from satellite images within hours, helping emergency responders save lives and allocate resources efficiently.
                                 </p>
-                                <ul class="list-disc pl-5 space-y-2 text-space-light opacity-90">
-                                    <li>Predicting natural disasters before they happen</li>
-                                    <li>Monitoring climate change impacts in real-time</li>
-                                    <li>Optimizing renewable energy deployment</li>
-                                    <li>Protecting endangered ecosystems</li>
-                                    <li>Improving urban planning for sustainable cities</li>
-                                </ul>
-                            </div>
-                            <div class="why-it-matters md:pl-6">
-                                <div class="bg-space-blue rounded-lg p-4 border border-cyan-400 border-opacity-30 h-full">
-                                    <h4 class="text-lg font-semibold mb-3 text-satellite-gold">
-                                        <i class="fas fa-lightbulb mr-2"></i>
-                                        Real-World Example
-                                    </h4>
-                                    <p class="text-space-light opacity-90">
-                                        When a flood occurs, our systems can automatically detect the affected areas from satellite images within hours, helping emergency responders save lives and allocate resources efficiently.
-                                    </p>
-                                    <div class="mt-4 flex justify-center">
-                                        <div class="inline-flex items-center px-4 py-2 bg-cyan-600 bg-opacity-20 text-cyan-400 rounded-full border border-cyan-400">
-                                            <i class="fas fa-satellite-dish mr-2"></i>
-                                            That's what I work on!
-                                        </div>
+                                <div class="mt-4 flex justify-center">
+                                    <div class="inline-flex items-center px-4 py-2 bg-cyan-600 bg-opacity-20 text-cyan-400 rounded-full border border-cyan-400">
+                                        <i class="fas fa-satellite-dish mr-2"></i>
+                                        That's what I work on!
                                     </div>
                                 </div>
                             </div>
@@ -1685,20 +1610,23 @@
         
         earthObserver.observe(document.getElementById('earth-container'));
 
-        // Field Explanation Toggle
-        const explainBtn = document.getElementById('explain-field-btn');
-        const fieldContent = document.getElementById('field-explanation-content');
-        
-        explainBtn.addEventListener('click', () => {
-            fieldContent.classList.toggle('hidden');
-            explainBtn.innerHTML = fieldContent.classList.contains('hidden') ? 
-                '<i class="fas fa-play mr-2"></i> Show Me What You Do!' : 
-                '<i class="fas fa-times mr-2"></i> Hide Explanation';
-            
-            // Scroll to explanation if showing
-            if (!fieldContent.classList.contains('hidden')) {
-                fieldContent.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }
+        // Accordion functionality
+        document.querySelectorAll('.accordion-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const content = btn.nextElementSibling;
+                
+                // Close all other accordion items
+                document.querySelectorAll('.accordion-content').forEach(item => {
+                    if (item !== content) {
+                        item.classList.remove('open');
+                        item.previousElementSibling.classList.remove('active');
+                    }
+                });
+                
+                // Toggle current item
+                btn.classList.toggle('active');
+                content.classList.toggle('open');
+            });
         });
     </script>
 </body>
