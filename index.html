@@ -7,6 +7,28 @@
     <meta property="og:title" content="Dev Shree Saini | Geospatial Engineer & Climate Researcher">
     <meta property="og:description" content="Satellite data specialist developing climate solutions through geospatial technologies and machine learning">
     <meta property="og:image" content="https://raw.githubusercontent.com/devam29/Resume2/main/dsaini.jpg">
+    <meta name="keywords" content="Geomatics Engineering ETH Zurich, Geospatial Portfolio, Climate AI, Satellite Data, Earth Observation, Remote Sensing Projects, Flood Detection, Machine Learning">
+    
+    <!-- Schema.org markup for Google -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Dev Shree Saini",
+      "jobTitle": "Geospatial Engineer & Climate Researcher",
+      "url": "https://devshreesaini.com",
+      "sameAs": [
+        "https://www.linkedin.com/in/devshreesaini",
+        "https://github.com/devam29"
+      ],
+      "alumniOf": {
+        "@type": "EducationalOrganization",
+        "name": "ETH Zurich",
+        "url": "https://ethz.ch"
+      }
+    }
+    </script>
+    
     <title>Dev Shree Saini | Geospatial Portfolio</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><text x='0' y='20' font-size='20'>🛰️</text></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -279,6 +301,9 @@
         /* Accordion Styles */
         .accordion-btn {
             transition: all 0.3s ease;
+            padding: 1.5rem;
+            width: 100%;
+            text-align: left;
         }
         
         .accordion-btn:hover {
@@ -508,6 +533,38 @@
             50% { opacity: 0; }
         }
         
+        /* Visual aid for geospatial section */
+        .visual-aid {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(44, 123, 229, 0.3);
+        }
+        
+        /* Hire Me button style */
+        .hire-me-btn {
+            background: linear-gradient(135deg, var(--satellite-gold), #FFA500);
+            color: var(--space-dark);
+            font-weight: 600;
+        }
+        
+        .hire-me-btn:hover {
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            transform: translateY(-2px);
+        }
+        
+        /* Audience tagline */
+        .audience-tagline {
+            background: rgba(44, 123, 229, 0.1);
+            border-left: 3px solid var(--satellite-gold);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+        }
+        
         @media (min-width: 768px) {
             .timeline-content {
                 flex-direction: row;
@@ -519,6 +576,10 @@
             
             .why-it-matters {
                 margin-top: 0;
+            }
+            
+            .accordion-btn {
+                padding: 1.5rem;
             }
         }
 
@@ -580,6 +641,15 @@
             .why-it-matters-container {
                 margin-top: 2rem;
             }
+            
+            /* Larger tap targets for mobile */
+            .accordion-btn {
+                padding: 1.2rem;
+            }
+            
+            .view-project-btn, .close-modal {
+                padding: 0.8rem;
+            }
         }
     </style>
 </head>
@@ -627,7 +697,7 @@
             <button class="md:hidden text-white" id="menu-toggle">
                 <i class="fas fa-bars text-xl"></i>
             </button>
-            <ul class="hidden md:flex space-x-6 text-white">
+            <ul class="hidden md:flex space-x-6 text-white items-center">
                 <li><a href="#about" class="hover:text-cyan-400 transition-colors">About</a></li>
                 <li><a href="#education" class="hover:text-cyan-400 transition-colors">Education</a></li>
                 <li><a href="#experience" class="hover:text-cyan-400 transition-colors">Experience</a></li>
@@ -636,6 +706,13 @@
                 <li><a href="#publications" class="hover:text-cyan-400 transition-colors">Publications</a></li>
                 <li><a href="#achievements" class="hover:text-cyan-400 transition-colors">Achievements</a></li>
                 <li><a href="#connect" class="hover:text-cyan-400 transition-colors">Connect</a></li>
+                <li>
+                    <a href="#connect" 
+                       class="hire-me-btn px-4 py-2 rounded-full transition-all shadow-lg hover:shadow-yellow-500/20">
+                        <i class="fas fa-handshake mr-2"></i>
+                        Hire Me
+                    </a>
+                </li>
             </ul>
             <ul class="mobile-menu hidden" id="mobile-menu">
                 <li class="py-2"><a href="#about" class="block hover:text-cyan-400 transition-colors">About</a></li>
@@ -646,6 +723,13 @@
                 <li class="py-2"><a href="#publications" class="block hover:text-cyan-400 transition-colors">Publications</a></li>
                 <li class="py-2"><a href="#achievements" class="block hover:text-cyan-400 transition-colors">Achievements</a></li>
                 <li class="py-2"><a href="#connect" class="block hover:text-cyan-400 transition-colors">Connect</a></li>
+                <li class="py-2">
+                    <a href="#connect" 
+                       class="hire-me-btn block text-center px-4 py-2 rounded-full transition-all">
+                        <i class="fas fa-handshake mr-2"></i>
+                        Hire Me
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -662,7 +746,7 @@
                 </div>
             </div>
             
-            <h1 class="text-4xl md:text-5xl font-bold mb-4">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 hero-title">
                 <span class="text-space-light">DEV SHREE </span>
                 <span class="text-satellite-gold">SAINI</span>
             </h1>
@@ -691,10 +775,14 @@
                 <h3 class="text-lg font-semibold text-cyan-400 mb-2">Professional Branding Statement</h3>
                 <p class="text-space-light">
                     <i class="fas fa-quote-left text-satellite-gold mr-1"></i>
-                    Satellite data specialist developing climate resilience solutions through geospatial AI and Earth observation technologies. 
-                    Bridging the gap between environmental science and engineering with a passion for sustainable development.
+                    Combining environmental science with tech to build real-world climate solutions through geospatial AI and Earth observation.
                     <i class="fas fa-quote-right text-satellite-gold ml-1"></i>
                 </p>
+                
+                <div class="audience-tagline text-sm mt-4 text-left">
+                    <i class="fas fa-info-circle text-satellite-gold mr-2"></i>
+                    This portfolio is crafted for researchers, recruiters, and curious minds who want to explore how space tech meets climate challenges.
+                </div>
             </div>
         </div>
         
@@ -719,7 +807,7 @@
                         <div>
                             <h3 class="text-xl font-bold mb-2">Geospatial Vision</h3>
                             <p class="text-space-light opacity-90">
-                                Passionate graduate student specializing in climate science and environmental data analysis, with hands-on experience in satellite-based flood detection and LULC dynamics. Skilled in leveraging machine learning and geospatial technologies to address climate resilience and sustainability.
+                                Passionate graduate student specializing in climate science and environmental data analysis, with hands-on experience in satellite-based flood detection and land use dynamics. Skilled in leveraging machine learning and geospatial technologies to address climate resilience and sustainability.
                             </p>
                         </div>
                     </div>
@@ -790,6 +878,7 @@
                             <i class="fas fa-chevron-down transition-transform duration-300"></i>
                         </button>
                         <div class="accordion-content px-6 pb-6">
+                            <div class="visual-aid" style="background-image: url('https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcWJhZzV4Y3VwY2N2d2R2d3V0dWl1bHZ3d3R4dGJ5Z2R3eG5mY3B6eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7btPCcdNniyf0ArS/giphy.gif')"></div>
                             <p class="text-space-light opacity-90">
                                 Like a doctor uses X-rays to see inside the body, we use satellite images to see Earth's health from space. We process data from various satellite sensors (optical, radar, LiDAR) to monitor environmental changes, track deforestation, measure sea level rise, and detect urban expansion.
                             </p>
@@ -806,6 +895,7 @@
                             <i class="fas fa-chevron-down transition-transform duration-300"></i>
                         </button>
                         <div class="accordion-content px-6 pb-6">
+                            <div class="visual-aid" style="background-image: url('https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcWJhZzV4Y3VwY2N2d2R2d3V0dWl1bHZ3d3R4dGJ5Z2R3eG5mY3B6eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7btPCcdNniyf0ArS/giphy.gif')"></div>
                             <p class="text-space-light opacity-90">
                                 Think of Google Maps, but with superpowers to predict floods, track deforestation, and monitor climate change. We create intelligent maps that help understand complex environmental patterns, analyze spatial relationships, and make data-driven decisions for sustainable development.
                             </p>
@@ -822,6 +912,7 @@
                             <i class="fas fa-chevron-down transition-transform duration-300"></i>
                         </button>
                         <div class="accordion-content px-6 pb-6">
+                            <div class="visual-aid" style="background-image: url('https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcWJhZzV4Y3VwY2N2d2R2d3V0dWl1bHZ3d3R4dGJ5Z2R3eG5mY3B6eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7btPCcdNniyf0ArS/giphy.gif')"></div>
                             <p class="text-space-light opacity-90">
                                 Similar to facial recognition, but for Earth's features - identifying floods, droughts, and urban growth patterns. We train computers to automatically detect environmental changes from satellite data using deep learning models like CNNs and transformers, enabling real-time monitoring at global scales.
                             </p>
@@ -1292,6 +1383,11 @@
                             <p class="text-space-light opacity-90 mb-4">
                                 Presented research on filtration systems for mesotrophic lakes at environmental engineering conference.
                             </p>
+                            <a href="https://doi.org/10.1007/978-3-031-61515-3_22" target="_blank"
+                               class="inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors">
+                                <i class="fas fa-external-link-alt mr-2"></i>
+                                Read Paper
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -2028,6 +2124,9 @@
                 modalContent.innerHTML = content;
                 modal.style.display = 'block';
                 document.body.style.overflow = 'hidden';
+                
+                // Scroll to top of modal for better mobile experience
+                modal.scrollTo(0, 0);
             });
         });
 
@@ -2192,6 +2291,13 @@
                 // Toggle current item
                 btn.classList.toggle('active');
                 content.classList.toggle('open');
+                
+                // Scroll to the accordion for better mobile experience
+                if (content.classList.contains('open')) {
+                    setTimeout(() => {
+                        btn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }, 100);
+                }
             });
         });
     </script>
