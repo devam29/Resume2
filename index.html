@@ -35,59 +35,65 @@
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700&family=Space+Mono&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         :root {
-            --space-dark: #0B0D17;
-            --space-blue: #1E2A4A;
-            --space-light: #D0D6F9;
-            --earth-blue: #2C7BE5;
+            --space-dark: #0A0E17;
+            --space-blue: #0F3460;
+            --space-light: #E2E8F0;
+            --earth-blue: #00B4D8;
+            --accent-teal: #00B4D8;
             --satellite-gold: #FFD700;
             --neon-pink: #FF6EC7;
             --neon-green: #39FF14;
+            --card-bg: rgba(15, 52, 96, 0.3);
+            --professional-blue: #0F3460;
         }
         
         body {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: 'Inter', sans-serif;
             background-color: var(--space-dark);
             color: var(--space-light);
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(46, 87, 194, 0.15) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(220, 38, 38, 0.1) 0%, transparent 20%),
-                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="20" cy="20" r="1" fill="white" opacity="0.7"/><circle cx="50" cy="50" r="1" fill="white" opacity="0.5"/><circle cx="80" cy="30" r="1" fill="white" opacity="0.9"/><circle cx="30" cy="70" r="1" fill="white" opacity="0.6"/><circle cx="70" cy="80" r="1" fill="white" opacity="0.8"/></svg>');
+                radial-gradient(circle at 10% 20%, rgba(0, 180, 216, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 215, 0, 0.05) 0%, transparent 20%),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="20" cy="20" r="1" fill="white" opacity="0.3"/><circle cx="50" cy="50" r="1" fill="white" opacity="0.2"/><circle cx="80" cy="30" r="1" fill="white" opacity="0.4"/><circle cx="30" cy="70" r="1" fill="white" opacity="0.25"/><circle cx="70" cy="80" r="1" fill="white" opacity="0.35"/></svg>');
             scroll-behavior: smooth;
+            line-height: 1.6;
         }
         
         .navbar {
             transition: all 0.3s ease;
-            background: rgba(11, 13, 23, 0.9);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(44, 123, 229, 0.1);
+            background: rgba(10, 14, 23, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0, 180, 216, 0.2);
         }
         
         .navbar.scrolled {
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-            border-bottom: 1px solid rgba(44, 123, 229, 0.3);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+            border-bottom: 1px solid rgba(0, 180, 216, 0.4);
         }
         
         .card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            background: rgba(30, 42, 74, 0.6);
+            background: var(--card-bg);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(44, 123, 229, 0.3);
+            border: 1px solid rgba(0, 180, 216, 0.2);
+            border-radius: 12px;
         }
         
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(44, 123, 229, 0.3);
-            border-color: var(--satellite-gold);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 180, 216, 0.15);
+            border-color: var(--earth-blue);
         }
         
         .active-nav {
-            color: var(--satellite-gold);
+            color: var(--earth-blue);
             position: relative;
+            font-weight: 600;
         }
         
         .active-nav::after {
@@ -97,12 +103,12 @@
             left: 0;
             width: 100%;
             height: 2px;
-            background: var(--satellite-gold);
+            background: var(--earth-blue);
         }
         
         .mobile-menu {
             display: none;
-            background: rgba(11, 13, 23, 0.98);
+            background: rgba(10, 14, 23, 0.98);
         }
         
         .satellite-track {
@@ -150,18 +156,19 @@
             font-size: 3rem;
             margin-bottom: 1.5rem;
             animation: float 3s ease-in-out infinite;
-            color: var(--neon-pink);
-            text-shadow: 0 0 10px var(--neon-pink);
+            color: var(--earth-blue);
+            text-shadow: 0 0 10px var(--earth-blue);
         }
         
         .loader-text {
             font-size: 1.5rem;
-            background: linear-gradient(90deg, var(--neon-pink), var(--neon-green), var(--earth-blue));
+            background: linear-gradient(90deg, var(--earth-blue), var(--satellite-gold));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             animation: gradientShift 5s ease infinite;
             background-size: 200% 200%;
+            font-weight: 500;
         }
         
         @keyframes gradientShift {
@@ -180,37 +187,48 @@
         .section-heading {
             position: relative;
             display: inline-block;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
+            font-weight: 700;
+            font-size: 2.5rem;
         }
         
         .section-heading::after {
             content: '';
             position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 50%;
-            height: 3px;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
             background: linear-gradient(90deg, var(--earth-blue), var(--satellite-gold));
+            border-radius: 2px;
         }
         
         .earth-glow {
-            box-shadow: 0 0 30px rgba(44, 123, 229, 0.3);
+            box-shadow: 0 0 30px rgba(0, 180, 216, 0.4);
         }
         
         .skill-badge {
             display: inline-block;
-            background: rgba(44, 123, 229, 0.2);
+            background: rgba(0, 180, 216, 0.15);
             border: 1px solid var(--earth-blue);
-            border-radius: 9999px;
-            padding: 0.25rem 0.75rem;
-            font-size: 0.75rem;
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
             margin-right: 0.5rem;
             margin-bottom: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .skill-badge:hover {
+            background: rgba(0, 180, 216, 0.25);
+            transform: translateY(-2px);
         }
         
         #map {
             height: 400px;
-            border-radius: 0.75rem;
+            border-radius: 12px;
             border: 1px solid var(--earth-blue);
         }
         
@@ -218,12 +236,13 @@
             background: var(--space-blue);
             color: var(--space-light);
             border: 1px solid var(--earth-blue);
+            border-radius: 8px;
         }
         
         .timeline-item {
             position: relative;
             padding-left: 2rem;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
         }
         
         .timeline-item::before {
@@ -253,21 +272,21 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.9);
             z-index: 1000;
             overflow-y: auto;
         }
         
         .modal-content {
-            background: var(--space-blue);
-            margin: 5% auto;
-            padding: 2rem;
-            border-radius: 0.5rem;
-            max-width: 800px;
+            background: var(--professional-blue);
+            margin: 2% auto;
+            padding: 2.5rem;
+            border-radius: 16px;
+            max-width: 900px;
             position: relative;
             animation: modalFadeIn 0.3s ease-out;
-            border: 1px solid var(--satellite-gold);
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+            border: 1px solid var(--earth-blue);
+            box-shadow: 0 0 50px rgba(0, 180, 216, 0.3);
         }
         
         @keyframes modalFadeIn {
@@ -277,23 +296,31 @@
         
         .close-modal {
             position: absolute;
-            top: 1rem;
-            right: 1rem;
+            top: 1.5rem;
+            right: 1.5rem;
             font-size: 1.5rem;
             cursor: pointer;
             color: var(--satellite-gold);
             transition: transform 0.3s ease;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .close-modal:hover {
             transform: rotate(90deg);
+            background: rgba(0, 0, 0, 0.5);
         }
         
         /* 3D Earth Container */
         #earth-container {
             width: 100%;
             height: 400px;
-            border-radius: 0.75rem;
+            border-radius: 12px;
             overflow: hidden;
             position: relative;
         }
@@ -304,10 +331,11 @@
             padding: 1.5rem;
             width: 100%;
             text-align: left;
+            border-radius: 8px;
         }
         
         .accordion-btn:hover {
-            background: rgba(44, 123, 229, 0.1);
+            background: rgba(0, 180, 216, 0.1);
         }
         
         .accordion-btn.active i.fa-chevron-down {
@@ -342,17 +370,18 @@
         .contact-link {
             display: flex;
             align-items: center;
-            padding: 0.75rem 1.5rem;
-            background: rgba(44, 123, 229, 0.2);
+            padding: 1rem 2rem;
+            background: rgba(0, 180, 216, 0.15);
             border: 1px solid var(--earth-blue);
-            border-radius: 9999px;
+            border-radius: 50px;
             transition: all 0.3s ease;
+            font-weight: 500;
         }
         
         .contact-link:hover {
-            background: rgba(44, 123, 229, 0.4);
+            background: rgba(0, 180, 216, 0.3);
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(44, 123, 229, 0.2);
+            box-shadow: 0 10px 25px rgba(0, 180, 216, 0.2);
         }
         
         /* Why it matters section */
@@ -367,11 +396,12 @@
             border: 1px solid var(--earth-blue);
             transition: all 0.3s ease;
             cursor: pointer;
+            border-radius: 16px;
         }
         
         .geospatial-explorer:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(44, 123, 229, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 180, 216, 0.2);
             border-color: var(--satellite-gold);
         }
         
@@ -382,7 +412,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(44, 123, 229, 0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(0, 180, 216, 0.1), transparent);
             transition: all 0.6s ease;
         }
         
@@ -395,6 +425,7 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            border-radius: 12px;
         }
         
         .achievement-card::after {
@@ -402,7 +433,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 3px;
+            width: 4px;
             height: 100%;
             background: var(--satellite-gold);
             transition: all 0.3s ease;
@@ -417,35 +448,39 @@
         .hobby-item {
             transition: all 0.3s ease;
             transform-style: preserve-3d;
+            border-radius: 12px;
         }
         
         .hobby-item:hover {
-            transform: translateY(-5px) rotateX(5deg);
-            box-shadow: 0 10px 25px rgba(44, 123, 229, 0.2);
+            transform: translateY(-8px) rotateX(5deg);
+            box-shadow: 0 15px 35px rgba(0, 180, 216, 0.15);
         }
         
         /* Language Meter */
         .language-meter {
-            height: 6px;
-            background: rgba(44, 123, 229, 0.2);
-            border-radius: 3px;
+            height: 8px;
+            background: rgba(0, 180, 216, 0.2);
+            border-radius: 4px;
             overflow: hidden;
+            margin-top: 0.5rem;
         }
         
         .language-meter-fill {
             height: 100%;
             background: linear-gradient(90deg, var(--earth-blue), var(--satellite-gold));
-            border-radius: 3px;
+            border-radius: 4px;
+            transition: width 1s ease-in-out;
         }
         
         /* Blog Card */
         .blog-card {
             transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border-radius: 12px;
         }
         
         .blog-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.1);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
         
         /* New Space Elements */
@@ -460,7 +495,7 @@
             position: absolute;
             width: 150px;
             height: 2px;
-            background: linear-gradient(90deg, rgba(255,255,255,0), var(--neon-pink));
+            background: linear-gradient(90deg, rgba(255,255,255,0), var(--earth-blue));
             transform-origin: left center;
             pointer-events: none;
             filter: blur(1px);
@@ -469,7 +504,7 @@
         .constellation-line {
             position: absolute;
             height: 1px;
-            background: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1);
             transform-origin: left center;
             pointer-events: none;
         }
@@ -483,16 +518,16 @@
         .floating-astronaut {
             position: absolute;
             animation: floatAstronaut 6s ease-in-out infinite;
-            opacity: 0.7;
+            opacity: 0.5;
             z-index: -1;
         }
         
         /* Terminal window effect */
         .terminal-window {
-            background: rgba(0, 0, 0, 0.7);
-            border: 1px solid var(--neon-green);
-            border-radius: 5px;
-            padding: 1rem;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--earth-blue);
+            border-radius: 8px;
+            padding: 1.5rem;
             font-family: 'Space Mono', monospace;
             position: relative;
             overflow: hidden;
@@ -504,25 +539,26 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 30px;
-            background: rgba(0, 0, 0, 0.3);
-            border-bottom: 1px solid var(--neon-green);
+            height: 35px;
+            background: rgba(0, 0, 0, 0.4);
+            border-bottom: 1px solid var(--earth-blue);
         }
         
         .terminal-window::after {
             content: 'terminal';
             position: absolute;
-            top: 5px;
-            left: 10px;
-            color: var(--neon-green);
+            top: 8px;
+            left: 15px;
+            color: var(--earth-blue);
             font-size: 0.8rem;
+            font-weight: 600;
         }
         
         .terminal-cursor {
             display: inline-block;
             width: 10px;
             height: 20px;
-            background: var(--neon-green);
+            background: var(--earth-blue);
             animation: blink 1s step-end infinite;
             vertical-align: middle;
             margin-left: 2px;
@@ -539,9 +575,9 @@
             height: 200px;
             background-size: cover;
             background-position: center;
-            border-radius: 0.5rem;
+            border-radius: 8px;
             margin-bottom: 1rem;
-            border: 1px solid rgba(44, 123, 229, 0.3);
+            border: 1px solid rgba(0, 180, 216, 0.3);
         }
         
         /* Hire Me button style */
@@ -549,20 +585,131 @@
             background: linear-gradient(135deg, var(--satellite-gold), #FFA500);
             color: var(--space-dark);
             font-weight: 600;
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            transition: all 0.3s ease;
         }
         
         .hire-me-btn:hover {
             background: linear-gradient(135deg, #FFD700, #FF8C00);
             transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
         }
         
         /* Audience tagline */
         .audience-tagline {
-            background: rgba(44, 123, 229, 0.1);
-            border-left: 3px solid var(--satellite-gold);
-            padding: 1rem;
-            margin: 1.5rem 0;
+            background: rgba(0, 180, 216, 0.1);
+            border-left: 4px solid var(--satellite-gold);
+            padding: 1.25rem;
+            margin: 2rem 0;
             font-style: italic;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        /* Language Switcher */
+        .language-switcher {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .lang-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .lang-btn.active {
+            background: var(--earth-blue);
+            color: var(--space-dark);
+            border-color: var(--earth-blue);
+        }
+        
+        .lang-btn:not(.active) {
+            background: transparent;
+            color: var(--space-light);
+            border-color: rgba(226, 232, 240, 0.3);
+        }
+        
+        .lang-btn:not(.active):hover {
+            border-color: var(--earth-blue);
+            color: var(--earth-blue);
+        }
+        
+        /* Professional Summary */
+        .executive-summary {
+            background: linear-gradient(135deg, var(--professional-blue), var(--space-dark));
+            border-radius: 16px;
+            padding: 3rem;
+            margin: 2rem 0;
+        }
+        
+        /* Skill Proficiency */
+        .skill-proficiency {
+            margin-bottom: 1.5rem;
+        }
+        
+        .skill-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .skill-name {
+            font-weight: 600;
+            color: var(--space-light);
+        }
+        
+        .skill-level {
+            font-size: 0.8rem;
+            color: var(--earth-blue);
+            font-weight: 500;
+        }
+        
+        /* Enhanced Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, var(--space-light), var(--earth-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            color: var(--space-light);
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            color: var(--space-light);
+        }
+        
+        p {
+            color: #CBD5E0;
+            line-height: 1.7;
+        }
+        
+        .text-lead {
+            font-size: 1.25rem;
+            color: #E2E8F0;
+            font-weight: 300;
+        }
+        
+        /* Enhanced spacing */
+        .section-spacing {
+            padding-top: 6rem;
+            padding-bottom: 6rem;
         }
         
         @media (min-width: 768px) {
@@ -580,6 +727,10 @@
             
             .accordion-btn {
                 padding: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 4rem;
             }
         }
 
@@ -606,8 +757,9 @@
             }
             
             .modal-content {
-                width: 90%;
-                margin: 10% auto;
+                width: 95%;
+                margin: 5% auto;
+                padding: 1.5rem;
             }
             
             .field-card {
@@ -642,6 +794,14 @@
                 margin-top: 2rem;
             }
             
+            .section-heading {
+                font-size: 2rem;
+            }
+            
+            .executive-summary {
+                padding: 2rem 1rem;
+            }
+            
             /* Larger tap targets for mobile */
             .accordion-btn {
                 padding: 1.2rem;
@@ -649,6 +809,11 @@
             
             .view-project-btn, .close-modal {
                 padding: 0.8rem;
+            }
+            
+            .language-switcher {
+                flex-wrap: wrap;
+                justify-content: center;
             }
         }
     </style>
@@ -691,43 +856,56 @@
     <nav class="navbar fixed top-0 w-full z-50 py-4">
         <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
             <div class="flex items-center space-x-2">
-                <i class="fas fa-satellite text-cyan-400"></i>
-                <h1 class="text-xl font-bold tracking-tight">DEV SHREE SAINI</h1>
+                <i class="fas fa-satellite text-earth-blue"></i>
+                <h1 class="text-xl font-bold tracking-tight text-space-light">DEV SHREE SAINI</h1>
             </div>
-            <button class="md:hidden text-white" id="menu-toggle">
-                <i class="fas fa-bars text-xl"></i>
-            </button>
-            <ul class="hidden md:flex space-x-6 text-white items-center">
-                <li><a href="#about" class="hover:text-cyan-400 transition-colors">About</a></li>
-                <li><a href="#education" class="hover:text-cyan-400 transition-colors">Education</a></li>
-                <li><a href="#experience" class="hover:text-cyan-400 transition-colors">Experience</a></li>
-                <li><a href="#skills" class="hover:text-cyan-400 transition-colors">Skills</a></li>
-                <li><a href="#projects" class="hover:text-cyan-400 transition-colors">Projects</a></li>
-                <li><a href="#publications" class="hover:text-cyan-400 transition-colors">Publications</a></li>
-                <li><a href="#achievements" class="hover:text-cyan-400 transition-colors">Achievements</a></li>
-                <li><a href="#connect" class="hover:text-cyan-400 transition-colors">Connect</a></li>
-                <li>
-                    <a href="#connect" 
-                       class="hire-me-btn px-4 py-2 rounded-full transition-all shadow-lg hover:shadow-yellow-500/20">
-                        <i class="fas fa-handshake mr-2"></i>
-                        Hire Me
-                    </a>
-                </li>
-            </ul>
+            
+            <div class="flex items-center space-x-4">
+                <!-- Language Switcher -->
+                <div class="language-switcher mr-4">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="fr">FR</button>
+                    <button class="lang-btn" data-lang="de">DE</button>
+                    <button class="lang-btn" data-lang="hi">HI</button>
+                </div>
+                
+                <button class="md:hidden text-white" id="menu-toggle">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+                
+                <ul class="hidden md:flex space-x-6 text-white items-center">
+                    <li><a href="#about" class="hover:text-earth-blue transition-colors">About</a></li>
+                    <li><a href="#education" class="hover:text-earth-blue transition-colors">Education</a></li>
+                    <li><a href="#experience" class="hover:text-earth-blue transition-colors">Experience</a></li>
+                    <li><a href="#skills" class="hover:text-earth-blue transition-colors">Skills</a></li>
+                    <li><a href="#projects" class="hover:text-earth-blue transition-colors">Projects</a></li>
+                    <li><a href="#publications" class="hover:text-earth-blue transition-colors">Publications</a></li>
+                    <li><a href="#achievements" class="hover:text-earth-blue transition-colors">Achievements</a></li>
+                    <li><a href="#connect" class="hover:text-earth-blue transition-colors">Connect</a></li>
+                    <li>
+                        <a href="#connect" 
+                           class="hire-me-btn px-4 py-2 transition-all shadow-lg hover:shadow-yellow-500/20">
+                            <i class="fas fa-handshake mr-2"></i>
+                            <span data-translate="hire_me">Hire Me</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
             <ul class="mobile-menu hidden" id="mobile-menu">
-                <li class="py-2"><a href="#about" class="block hover:text-cyan-400 transition-colors">About</a></li>
-                <li class="py-2"><a href="#education" class="block hover:text-cyan-400 transition-colors">Education</a></li>
-                <li class="py-2"><a href="#experience" class="block hover:text-cyan-400 transition-colors">Experience</a></li>
-                <li class="py-2"><a href="#skills" class="block hover:text-cyan-400 transition-colors">Skills</a></li>
-                <li class="py-2"><a href="#projects" class="block hover:text-cyan-400 transition-colors">Projects</a></li>
-                <li class="py-2"><a href="#publications" class="block hover:text-cyan-400 transition-colors">Publications</a></li>
-                <li class="py-2"><a href="#achievements" class="block hover:text-cyan-400 transition-colors">Achievements</a></li>
-                <li class="py-2"><a href="#connect" class="block hover:text-cyan-400 transition-colors">Connect</a></li>
+                <li class="py-2"><a href="#about" class="block hover:text-earth-blue transition-colors">About</a></li>
+                <li class="py-2"><a href="#education" class="block hover:text-earth-blue transition-colors">Education</a></li>
+                <li class="py-2"><a href="#experience" class="block hover:text-earth-blue transition-colors">Experience</a></li>
+                <li class="py-2"><a href="#skills" class="block hover:text-earth-blue transition-colors">Skills</a></li>
+                <li class="py-2"><a href="#projects" class="block hover:text-earth-blue transition-colors">Projects</a></li>
+                <li class="py-2"><a href="#publications" class="block hover:text-earth-blue transition-colors">Publications</a></li>
+                <li class="py-2"><a href="#achievements" class="block hover:text-earth-blue transition-colors">Achievements</a></li>
+                <li class="py-2"><a href="#connect" class="block hover:text-earth-blue transition-colors">Connect</a></li>
                 <li class="py-2">
                     <a href="#connect" 
-                       class="hire-me-btn block text-center px-4 py-2 rounded-full transition-all">
+                       class="hire-me-btn block text-center px-4 py-2 transition-all">
                         <i class="fas fa-handshake mr-2"></i>
-                        Hire Me
+                        <span data-translate="hire_me">Hire Me</span>
                     </a>
                 </li>
             </ul>
@@ -735,51 +913,74 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="hero" class="min-h-screen flex items-center justify-center text-center pt-24 md:pt-16 px-4 relative overflow-hidden">
+    <section id="hero" class="min-h-screen flex items-center justify-center text-center pt-24 md:pt-16 px-4 relative overflow-hidden section-spacing">
         <div class="max-w-4xl mx-auto relative z-10">
             <div class="relative inline-block mb-8">
                 <img src="https://raw.githubusercontent.com/devam29/Resume2/main/dsaini.jpg" 
-                     class="w-40 h-40 rounded-full border-4 border-cyan-400 earth-glow object-cover" 
+                     class="w-40 h-40 rounded-full border-4 border-earth-blue earth-glow object-cover" 
                      alt="Dev Shree Saini">
                 <div class="absolute -bottom-2 -right-2 bg-space-blue rounded-full p-2 border border-space-light">
                     <i class="fas fa-satellite text-satellite-gold"></i>
                 </div>
             </div>
             
-            <h1 class="text-4xl md:text-5xl font-bold mb-4 hero-title">
-                <span class="text-space-light">DEV SHREE </span>
-                <span class="text-satellite-gold">SAINI</span>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 hero-title" data-translate="hero_title">
+                <span>DEV SHREE SAINI</span>
             </h1>
             
-            <p class="text-xl text-gray-300 mb-6 font-mono">Geospatial Engineer | Climate Researcher | ETH Zurich</p>
+            <p class="text-xl text-gray-300 mb-6 font-mono" data-translate="hero_subtitle">Geospatial Engineer | Climate Researcher | ETH Zurich</p>
             
             <div class="inline-flex items-center space-x-2 bg-space-blue bg-opacity-50 px-4 py-2 rounded-full mb-6 border border-space-light border-opacity-20">
                 <i class="fas fa-map-marker-alt text-satellite-gold"></i>
-                <span>Zurich, Switzerland</span>
+                <span data-translate="hero_location">Zurich, Switzerland</span>
             </div>
             
             <div class="flex flex-wrap justify-center gap-4 mt-6">
                 <a href="https://raw.githubusercontent.com/devam29/Resume/main/CV_DevShreeSaini.pdf" 
-                   class="inline-flex items-center px-6 py-3 bg-cyan-600 hover:bg-cyan-700 text-white rounded-full transition-colors shadow-lg hover:shadow-cyan-500/20">
+                   class="inline-flex items-center px-6 py-3 bg-earth-blue hover:bg-cyan-700 text-white rounded-full transition-colors shadow-lg hover:shadow-cyan-500/20 font-semibold">
                     <i class="fas fa-file-download mr-2"></i>
-                    Download Resume
+                    <span data-translate="download_resume">Download Resume</span>
                 </a>
                 <a href="#connect" 
-                   class="inline-flex items-center px-6 py-3 bg-transparent border border-cyan-400 hover:bg-cyan-400 hover:bg-opacity-10 text-cyan-400 rounded-full transition-colors hover:shadow-cyan-500/10">
+                   class="inline-flex items-center px-6 py-3 bg-transparent border border-earth-blue hover:bg-earth-blue hover:bg-opacity-10 text-earth-blue rounded-full transition-colors hover:shadow-cyan-500/10 font-semibold">
                     <i class="fas fa-paper-plane mr-2"></i>
-                    Contact Me
+                    <span data-translate="contact_me">Contact Me</span>
                 </a>
             </div>
             
-            <div class="mt-8 max-w-2xl mx-auto bg-space-blue bg-opacity-50 p-6 rounded-lg border border-cyan-400 border-opacity-30">
-                <h3 class="text-lg font-semibold text-cyan-400 mb-2">Professional Branding Statement</h3>
-                <p class="text-space-light">
+            <!-- Professional Summary Section -->
+            <div class="executive-summary mt-12">
+                <h2 class="text-2xl font-bold mb-6 text-center text-space-light">Geospatial Engineering Specialist</h2>
+                <p class="text-lead text-center mb-6">
+                    Master's candidate at ETH Zurich leveraging satellite data and machine learning 
+                    to develop climate resilience solutions. 3+ years experience in flood detection, 
+                    hydrological modeling, and environmental monitoring through remote sensing technologies.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-earth-blue mb-2">3+</div>
+                        <div class="text-sm text-space-light">Years Experience</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-satellite-gold mb-2">10+</div>
+                        <div class="text-sm text-space-light">Projects Completed</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-earth-blue mb-2">5</div>
+                        <div class="text-sm text-space-light">Research Publications</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 max-w-2xl mx-auto bg-space-blue bg-opacity-50 p-6 rounded-lg border border-earth-blue border-opacity-30">
+                <h3 class="text-lg font-semibold text-earth-blue mb-2" data-translate="professional_branding">Professional Branding Statement</h3>
+                <p class="text-space-light" data-translate="branding_text">
                     <i class="fas fa-quote-left text-satellite-gold mr-1"></i>
                     Combining environmental science with tech to build real-world climate solutions through geospatial AI and Earth observation.
                     <i class="fas fa-quote-right text-satellite-gold ml-1"></i>
                 </p>
                 
-                <div class="audience-tagline text-sm mt-4 text-left">
+                <div class="audience-tagline text-sm mt-4 text-left" data-translate="audience_note">
                     <i class="fas fa-info-circle text-satellite-gold mr-2"></i>
                     This portfolio is crafted for researchers, recruiters, and curious minds who want to explore how space tech meets climate challenges.
                 </div>
@@ -791,22 +992,22 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-20 px-4 satellite-track">
+    <section id="about" class="section-spacing px-4 satellite-track">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold mb-12 text-center text-cyan-400 section-heading">
+            <h2 class="section-heading text-center text-earth-blue" data-translate="about_me">
                 <i class="fas fa-user-astronaut mr-2"></i>
                 ABOUT ME
             </h2>
             
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div class="card p-8 rounded-lg">
+                <div class="card p-8">
                     <div class="flex items-start mb-6">
-                        <div class="bg-cyan-600 p-3 rounded-full mr-4">
+                        <div class="bg-earth-blue p-3 rounded-full mr-4">
                             <i class="fas fa-satellite-dish text-white"></i>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold mb-2">Geospatial Vision</h3>
-                            <p class="text-space-light opacity-90">
+                            <h3 class="text-xl font-bold mb-2 text-space-light" data-translate="geospatial_vision">Geospatial Vision</h3>
+                            <p class="text-space-light opacity-90" data-translate="geospatial_vision_text">
                                 Passionate graduate student specializing in climate science and environmental data analysis, with hands-on experience in satellite-based flood detection and land use dynamics. Skilled in leveraging machine learning and geospatial technologies to address climate resilience and sustainability.
                             </p>
                         </div>
@@ -817,22 +1018,22 @@
                             <i class="fas fa-bullseye"></i>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold mb-2">Career Objective</h3>
-                            <p class="text-space-light opacity-90">
+                            <h3 class="text-xl font-bold mb-2 text-space-light" data-translate="career_objective">Career Objective</h3>
+                            <p class="text-space-light opacity-90" data-translate="career_objective_text">
                                 To apply my expertise in geospatial analysis and remote sensing to develop innovative solutions for climate change adaptation and disaster risk reduction, while contributing to interdisciplinary research at the intersection of technology and environmental science.
                             </p>
                         </div>
                     </div>
                 </div>
                 
-                <div class="card p-8 rounded-lg">
+                <div class="card p-8">
                     <div class="flex items-start mb-6">
                         <div class="bg-satellite-gold p-3 rounded-full mr-4 text-space-dark">
                             <i class="fas fa-globe-americas"></i>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold mb-2">Research Focus</h3>
-                            <p class="text-space-light opacity-90">
+                            <h3 class="text-xl font-bold mb-2 text-space-light" data-translate="research_focus">Research Focus</h3>
+                            <p class="text-space-light opacity-90" data-translate="research_focus_text">
                                 Currently pursuing my Master's in Geomatics Engineering at ETH Zurich, I'm driven by research that informs practical, tech-enabled climate solutions. My work spans from GNSS-based precipitation prediction to flood risk modeling using advanced geospatial tools and satellite data.
                             </p>
                         </div>
@@ -848,21 +1049,21 @@
     </section>
 
     <!-- Field Explanation Section -->
-    <section id="field-explanation" class="py-20 px-4 bg-space-blue bg-opacity-30">
+    <section id="field-explanation" class="section-spacing px-4 bg-space-blue bg-opacity-30">
         <div class="max-w-7xl mx-auto text-center">
-            <div class="geospatial-explorer card p-8 rounded-lg max-w-2xl mx-auto cursor-pointer" id="geospatial-explorer-btn">
+            <div class="geospatial-explorer card p-8 max-w-2xl mx-auto cursor-pointer" id="geospatial-explorer-btn">
                 <div class="flex flex-col items-center">
                     <i class="fas fa-question-circle text-4xl mb-4 text-satellite-gold"></i>
-                    <h3 class="text-2xl font-bold mb-2">Not familiar with Geospatial Engineering?</h3>
-                    <p class="text-space-light opacity-90 mb-4">Click here to explore what this exciting field is all about!</p>
+                    <h3 class="text-2xl font-bold mb-2 text-space-light" data-translate="geospatial_explorer_title">Not familiar with Geospatial Engineering?</h3>
+                    <p class="text-space-light opacity-90 mb-4" data-translate="geospatial_explorer_subtitle">Click here to explore what this exciting field is all about!</p>
                     <div class="animate-bounce mt-4">
-                        <i class="fas fa-chevron-down text-xl text-cyan-400"></i>
+                        <i class="fas fa-chevron-down text-xl text-earth-blue"></i>
                     </div>
                 </div>
             </div>
             
             <div class="hidden" id="field-explanation-content">
-                <h2 class="text-3xl font-bold mb-12 text-center text-cyan-400 section-heading mt-12">
+                <h2 class="section-heading text-center text-earth-blue mt-12" data-translate="what_is_geospatial">
                     <i class="fas fa-satellite mr-2"></i>
                     WHAT IS GEOSPATIAL ENGINEERING?
                 </h2>
@@ -873,13 +1074,13 @@
                         <button class="accordion-btn w-full flex justify-between items-center p-6 text-left">
                             <div class="flex items-center">
                                 <i class="fas fa-satellite text-2xl mr-4 text-satellite-gold"></i>
-                                <h3 class="text-xl font-bold">Satellite Data</h3>
+                                <h3 class="text-xl font-bold text-space-light" data-translate="satellite_data">Satellite Data</h3>
                             </div>
-                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                            <i class="fas fa-chevron-down transition-transform duration-300 text-earth-blue"></i>
                         </button>
                         <div class="accordion-content px-6 pb-6">
                             <div class="visual-aid" style="background-image: url('https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcWJhZzV4Y3VwY2N2d2R2d3V0dWl1bHZ3d3R4dGJ5Z2R3eG5mY3B6eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7btPCcdNniyf0ArS/giphy.gif')"></div>
-                            <p class="text-space-light opacity-90">
+                            <p class="text-space-light opacity-90" data-translate="satellite_data_text">
                                 Like a doctor uses X-rays to see inside the body, we use satellite images to see Earth's health from space. We process data from various satellite sensors (optical, radar, LiDAR) to monitor environmental changes, track deforestation, measure sea level rise, and detect urban expansion.
                             </p>
                         </div>
@@ -890,13 +1091,13 @@
                         <button class="accordion-btn w-full flex justify-between items-center p-6 text-left">
                             <div class="flex items-center">
                                 <i class="fas fa-map-marked-alt text-2xl mr-4 text-satellite-gold"></i>
-                                <h3 class="text-xl font-bold">Mapping & Analysis</h3>
+                                <h3 class="text-xl font-bold text-space-light" data-translate="mapping_analysis">Mapping & Analysis</h3>
                             </div>
-                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                            <i class="fas fa-chevron-down transition-transform duration-300 text-earth-blue"></i>
                         </button>
                         <div class="accordion-content px-6 pb-6">
                             <div class="visual-aid" style="background-image: url('https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcWJhZzV4Y3VwY2N2d2R2d3V0dWl1bHZ3d3R4dGJ5Z2R3eG5mY3B6eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7btPCcdNniyf0ArS/giphy.gif')"></div>
-                            <p class="text-space-light opacity-90">
+                            <p class="text-space-light opacity-90" data-translate="mapping_analysis_text">
                                 Think of Google Maps, but with superpowers to predict floods, track deforestation, and monitor climate change. We create intelligent maps that help understand complex environmental patterns, analyze spatial relationships, and make data-driven decisions for sustainable development.
                             </p>
                         </div>
@@ -907,13 +1108,13 @@
                         <button class="accordion-btn w-full flex justify-between items-center p-6 text-left">
                             <div class="flex items-center">
                                 <i class="fas fa-robot text-2xl mr-4 text-satellite-gold"></i>
-                                <h3 class="text-xl font-bold">AI Solutions</h3>
+                                <h3 class="text-xl font-bold text-space-light" data-translate="ai_solutions">AI Solutions</h3>
                             </div>
-                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                            <i class="fas fa-chevron-down transition-transform duration-300 text-earth-blue"></i>
                         </button>
                         <div class="accordion-content px-6 pb-6">
                             <div class="visual-aid" style="background-image: url('https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcWJhZzV4Y3VwY2N2d2R2d3V0dWl1bHZ3d3R4dGJ5Z2R3eG5mY3B6eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7btPCcdNniyf0ArS/giphy.gif')"></div>
-                            <p class="text-space-light opacity-90">
+                            <p class="text-space-light opacity-90" data-translate="ai_solutions_text">
                                 Similar to facial recognition, but for Earth's features - identifying floods, droughts, and urban growth patterns. We train computers to automatically detect environmental changes from satellite data using deep learning models like CNNs and transformers, enabling real-time monitoring at global scales.
                             </p>
                         </div>
@@ -921,34 +1122,34 @@
                 </div>
                 
                 <div class="why-it-matters-container mt-12">
-                    <div class="card p-8 rounded-lg">
+                    <div class="card p-8">
                         <div class="timeline-content">
                             <div class="md:pr-6">
-                                <h3 class="text-2xl font-bold mb-4 text-cyan-400">Why It Matters</h3>
-                                <p class="text-space-light opacity-90 mb-4">
+                                <h3 class="text-2xl font-bold mb-4 text-earth-blue" data-translate="why_it_matters">Why It Matters</h3>
+                                <p class="text-space-light opacity-90 mb-4" data-translate="why_it_matters_text">
                                     Geospatial engineering helps solve some of the world's most pressing challenges:
                                 </p>
                                 <ul class="list-disc pl-5 space-y-2 text-space-light opacity-90">
-                                    <li>Predicting natural disasters before they happen</li>
-                                    <li>Monitoring climate change impacts in real-time</li>
-                                    <li>Optimizing renewable energy deployment</li>
-                                    <li>Protecting endangered ecosystems</li>
-                                    <li>Improving urban planning for sustainable cities</li>
+                                    <li data-translate="disaster_prediction">Predicting natural disasters before they happen</li>
+                                    <li data-translate="climate_monitoring">Monitoring climate change impacts in real-time</li>
+                                    <li data-translate="energy_optimization">Optimizing renewable energy deployment</li>
+                                    <li data-translate="ecosystem_protection">Protecting endangered ecosystems</li>
+                                    <li data-translate="urban_planning">Improving urban planning for sustainable cities</li>
                                 </ul>
                             </div>
                             <div class="why-it-matters md:pl-6">
-                                <div class="bg-space-blue rounded-lg p-4 border border-cyan-400 border-opacity-30 h-full">
+                                <div class="bg-space-blue rounded-lg p-4 border border-earth-blue border-opacity-30 h-full">
                                     <h4 class="text-lg font-semibold mb-3 text-satellite-gold">
                                         <i class="fas fa-lightbulb mr-2"></i>
-                                        Real-World Example
+                                        <span data-translate="real_world_example">Real-World Example</span>
                                     </h4>
-                                    <p class="text-space-light opacity-90">
+                                    <p class="text-space-light opacity-90" data-translate="real_world_text">
                                         When a flood occurs, our systems can automatically detect the affected areas from satellite images within hours, helping emergency responders save lives and allocate resources efficiently.
                                     </p>
                                     <div class="mt-4 flex justify-center">
-                                        <div class="inline-flex items-center px-4 py-2 bg-cyan-600 bg-opacity-20 text-cyan-400 rounded-full border border-cyan-400">
+                                        <div class="inline-flex items-center px-4 py-2 bg-earth-blue bg-opacity-20 text-earth-blue rounded-full border border-earth-blue">
                                             <i class="fas fa-satellite-dish mr-2"></i>
-                                            That's what I work on!
+                                            <span data-translate="what_i_work_on">That's what I work on!</span>
                                         </div>
                                     </div>
                                 </div>
@@ -961,37 +1162,37 @@
     </section>
 
     <!-- Education Section -->
-    <section id="education" class="py-20 px-4 satellite-track">
+    <section id="education" class="section-spacing px-4 satellite-track">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold mb-12 text-center text-cyan-400 section-heading">
+            <h2 class="section-heading text-center text-earth-blue" data-translate="education">
                 <i class="fas fa-graduation-cap mr-2"></i>
                 EDUCATION
             </h2>
             
             <div class="space-y-8">
                 <div class="timeline-item">
-                    <div class="card p-8 rounded-lg">
+                    <div class="card p-8">
                         <div class="flex flex-col md:flex-row md:items-center mb-6">
                             <div class="flex items-center mb-4 md:mb-0 md:w-1/3">
                                 <img src="https://raw.githubusercontent.com/devam29/Resume2/main/eth.png" 
                                      alt="ETH Zurich Logo" 
                                      class="h-12 mr-4">
                                 <div>
-                                    <h3 class="text-xl font-bold">ETH Zurich</h3>
-                                    <p class="text-sm text-gray-400">MSc in Geomatics Engineering</p>
+                                    <h3 class="text-xl font-bold text-space-light" data-translate="eth_zurich">ETH Zurich</h3>
+                                    <p class="text-sm text-gray-400" data-translate="msc_geomatics">MSc in Geomatics Engineering</p>
                                 </div>
                             </div>
                             <div class="md:w-2/3">
                                 <div class="flex items-center text-sm mb-4">
                                     <i class="fas fa-map-marker-alt mr-2 text-satellite-gold"></i>
-                                    <span>Zurich, Switzerland</span>
+                                    <span data-translate="eth_location">Zurich, Switzerland</span>
                                     <i class="fas fa-calendar-alt ml-4 mr-2 text-satellite-gold"></i>
-                                    <span>2023 – Present</span>
+                                    <span data-translate="eth_duration">2023 – Present</span>
                                 </div>
                                 <ul class="list-disc pl-5 space-y-2 text-space-light opacity-90">
-                                    <li>Specialization in Remote Sensing and Climate Science</li>
-                                    <li>Semester Project: "GNSS-ZWD based Precipitation Prediction using Machine Learning"</li>
-                                    <li>Coursework: Space Geodesy, Cartography, Environment Monitoring, Photogrammetry</li>
+                                    <li data-translate="eth_specialization">Specialization in Remote Sensing and Climate Science</li>
+                                    <li data-translate="eth_project">Semester Project: "GNSS-ZWD based Precipitation Prediction using Machine Learning"</li>
+                                    <li data-translate="eth_coursework">Coursework: Space Geodesy, Cartography, Environment Monitoring, Photogrammetry</li>
                                 </ul>
                                 <div class="flex flex-wrap mt-4">
                                     <span class="skill-badge">Remote Sensing</span>
@@ -1004,28 +1205,28 @@
                 </div>
                 
                 <div class="timeline-item">
-                    <div class="card p-8 rounded-lg">
+                    <div class="card p-8">
                         <div class="flex flex-col md:flex-row md:items-center mb-6">
                             <div class="flex items-center mb-4 md:mb-0 md:w-1/3">
                                 <img src="https://raw.githubusercontent.com/devam29/Resume2/main/vit.png" 
                                      alt="VIT Logo" 
                                      class="h-12 mr-4">
                                 <div>
-                                    <h3 class="text-xl font-bold">VIT University</h3>
-                                    <p class="text-sm text-gray-400">BTech in Civil Engineering</p>
+                                    <h3 class="text-xl font-bold text-space-light" data-translate="vit_university">VIT University</h3>
+                                    <p class="text-sm text-gray-400" data-translate="btech_civil">BTech in Civil Engineering</p>
                                 </div>
                             </div>
                             <div class="md:w-2/3">
                                 <div class="flex items-center text-sm mb-4">
                                     <i class="fas fa-map-marker-alt mr-2 text-satellite-gold"></i>
-                                    <span>Vellore, India</span>
+                                    <span data-translate="vit_location">Vellore, India</span>
                                     <i class="fas fa-calendar-alt ml-4 mr-2 text-satellite-gold"></i>
-                                    <span>2019 – 2023</span>
+                                    <span data-translate="vit_duration">2019 – 2023</span>
                                 </div>
                                 <ul class="list-disc pl-5 space-y-2 text-space-light opacity-90">
-                                    <li>Specialized in Geospatial Technology and Water Resources</li>
-                                    <li>Thesis: "Flood Risk Assessment using SWAT Model and Remote Sensing"</li>
-                                    <li>CGPA: 9.33/10.0, 2nd rank in department out of 150 students</li>
+                                    <li data-translate="vit_specialization">Specialized in Geospatial Technology and Water Resources</li>
+                                    <li data-translate="vit_thesis">Thesis: "Flood Risk Assessment using SWAT Model and Remote Sensing"</li>
+                                    <li data-translate="vit_achievement">CGPA: 9.33/10.0, 2nd rank in department out of 150 students</li>
                                 </ul>
                                 <div class="flex flex-wrap mt-4">
                                     <span class="skill-badge">GIS</span>
@@ -1041,37 +1242,37 @@
     </section>
 
     <!-- Experience Section -->
-    <section id="experience" class="py-20 px-4 bg-space-blue bg-opacity-30 satellite-track">
+    <section id="experience" class="section-spacing px-4 bg-space-blue bg-opacity-30 satellite-track">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold mb-12 text-center text-cyan-400 section-heading">
+            <h2 class="section-heading text-center text-earth-blue" data-translate="experience">
                 <i class="fas fa-briefcase mr-2"></i>
                 PROFESSIONAL EXPERIENCE
             </h2>
             
             <div class="space-y-8">
                 <div class="timeline-item">
-                    <div class="card p-8 rounded-lg">
+                    <div class="card p-8">
                         <div class="flex flex-col md:flex-row md:items-center mb-6">
                             <div class="flex items-center mb-4 md:mb-0 md:w-1/3">
                                 <img src="https://raw.githubusercontent.com/devam29/Resume2/main/iirs.png" 
                                      alt="ISRO Logo" 
                                      class="h-12 mr-4">
                                 <div>
-                                    <h3 class="text-xl font-bold">Spatial Data Analyst Intern</h3>
-                                    <p class="text-sm text-gray-400">IIRS, ISRO</p>
+                                    <h3 class="text-xl font-bold text-space-light" data-translate="spatial_analyst">Spatial Data Analyst Intern</h3>
+                                    <p class="text-sm text-gray-400" data-translate="isro">IIRS, ISRO</p>
                                 </div>
                             </div>
                             <div class="md:w-2/3">
                                 <div class="flex items-center text-sm mb-4">
                                     <i class="fas fa-map-marker-alt mr-2 text-satellite-gold"></i>
-                                    <span>Dehradun, India</span>
+                                    <span data-translate="dehradun_location">Dehradun, India</span>
                                     <i class="fas fa-calendar-alt ml-4 mr-2 text-satellite-gold"></i>
-                                    <span>Jan 2023 – Dec 2023</span>
+                                    <span data-translate="isro_duration">Jan 2023 – Dec 2023</span>
                                 </div>
                                 <ul class="list-disc pl-5 space-y-2 text-space-light opacity-90">
-                                    <li>Developed a U-Net model for flood detection using Sentinel-1 SAR data, achieving 92% accuracy</li>
-                                    <li>Processed and analyzed satellite imagery for disaster management applications</li>
-                                    <li>Implemented automated pipelines for large-scale geospatial data processing</li>
+                                    <li data-translate="isro_task1">Developed a U-Net model for flood detection using Sentinel-1 SAR data, achieving 92% accuracy</li>
+                                    <li data-translate="isro_task2">Processed and analyzed satellite imagery for disaster management applications</li>
+                                    <li data-translate="isro_task3">Implemented automated pipelines for large-scale geospatial data processing</li>
                                 </ul>
                                 <div class="flex flex-wrap mt-4">
                                     <span class="skill-badge">Deep Learning</span>
@@ -1085,28 +1286,28 @@
                 </div>
                 
                 <div class="timeline-item">
-                    <div class="card p-8 rounded-lg">
+                    <div class="card p-8">
                         <div class="flex flex-col md:flex-row md:items-center mb-6">
                             <div class="flex items-center mb-4 md:mb-0 md:w-1/3">
                                 <img src="https://raw.githubusercontent.com/devam29/Resume2/main/concordia.jpg" 
                                      alt="Concordia Logo" 
                                      class="h-12 mr-4">
                                 <div>
-                                    <h3 class="text-xl font-bold">Research Intern</h3>
-                                    <p class="text-sm text-gray-400">Concordia University</p>
+                                    <h3 class="text-xl font-bold text-space-light" data-translate="research_intern">Research Intern</h3>
+                                    <p class="text-sm text-gray-400" data-translate="concordia">Concordia University</p>
                                 </div>
                             </div>
                             <div class="md:w-2/3">
                                 <div class="flex items-center text-sm mb-4">
                                     <i class="fas fa-map-marker-alt mr-2 text-satellite-gold"></i>
-                                    <span>Montreal, Canada</span>
+                                    <span data-translate="montreal_location">Montreal, Canada</span>
                                     <i class="fas fa-calendar-alt ml-4 mr-2 text-satellite-gold"></i>
-                                    <span>June 2022 – Aug 2022</span>
+                                    <span data-translate="concordia_duration">June 2022 – Aug 2022</span>
                                 </div>
                                 <ul class="list-disc pl-5 space-y-2 text-space-light opacity-90">
-                                    <li>Designed a geotextile filtration system, reducing lake water nutrients by 50%</li>
-                                    <li>Conducted water quality analysis using remote sensing data</li>
-                                    <li>Presented findings at international environmental engineering conference</li>
+                                    <li data-translate="concordia_task1">Designed a geotextile filtration system, reducing lake water nutrients by 50%</li>
+                                    <li data-translate="concordia_task2">Conducted water quality analysis using remote sensing data</li>
+                                    <li data-translate="concordia_task3">Presented findings at international environmental engineering conference</li>
                                 </ul>
                                 <div class="flex flex-wrap mt-4">
                                     <span class="skill-badge">Water Quality</span>
@@ -1119,28 +1320,28 @@
                 </div>
                 
                 <div class="timeline-item">
-                    <div class="card p-8 rounded-lg">
+                    <div class="card p-8">
                         <div class="flex flex-col md:flex-row md:items-center mb-6">
                             <div class="flex items-center mb-4 md:mb-0 md:w-1/3">
                                 <img src="https://raw.githubusercontent.com/devam29/Resume2/main/vit.png" 
                                      alt="VIT Logo" 
                                      class="h-12 mr-4">
                                 <div>
-                                    <h3 class="text-xl font-bold">Teaching Assistant</h3>
-                                    <p class="text-sm text-gray-400">VIT Vellore</p>
+                                    <h3 class="text-xl font-bold text-space-light" data-translate="teaching_assistant">Teaching Assistant</h3>
+                                    <p class="text-sm text-gray-400" data-translate="vit">VIT Vellore</p>
                                 </div>
                             </div>
                             <div class="md:w-2/3">
                                 <div class="flex items-center text-sm mb-4">
                                     <i class="fas fa-map-marker-alt mr-2 text-satellite-gold"></i>
-                                    <span>Vellore, India</span>
+                                    <span data-translate="vit_location">Vellore, India</span>
                                     <i class="fas fa-calendar-alt ml-4 mr-2 text-satellite-gold"></i>
-                                    <span>Sept 2021 – Jan 2023</span>
+                                    <span data-translate="vit_ta_duration">Sept 2021 – Jan 2023</span>
                                 </div>
                                 <ul class="list-disc pl-5 space-y-2 text-space-light opacity-90">
-                                    <li>Mentored ~40 students in GIS tasks like LULC classification and flood mapping</li>
-                                    <li>Developed course materials for geospatial analysis using open-source tools</li>
-                                    <li>Conducted workshops on satellite data processing and applications</li>
+                                    <li data-translate="ta_task1">Mentored ~40 students in GIS tasks like LULC classification and flood mapping</li>
+                                    <li data-translate="ta_task2">Developed course materials for geospatial analysis using open-source tools</li>
+                                    <li data-translate="ta_task3">Conducted workshops on satellite data processing and applications</li>
                                 </ul>
                                 <div class="flex flex-wrap mt-4">
                                     <span class="skill-badge">Teaching</span>
@@ -1156,62 +1357,105 @@
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="py-20 px-4 satellite-track">
+    <section id="skills" class="section-spacing px-4 satellite-track">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold mb-12 text-center text-cyan-400 section-heading">
+            <h2 class="section-heading text-center text-earth-blue" data-translate="skills">
                 <i class="fas fa-satellite-dish mr-2"></i>
                 TECHNICAL SKILLS
             </h2>
             
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
-                <div class="card p-6 rounded-lg flex flex-col items-center text-center">
-                    <i class="fas fa-code text-3xl mb-3 text-cyan-400"></i>
-                    <h3 class="text-lg font-semibold">Programming</h3>
-                    <p class="text-sm text-gray-400 mt-1">Python, MATLAB, R, JavaScript</p>
+                <div class="card p-6 flex flex-col items-center text-center">
+                    <i class="fas fa-code text-3xl mb-3 text-earth-blue"></i>
+                    <h3 class="text-lg font-semibold text-space-light" data-translate="programming">Programming</h3>
+                    <p class="text-sm text-gray-400 mt-1" data-translate="programming_skills">Python, MATLAB, R, JavaScript</p>
                 </div>
-                <div class="card p-6 rounded-lg flex flex-col items-center text-center">
-                    <i class="fas fa-satellite text-3xl mb-3 text-cyan-400"></i>
-                    <h3 class="text-lg font-semibold">Remote Sensing</h3>
-                    <p class="text-sm text-gray-400 mt-1">SAR, Lidar, Hyperspectral, Multispectral</p>
+                <div class="card p-6 flex flex-col items-center text-center">
+                    <i class="fas fa-satellite text-3xl mb-3 text-earth-blue"></i>
+                    <h3 class="text-lg font-semibold text-space-light" data-translate="remote_sensing">Remote Sensing</h3>
+                    <p class="text-sm text-gray-400 mt-1" data-translate="remote_sensing_skills">SAR, Lidar, Hyperspectral, Multispectral</p>
                 </div>
-                <div class="card p-6 rounded-lg flex flex-col items-center text-center">
-                    <i class="fas fa-map-marked-alt text-3xl mb-3 text-cyan-400"></i>
-                    <h3 class="text-lg font-semibold">GIS</h3>
-                    <p class="text-sm text-gray-400 mt-1">QGIS, ArcGIS, PostGIS, GeoServer</p>
+                <div class="card p-6 flex flex-col items-center text-center">
+                    <i class="fas fa-map-marked-alt text-3xl mb-3 text-earth-blue"></i>
+                    <h3 class="text-lg font-semibold text-space-light" data-translate="gis">GIS</h3>
+                    <p class="text-sm text-gray-400 mt-1" data-translate="gis_skills">QGIS, ArcGIS, PostGIS, GeoServer</p>
                 </div>
-                <div class="card p-6 rounded-lg flex flex-col items-center text-center">
-                    <i class="fas fa-robot text-3xl mb-3 text-cyan-400"></i>
-                    <h3 class="text-lg font-semibold">Machine Learning</h3>
-                    <p class="text-sm text-gray-400 mt-1">PyTorch, TensorFlow, Scikit-learn</p>
+                <div class="card p-6 flex flex-col items-center text-center">
+                    <i class="fas fa-robot text-3xl mb-3 text-earth-blue"></i>
+                    <h3 class="text-lg font-semibold text-space-light" data-translate="machine_learning">Machine Learning</h3>
+                    <p class="text-sm text-gray-400 mt-1" data-translate="ml_skills">PyTorch, TensorFlow, Scikit-learn</p>
                 </div>
-                <div class="card p-6 rounded-lg flex flex-col items-center text-center">
-                    <i class="fas fa-water text-3xl mb-3 text-cyan-400"></i>
-                    <h3 class="text-lg font-semibold">Hydrology</h3>
-                    <p class="text-sm text-gray-400 mt-1">HEC-RAS, SWAT, MODFLOW</p>
+                <div class="card p-6 flex flex-col items-center text-center">
+                    <i class="fas fa-water text-3xl mb-3 text-earth-blue"></i>
+                    <h3 class="text-lg font-semibold text-space-light" data-translate="hydrology">Hydrology</h3>
+                    <p class="text-sm text-gray-400 mt-1" data-translate="hydrology_skills">HEC-RAS, SWAT, MODFLOW</p>
                 </div>
-                <div class="card p-6 rounded-lg flex flex-col items-center text-center">
-                    <i class="fas fa-chart-network text-3xl mb-3 text-cyan-400"></i>
-                    <h3 class="text-lg font-semibold">Data Analysis</h3>
-                    <p class="text-sm text-gray-400 mt-1">Pandas, GeoPandas, Rasterio</p>
+                <div class="card p-6 flex flex-col items-center text-center">
+                    <i class="fas fa-chart-network text-3xl mb-3 text-earth-blue"></i>
+                    <h3 class="text-lg font-semibold text-space-light" data-translate="data_analysis">Data Analysis</h3>
+                    <p class="text-sm text-gray-400 mt-1" data-translate="data_analysis_skills">Pandas, GeoPandas, Rasterio</p>
                 </div>
-                <div class="card p-6 rounded-lg flex flex-col items-center text-center">
-                    <i class="fas fa-database text-3xl mb-3 text-cyan-400"></i>
-                    <h3 class="text-lg font-semibold">Spatial Databases</h3>
-                    <p class="text-sm text-gray-400 mt-1">PostgreSQL, MongoDB, Google Earth Engine</p>
+                <div class="card p-6 flex flex-col items-center text-center">
+                    <i class="fas fa-database text-3xl mb-3 text-earth-blue"></i>
+                    <h3 class="text-lg font-semibold text-space-light" data-translate="spatial_databases">Spatial Databases</h3>
+                    <p class="text-sm text-gray-400 mt-1" data-translate="database_skills">PostgreSQL, MongoDB, Google Earth Engine</p>
                 </div>
-                <div class="card p-6 rounded-lg flex flex-col items-center text-center">
-                    <i class="fas fa-cloud text-3xl mb-3 text-cyan-400"></i>
-                    <h3 class="text-lg font-semibold">Cloud Computing</h3>
-                    <p class="text-sm text-gray-400 mt-1">AWS, Google Cloud, Docker</p>
+                <div class="card p-6 flex flex-col items-center text-center">
+                    <i class="fas fa-cloud text-3xl mb-3 text-earth-blue"></i>
+                    <h3 class="text-lg font-semibold text-space-light" data-translate="cloud_computing">Cloud Computing</h3>
+                    <p class="text-sm text-gray-400 mt-1" data-translate="cloud_skills">AWS, Google Cloud, Docker</p>
+                </div>
+            </div>
+
+            <!-- Skill Proficiency Section -->
+            <div class="card p-8 mt-8">
+                <h3 class="text-2xl font-bold mb-6 text-earth-blue text-center">Skill Proficiency</h3>
+                <div class="space-y-6">
+                    <div class="skill-proficiency">
+                        <div class="skill-header">
+                            <span class="skill-name">Python & Machine Learning</span>
+                            <span class="skill-level">Advanced</span>
+                        </div>
+                        <div class="language-meter">
+                            <div class="language-meter-fill" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-proficiency">
+                        <div class="skill-header">
+                            <span class="skill-name">Remote Sensing & GIS</span>
+                            <span class="skill-level">Advanced</span>
+                        </div>
+                        <div class="language-meter">
+                            <div class="language-meter-fill" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-proficiency">
+                        <div class="skill-header">
+                            <span class="skill-name">Hydrological Modeling</span>
+                            <span class="skill-level">Proficient</span>
+                        </div>
+                        <div class="language-meter">
+                            <div class="language-meter-fill" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-proficiency">
+                        <div class="skill-header">
+                            <span class="skill-name">Cloud Computing</span>
+                            <span class="skill-level">Intermediate</span>
+                        </div>
+                        <div class="language-meter">
+                            <div class="language-meter-fill" style="width: 70%"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="py-20 px-4 bg-space-blue bg-opacity-30 satellite-track">
+    <section id="projects" class="section-spacing px-4 bg-space-blue bg-opacity-30 satellite-track">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold mb-12 text-center text-cyan-400 section-heading">
+            <h2 class="section-heading text-center text-earth-blue" data-translate="projects">
                 <i class="fas fa-project-diagram mr-2"></i>
                 RESEARCH PROJECTS
             </h2>
@@ -1225,18 +1469,18 @@
                              alt="GNSS Project">
                         <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
                         <div class="absolute bottom-4 left-4">
-                            <span class="bg-cyan-600 text-white text-xs px-2 py-1 rounded">Machine Learning</span>
+                            <span class="bg-earth-blue text-white text-xs px-2 py-1 rounded">Machine Learning</span>
                         </div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">GNSS Precipitation Prediction</h3>
-                        <p class="text-sm text-gray-400 mb-3">ETH Zurich • 2024</p>
-                        <p class="text-space-light opacity-90 mb-4">
+                        <h3 class="text-xl font-bold mb-2 text-space-light" data-translate="gnss_project">GNSS Precipitation Prediction</h3>
+                        <p class="text-sm text-gray-400 mb-3" data-translate="gnss_subtitle">ETH Zurich • 2024</p>
+                        <p class="text-space-light opacity-90 mb-4" data-translate="gnss_description">
                             Machine learning model for rainfall prediction using GNSS signal delay and ERA5 datasets with satellite-derived atmospheric data.
                         </p>
-                        <button class="view-project-btn inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors">
+                        <button class="view-project-btn inline-flex items-center text-earth-blue hover:text-cyan-300 transition-colors font-semibold">
                             <i class="fas fa-search mr-2"></i>
-                            View Details
+                            <span data-translate="view_details">View Details</span>
                         </button>
                     </div>
                 </div>
@@ -1249,18 +1493,18 @@
                              alt="Flood Project">
                         <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
                         <div class="absolute bottom-4 left-4">
-                            <span class="bg-cyan-600 text-white text-xs px-2 py-1 rounded">Hydrology</span>
+                            <span class="bg-earth-blue text-white text-xs px-2 py-1 rounded">Hydrology</span>
                         </div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Flood Risk Assessment</h3>
-                        <p class="text-sm text-gray-400 mb-3">Dhansiri River Basin, India</p>
-                        <p class="text-space-light opacity-90 mb-4">
+                        <h3 class="text-xl font-bold mb-2 text-space-light" data-translate="flood_project">Flood Risk Assessment</h3>
+                        <p class="text-sm text-gray-400 mb-3" data-translate="flood_subtitle">Dhansiri River Basin, India</p>
+                        <p class="text-space-light opacity-90 mb-4" data-translate="flood_description">
                             SWAT model with NSE: 0.84 and R²: 0.90 for flood risk analysis using satellite imagery and hydrological modeling.
                         </p>
-                        <button class="view-project-btn inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors">
+                        <button class="view-project-btn inline-flex items-center text-earth-blue hover:text-cyan-300 transition-colors font-semibold">
                             <i class="fas fa-search mr-2"></i>
-                            View Details
+                            <span data-translate="view_details">View Details</span>
                         </button>
                     </div>
                 </div>
@@ -1273,18 +1517,18 @@
                              alt="Groundwater Project">
                         <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
                         <div class="absolute bottom-4 left-4">
-                            <span class="bg-cyan-600 text-white text-xs px-2 py-1 rounded">GIS Analysis</span>
+                            <span class="bg-earth-blue text-white text-xs px-2 py-1 rounded">GIS Analysis</span>
                         </div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Groundwater Sustainability</h3>
-                        <p class="text-sm text-gray-400 mb-3">Ahmedabad, India</p>
-                        <p class="text-space-light opacity-90 mb-4">
+                        <h3 class="text-xl font-bold mb-2 text-space-light" data-translate="groundwater_project">Groundwater Sustainability</h3>
+                        <p class="text-sm text-gray-400 mb-3" data-translate="groundwater_subtitle">Ahmedabad, India</p>
+                        <p class="text-space-light opacity-90 mb-4" data-translate="groundwater_description">
                             AHP analysis using satellite data and GIS to identify 89% medium to high potential groundwater zones.
                         </p>
-                        <button class="view-project-btn inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors">
+                        <button class="view-project-btn inline-flex items-center text-earth-blue hover:text-cyan-300 transition-colors font-semibold">
                             <i class="fas fa-search mr-2"></i>
-                            View Details
+                            <span data-translate="view_details">View Details</span>
                         </button>
                     </div>
                 </div>
@@ -1303,90 +1547,90 @@
     </div>
 
     <!-- Publications Section -->
-    <section id="publications" class="py-20 px-4 satellite-track">
+    <section id="publications" class="section-spacing px-4 satellite-track">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold mb-12 text-center text-cyan-400 section-heading">
+            <h2 class="section-heading text-center text-earth-blue" data-translate="publications">
                 <i class="fas fa-book mr-2"></i>
                 RESEARCH PUBLICATIONS
             </h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="card p-8 rounded-lg">
+                <div class="card p-8">
                     <div class="flex items-start mb-4">
-                        <div class="bg-cyan-600 p-3 rounded-full mr-4">
+                        <div class="bg-earth-blue p-3 rounded-full mr-4">
                             <i class="fas fa-file-alt text-white"></i>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold mb-2">Impact of Short-Duration Precipitation</h3>
-                            <p class="text-sm text-gray-400 mb-3">Scientific Reports, Nature • 2023</p>
-                            <p class="text-space-light opacity-90 mb-4">
+                            <h3 class="text-xl font-bold mb-2 text-space-light" data-translate="impact_precipitation">Impact of Short-Duration Precipitation</h3>
+                            <p class="text-sm text-gray-400 mb-3" data-translate="scientific_reports">Scientific Reports, Nature • 2023</p>
+                            <p class="text-space-light opacity-90 mb-4" data-translate="precipitation_abstract">
                                 Analyzed precipitation impacts on water resources in the Cauvery Basin using satellite data and hydrological models.
                             </p>
                             <a href="https://doi.org/10.1038/s41598-023-41417-6" target="_blank"
-                               class="inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors">
+                               class="inline-flex items-center text-earth-blue hover:text-cyan-300 transition-colors font-semibold">
                                 <i class="fas fa-external-link-alt mr-2"></i>
-                                Read Paper
+                                <span data-translate="read_paper">Read Paper</span>
                             </a>
                         </div>
                     </div>
                 </div>
                 
-                <div class="card p-8 rounded-lg">
+                <div class="card p-8">
                     <div class="flex items-start mb-4">
                         <div class="bg-satellite-gold p-3 rounded-full mr-4 text-space-dark">
                             <i class="fas fa-file-alt"></i>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold mb-2">HEC-RAS with GIS</h3>
-                            <p class="text-sm text-gray-400 mb-3">Journal of the Geological Society of India • 2024</p>
-                            <p class="text-space-light opacity-90 mb-4">
+                            <h3 class="text-xl font-bold mb-2 text-space-light" data-translate="hec_ras">HEC-RAS with GIS</h3>
+                            <p class="text-sm text-gray-400 mb-3" data-translate="geological_journal">Journal of the Geological Society of India • 2024</p>
+                            <p class="text-space-light opacity-90 mb-4" data-translate="hec_ras_abstract">
                                 Studied river cross-section width for flood detection using HEC-RAS and GIS with satellite-derived DEMs.
                             </p>
                             <a href="https://doi.org/10.17491/jgsi/2024/173843" target="_blank"
-                               class="inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors">
+                               class="inline-flex items-center text-earth-blue hover:text-cyan-300 transition-colors font-semibold">
                                 <i class="fas fa-external-link-alt mr-2"></i>
-                                Read Paper
+                                <span data-translate="read_paper">Read Paper</span>
                             </a>
                         </div>
                     </div>
                 </div>
                 
-                <div class="card p-8 rounded-lg">
+                <div class="card p-8">
                     <div class="flex items-start mb-4">
-                        <div class="bg-cyan-600 p-3 rounded-full mr-4">
+                        <div class="bg-earth-blue p-3 rounded-full mr-4">
                             <i class="fas fa-file-alt text-white"></i>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold mb-2">Chilika Lake LULC Dynamics</h3>
-                            <p class="text-sm text-gray-400 mb-3">Estuaries and Coasts • 2025</p>
-                            <p class="text-space-light opacity-90 mb-4">
+                            <h3 class="text-xl font-bold mb-2 text-space-light" data-translate="chilika_lake">Chilika Lake LULC Dynamics</h3>
+                            <p class="text-sm text-gray-400 mb-3" data-translate="estuaries_journal">Estuaries and Coasts • 2025</p>
+                            <p class="text-space-light opacity-90 mb-4" data-translate="chilika_abstract">
                                 Investigated LULC impacts on Chilika Lake's ecosystem services using multi-temporal satellite imagery.
                             </p>
                             <a href="https://doi.org/10.1007/s12237-025-01509-0" target="_blank"
-                               class="inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors">
+                               class="inline-flex items-center text-earth-blue hover:text-cyan-300 transition-colors font-semibold">
                                 <i class="fas fa-external-link-alt mr-2"></i>
-                                Read Paper
+                                <span data-translate="read_paper">Read Paper</span>
                             </a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Updated Conference Paper -->
-                <div class="card p-8 rounded-lg">
+                <div class="card p-8">
                     <div class="flex items-start mb-4">
                         <div class="bg-satellite-gold p-3 rounded-full mr-4 text-space-dark">
                             <i class="fas fa-file-alt"></i>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold mb-2">Wetland Discharge Water Filtration</h3>
-                            <p class="text-sm text-gray-400 mb-3">Concordia University • 2022</p>
-                            <p class="text-space-light opacity-90 mb-4">
+                            <h3 class="text-xl font-bold mb-2 text-space-light" data-translate="wetland_discharge">Wetland Discharge Water Filtration</h3>
+                            <p class="text-sm text-gray-400 mb-3" data-translate="concordia_conf">Concordia University • 2022</p>
+                            <p class="text-space-light opacity-90 mb-4" data-translate="wetland_abstract">
                                 Presented research on filtration systems for mesotrophic lakes at environmental engineering conference.
                             </p>
                             <a href="https://doi.org/10.1007/978-3-031-61515-3_22" target="_blank"
-                               class="inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors">
+                               class="inline-flex items-center text-earth-blue hover:text-cyan-300 transition-colors font-semibold">
                                 <i class="fas fa-external-link-alt mr-2"></i>
-                                Read Paper
+                                <span data-translate="read_paper">Read Paper</span>
                             </a>
                         </div>
                     </div>
@@ -1396,108 +1640,108 @@
     </section>
 
     <!-- Achievements Section -->
-    <section id="achievements" class="py-20 px-4 bg-space-blue bg-opacity-30 satellite-track">
+    <section id="achievements" class="section-spacing px-4 bg-space-blue bg-opacity-30 satellite-track">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold mb-12 text-center text-cyan-400 section-heading">
+            <h2 class="section-heading text-center text-earth-blue" data-translate="achievements">
                 <i class="fas fa-trophy mr-2"></i>
                 ACHIEVEMENTS
             </h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Achievement 1 -->
-                <div class="achievement-card card p-8 rounded-lg">
+                <div class="achievement-card card p-8">
                     <div class="flex items-start">
                         <div class="bg-satellite-gold p-3 rounded-full mr-4 text-space-dark">
                             <i class="fas fa-medal"></i>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold mb-2">MITACS Globalink Research Scholar</h3>
-                            <p class="text-sm text-gray-400 mb-3">2022</p>
-                            <p class="text-space-light opacity-90 mb-4">
+                            <h3 class="text-xl font-bold mb-2 text-space-light" data-translate="mitacs_scholar">MITACS Globalink Research Scholar</h3>
+                            <p class="text-sm text-gray-400 mb-3" data-translate="mitacs_year">2022</p>
+                            <p class="text-space-light opacity-90 mb-4" data-translate="mitacs_description">
                                 Awarded prestigious MITACS scholarship for international research internship at Concordia University, Canada, selected among top candidates nationwide.
                             </p>
                             <a href="https://drive.google.com/file/d/1QwDwROCIen6ByBGZaBxa2HMLi5a6QlAM/view" target="_blank"
-                               class="inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors">
+                               class="inline-flex items-center text-earth-blue hover:text-cyan-300 transition-colors font-semibold">
                                 <i class="fas fa-external-link-alt mr-2"></i>
-                                View Certificate
+                                <span data-translate="view_certificate">View Certificate</span>
                             </a>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Achievement 2 -->
-                <div class="achievement-card card p-8 rounded-lg">
+                <div class="achievement-card card p-8">
                     <div class="flex items-start">
-                        <div class="bg-cyan-600 p-3 rounded-full mr-4">
+                        <div class="bg-earth-blue p-3 rounded-full mr-4">
                             <i class="fas fa-trophy text-white"></i>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold mb-2">Road Safety Hackathon Winner</h3>
-                            <p class="text-sm text-gray-400 mb-3">2022</p>
-                            <p class="text-space-light opacity-90 mb-4">
+                            <h3 class="text-xl font-bold mb-2 text-space-light" data-translate="hackathon_winner">Road Safety Hackathon Winner</h3>
+                            <p class="text-sm text-gray-400 mb-3" data-translate="hackathon_year">2022</p>
+                            <p class="text-space-light opacity-90 mb-4" data-translate="hackathon_description">
                                 1st place in national competition for "Implementable Local Action Plan for Road Safety". Proposal was considered for implementation by IIT Madras.
                             </p>
                             <a href="https://drive.google.com/file/d/1N3uccDLDTKydMsWo24E_q_mLWODFtH-Q/view" target="_blank"
-                               class="inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors">
+                               class="inline-flex items-center text-earth-blue hover:text-cyan-300 transition-colors font-semibold">
                                 <i class="fas fa-external-link-alt mr-2"></i>
-                                View Certificate
+                                <span data-translate="view_certificate">View Certificate</span>
                             </a>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Achievement 3 -->
-                <div class="achievement-card card p-8 rounded-lg">
+                <div class="achievement-card card p-8">
                     <div class="flex items-start">
                         <div class="bg-satellite-gold p-3 rounded-full mr-4 text-space-dark">
                             <i class="fas fa-award"></i>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold mb-2">University Rank Holder</h3>
-                            <p class="text-sm text-gray-400 mb-3">2023</p>
-                            <p class="text-space-light opacity-90 mb-4">
+                            <h3 class="text-xl font-bold mb-2 text-space-light" data-translate="university_rank">University Rank Holder</h3>
+                            <p class="text-sm text-gray-400 mb-3" data-translate="rank_year">2023</p>
+                            <p class="text-space-light opacity-90 mb-4" data-translate="rank_description">
                                 Secured 2nd rank in Civil Engineering department with CGPA of 9.33/10.0, recognized for academic excellence among 150 students.
                             </p>
                             <a href="https://drive.google.com/file/d/1D6tUMSp7qmryGr5cjzmbHxw8Wj45mLOB/view" target="_blank"
-                               class="inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors">
+                               class="inline-flex items-center text-earth-blue hover:text-cyan-300 transition-colors font-semibold">
                                 <i class="fas fa-external-link-alt mr-2"></i>
-                                View Certificate
+                                <span data-translate="view_certificate">View Certificate</span>
                             </a>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Achievement 4 -->
-                <div class="achievement-card card p-8 rounded-lg">
+                <div class="achievement-card card p-8">
                     <div class="flex items-start">
-                        <div class="bg-cyan-600 p-3 rounded-full mr-4">
+                        <div class="bg-earth-blue p-3 rounded-full mr-4">
                             <i class="fas fa-star text-white"></i>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold mb-2">Merit Scholarship (3 Years)</h3>
-                            <p class="text-sm text-gray-400 mb-3">2020-2023</p>
-                            <p class="text-space-light opacity-90 mb-4">
+                            <h3 class="text-xl font-bold mb-2 text-space-light" data-translate="merit_scholarship">Merit Scholarship (3 Years)</h3>
+                            <p class="text-sm text-gray-400 mb-3" data-translate="scholarship_years">2020-2023</p>
+                            <p class="text-space-light opacity-90 mb-4" data-translate="scholarship_description">
                                 Awarded university merit scholarship for three consecutive years recognizing consistent academic performance in top 5% of class.
                             </p>
                             <a href="https://drive.google.com/file/d/1misYhC8elOwVaynWjZoDz-48amL2P_bz/view" target="_blank"
-                               class="inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors">
+                               class="inline-flex items-center text-earth-blue hover:text-cyan-300 transition-colors font-semibold">
                                 <i class="fas fa-external-link-alt mr-2"></i>
-                                View Certificates
+                                <span data-translate="view_certificates">View Certificates</span>
                             </a>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Achievement 5 -->
-                <div class="achievement-card card p-8 rounded-lg">
+                <div class="achievement-card card p-8">
                     <div class="flex items-start">
                         <div class="bg-satellite-gold p-3 rounded-full mr-4 text-space-dark">
                             <i class="fas fa-mountain"></i>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold mb-2">AICTE YUVAK Scholar</h3>
-                            <p class="text-sm text-gray-400 mb-3">2021</p>
-                            <p class="text-space-light opacity-90 mb-4">
+                            <h3 class="text-xl font-bold mb-2 text-space-light" data-translate="aicte_scholar">AICTE YUVAK Scholar</h3>
+                            <p class="text-sm text-gray-400 mb-3" data-translate="aicte_year">2021</p>
+                            <p class="text-space-light opacity-90 mb-4" data-translate="aicte_description">
                                 Selected among 10 students nationwide for educational tour to ATAL Tunnel, sponsored by Government of India to study advanced construction techniques.
                             </p>
                         </div>
@@ -1508,115 +1752,115 @@
     </section>
 
     <!-- Hobbies & Interests Section -->
-    <section id="hobbies" class="py-20 px-4">
+    <section id="hobbies" class="section-spacing px-4">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold mb-12 text-center text-cyan-400 section-heading">
+            <h2 class="section-heading text-center text-earth-blue" data-translate="hobbies">
                 <i class="fas fa-heart mr-2"></i>
                 BEYOND WORK
             </h2>
             
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
                 <!-- Hobby 1 -->
-                <div class="hobby-item card p-6 rounded-lg flex flex-col items-center text-center">
+                <div class="hobby-item card p-6 flex flex-col items-center text-center">
                     <i class="fas fa-chess text-3xl mb-3 text-satellite-gold"></i>
-                    <h3 class="text-lg font-semibold">Chess</h3>
-                    <p class="text-sm text-gray-400 mt-1">FIDE Rating: 1600</p>
+                    <h3 class="text-lg font-semibold text-space-light" data-translate="chess">Chess</h3>
+                    <p class="text-sm text-gray-400 mt-1" data-translate="chess_rating">FIDE Rating: 1600</p>
                 </div>
                 
                 <!-- Hobby 2 -->
-                <div class="hobby-item card p-6 rounded-lg flex flex-col items-center text-center">
+                <div class="hobby-item card p-6 flex flex-col items-center text-center">
                     <i class="fas fa-cricket text-3xl mb-3 text-satellite-gold"></i>
-                    <h3 class="text-lg font-semibold">Cricket</h3>
-                    <p class="text-sm text-gray-400 mt-1">Competitive player</p>
+                    <h3 class="text-lg font-semibold text-space-light" data-translate="cricket">Cricket</h3>
+                    <p class="text-sm text-gray-400 mt-1" data-translate="cricket_desc">Competitive player</p>
                 </div>
                 
                 <!-- Hobby 3 -->
-                <div class="hobby-item card p-6 rounded-lg flex flex-col items-center text-center">
+                <div class="hobby-item card p-6 flex flex-col items-center text-center">
                     <i class="fas fa-book-open text-3xl mb-3 text-satellite-gold"></i>
-                    <h3 class="text-lg font-semibold">Reading</h3>
-                    <p class="text-sm text-gray-400 mt-1">Sci-fi & Self-help books</p>
+                    <h3 class="text-lg font-semibold text-space-light" data-translate="reading">Reading</h3>
+                    <p class="text-sm text-gray-400 mt-1" data-translate="reading_desc">Sci-fi & Self-help books</p>
                 </div>
                 
                 <!-- Hobby 4 -->
-                <div class="hobby-item card p-6 rounded-lg flex flex-col items-center text-center">
+                <div class="hobby-item card p-6 flex flex-col items-center text-center">
                     <i class="fas fa-pen-fancy text-3xl mb-3 text-satellite-gold"></i>
-                    <h3 class="text-lg font-semibold">Hindi Poetry</h3>
-                    <p class="text-sm text-gray-400 mt-1">Bilingual writer</p>
-                    <a href="https://example.com/poetry" target="_blank" class="text-xs text-cyan-400 mt-2 hover:underline">View Samples</a>
+                    <h3 class="text-lg font-semibold text-space-light" data-translate="hindi_poetry">Hindi Poetry</h3>
+                    <p class="text-sm text-gray-400 mt-1" data-translate="poetry_desc">Bilingual writer</p>
+                    <a href="https://example.com/poetry" target="_blank" class="text-xs text-earth-blue mt-2 hover:underline font-semibold" data-translate="view_samples">View Samples</a>
                 </div>
                 
                 <!-- Hobby 5 -->
-                <div class="hobby-item card p-6 rounded-lg flex flex-col items-center text-center">
+                <div class="hobby-item card p-6 flex flex-col items-center text-center">
                     <i class="fas fa-utensils text-3xl mb-3 text-satellite-gold"></i>
-                    <h3 class="text-lg font-semibold">Cooking</h3>
-                    <p class="text-sm text-gray-400 mt-1">Experimental Indian fusion</p>
+                    <h3 class="text-lg font-semibold text-space-light" data-translate="cooking">Cooking</h3>
+                    <p class="text-sm text-gray-400 mt-1" data-translate="cooking_desc">Experimental Indian fusion</p>
                 </div>
                 
                 <!-- Hobby 6 -->
-                <div class="hobby-item card p-6 rounded-lg flex flex-col items-center text-center">
+                <div class="hobby-item card p-6 flex flex-col items-center text-center">
                     <i class="fas fa-headphones text-3xl mb-3 text-satellite-gold"></i>
-                    <h3 class="text-lg font-semibold">Music</h3>
-                    <p class="text-sm text-gray-400 mt-1">Classical & Jazz</p>
+                    <h3 class="text-lg font-semibold text-space-light" data-translate="music">Music</h3>
+                    <p class="text-sm text-gray-400 mt-1" data-translate="music_desc">Classical & Jazz</p>
                 </div>
                 
                 <!-- Hobby 7 -->
-                <div class="hobby-item card p-6 rounded-lg flex flex-col items-center text-center">
+                <div class="hobby-item card p-6 flex flex-col items-center text-center">
                     <i class="fas fa-hiking text-3xl mb-3 text-satellite-gold"></i>
-                    <h3 class="text-lg font-semibold">Hiking</h3>
-                    <p class="text-sm text-gray-400 mt-1">Alpine trails</p>
+                    <h3 class="text-lg font-semibold text-space-light" data-translate="hiking">Hiking</h3>
+                    <p class="text-sm text-gray-400 mt-1" data-translate="hiking_desc">Alpine trails</p>
                 </div>
                 
                 <!-- Hobby 8 -->
-                <div class="hobby-item card p-6 rounded-lg flex flex-col items-center text-center">
+                <div class="hobby-item card p-6 flex flex-col items-center text-center">
                     <i class="fas fa-camera text-3xl mb-3 text-satellite-gold"></i>
-                    <h3 class="text-lg font-semibold">Photography</h3>
-                    <p class="text-sm text-gray-400 mt-1">Landscape & Nature</p>
+                    <h3 class="text-lg font-semibold text-space-light" data-translate="photography">Photography</h3>
+                    <p class="text-sm text-gray-400 mt-1" data-translate="photography_desc">Landscape & Nature</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Blog Section -->
-    <section id="blog" class="py-20 px-4 bg-space-blue bg-opacity-30">
+    <section id="blog" class="section-spacing px-4 bg-space-blue bg-opacity-30">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold mb-12 text-center text-cyan-400 section-heading">
+            <h2 class="section-heading text-center text-earth-blue" data-translate="blog">
                 <i class="fas fa-blog mr-2"></i>
                 BLOG & WRITINGS
             </h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="blog-card card p-8 rounded-lg">
+                <div class="blog-card card p-8">
                     <div class="flex items-start mb-4">
                         <div class="bg-satellite-gold p-3 rounded-full mr-4 text-space-dark">
                             <i class="fas fa-pen-nib"></i>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold mb-2">Coming Soon: Geospatial Insights</h3>
-                            <p class="text-sm text-gray-400 mb-3">Launching Nov 2025 </p>
-                            <p class="text-space-light opacity-90 mb-4">
+                            <h3 class="text-xl font-bold mb-2 text-space-light" data-translate="geospatial_insights">Coming Soon: Geospatial Insights</h3>
+                            <p class="text-sm text-gray-400 mb-3" data-translate="blog_launch">Launching Nov 2025</p>
+                            <p class="text-space-light opacity-90 mb-4" data-translate="blog_description">
                                 I'm currently developing a blog to share insights on geospatial technologies, climate research, and the intersection of AI with Earth observation.
                             </p>
-                            <div class="flex items-center text-sm text-cyan-400">
+                            <div class="flex items-center text-sm text-earth-blue font-semibold">
                                 <i class="fas fa-cog fa-spin mr-2"></i>
-                                <span>Work in Progress</span>
+                                <span data-translate="work_in_progress">Work in Progress</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="blog-card card p-8 rounded-lg">
+                <div class="blog-card card p-8">
                     <div class="flex items-start">
-                        <div class="bg-cyan-600 p-3 rounded-full mr-4">
+                        <div class="bg-earth-blue p-3 rounded-full mr-4">
                             <i class="fas fa-lightbulb text-white"></i>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold mb-2">Technical Writing</h3>
-                            <p class="text-space-light opacity-90 mb-4">
+                            <h3 class="text-xl font-bold mb-2 text-space-light" data-translate="technical_writing">Technical Writing</h3>
+                            <p class="text-space-light opacity-90 mb-4" data-translate="writing_description">
                                 I occasionally write technical articles about geospatial technologies, climate science, and engineering solutions.
                             </p>
-                            <a href="#connect" class="inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors">
+                            <a href="#connect" class="inline-flex items-center text-earth-blue hover:text-cyan-300 transition-colors font-semibold">
                                 <i class="fas fa-paper-plane mr-2"></i>
-                                Contact for collaborations
+                                <span data-translate="contact_collaborations">Contact for collaborations</span>
                             </a>
                         </div>
                     </div>
@@ -1626,18 +1870,18 @@
     </section>
 
     <!-- Languages Section -->
-    <section id="languages" class="py-20 px-4">
+    <section id="languages" class="section-spacing px-4">
         <div class="max-w-3xl mx-auto">
-            <h2 class="text-3xl font-bold mb-12 text-center text-cyan-400 section-heading">
+            <h2 class="section-heading text-center text-earth-blue" data-translate="languages">
                 <i class="fas fa-language mr-2"></i>
                 LANGUAGE PROFICIENCY
             </h2>
             
-            <div class="card p-8 rounded-lg">
+            <div class="card p-8">
                 <!-- Language 1 -->
                 <div class="mb-6">
                     <div class="flex justify-between items-center mb-2">
-                        <span class="font-medium">Hindi (Native)</span>
+                        <span class="font-medium text-space-light" data-translate="hindi_native">Hindi (Native)</span>
                     </div>
                     <div class="language-meter">
                         <div class="language-meter-fill" style="width: 100%"></div>
@@ -1647,8 +1891,8 @@
                 <!-- Language 2 -->
                 <div class="mb-6">
                     <div class="flex justify-between items-center mb-2">
-                        <span class="font-medium">English (Professional)</span>
-                        <span class="text-sm text-gray-400">IELTS C1</span>
+                        <span class="font-medium text-space-light" data-translate="english_pro">English (Professional)</span>
+                        <span class="text-sm text-gray-400" data-translate="ielts_c1">IELTS C1</span>
                     </div>
                     <div class="language-meter">
                         <div class="language-meter-fill" style="width: 90%"></div>
@@ -1658,8 +1902,8 @@
                 <!-- Language 3 -->
                 <div class="mb-6">
                     <div class="flex justify-between items-center mb-2">
-                        <span class="font-medium">German (Learning)</span>
-                        <span class="text-sm text-gray-400">A2 | 1+ year Duolingo streak</span>
+                        <span class="font-medium text-space-light" data-translate="german_learning">German (Learning)</span>
+                        <span class="text-sm text-gray-400" data-translate="duolingo_german">A2 | 1+ year Duolingo streak</span>
                     </div>
                     <div class="language-meter">
                         <div class="language-meter-fill" style="width: 30%"></div>
@@ -1669,8 +1913,8 @@
                 <!-- Language 4 -->
                 <div>
                     <div class="flex justify-between items-center mb-2">
-                        <span class="font-medium">French (Basic)</span>
-                        <span class="text-sm text-gray-400">1-year Duolingo streak</span>
+                        <span class="font-medium text-space-light" data-translate="french_basic">French (Basic)</span>
+                        <span class="text-sm text-gray-400" data-translate="duolingo_french">1-year Duolingo streak</span>
                     </div>
                     <div class="language-meter">
                         <div class="language-meter-fill" style="width: 20%"></div>
@@ -1681,38 +1925,38 @@
     </section>
 
     <!-- Speaking Engagements Section -->
-    <section id="speaking" class="py-20 px-4 bg-space-blue bg-opacity-30">
+    <section id="speaking" class="section-spacing px-4 bg-space-blue bg-opacity-30">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold mb-12 text-center text-cyan-400 section-heading">
+            <h2 class="section-heading text-center text-earth-blue" data-translate="speaking">
                 <i class="fas fa-microphone mr-2"></i>
                 SPEAKING ENGAGEMENTS
             </h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="card p-8 rounded-lg">
+                <div class="card p-8">
                     <div class="flex items-start mb-4">
                         <div class="bg-satellite-gold p-3 rounded-full mr-4 text-space-dark">
                             <i class="fas fa-chalkboard-teacher"></i>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold mb-2">Guest Speaker - Fresher Induction</h3>
-                            <p class="text-sm text-gray-400 mb-3">VIT Vellore • 2023</p>
-                            <p class="text-space-light opacity-90">
+                            <h3 class="text-xl font-bold mb-2 text-space-light" data-translate="guest_speaker">Guest Speaker - Fresher Induction</h3>
+                            <p class="text-sm text-gray-400 mb-3" data-translate="vit_speaking">VIT Vellore • 2023</p>
+                            <p class="text-space-light opacity-90" data-translate="guest_speaker_desc">
                                 Invited to share my academic journey and research experiences with incoming civil engineering students during orientation program.
                             </p>
                         </div>
                     </div>
                 </div>
                 
-                <div class="card p-8 rounded-lg">
+                <div class="card p-8">
                     <div class="flex items-start mb-4">
-                        <div class="bg-cyan-600 p-3 rounded-full mr-4">
+                        <div class="bg-earth-blue p-3 rounded-full mr-4">
                             <i class="fas fa-presentation text-white"></i>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold mb-2">Flood Risk Analysis Presentation</h3>
-                            <p class="text-sm text-gray-400 mb-3">National Conference • 2022</p>
-                            <p class="text-space-light opacity-90">
+                            <h3 class="text-xl font-bold mb-2 text-space-light" data-translate="flood_presentation">Flood Risk Analysis Presentation</h3>
+                            <p class="text-sm text-gray-400 mb-3" data-translate="national_conf">National Conference • 2022</p>
+                            <p class="text-space-light opacity-90" data-translate="flood_presentation_desc">
                                 Presented research on flood-prone zone identification in Bihar using HEC-RAS modeling and satellite data analysis.
                             </p>
                         </div>
@@ -1723,34 +1967,34 @@
     </section>
 
     <!-- Connect Section -->
-    <section id="connect" class="py-20 px-4 satellite-track">
+    <section id="connect" class="section-spacing px-4 satellite-track">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold mb-12 text-center text-cyan-400 section-heading">
+            <h2 class="section-heading text-center text-earth-blue" data-translate="connect">
                 <i class="fas fa-rocket mr-2"></i>
                 LET'S CONNECT
             </h2>
             
-            <div class="card p-8 rounded-lg max-w-3xl mx-auto">
-                <p class="text-lg text-center mb-8">
+            <div class="card p-8 max-w-3xl mx-auto">
+                <p class="text-lg text-center mb-8 text-space-light" data-translate="connect_text">
                     Passionate about geospatial technologies and climate solutions. Open to research collaborations and impactful projects.
                 </p>
                 
                 <div class="contact-links">
                     <a href="mailto:devamss29@gmail.com" class="contact-link">
                         <i class="fas fa-envelope mr-2"></i>
-                        Email Me
+                        <span data-translate="email_me">Email Me</span>
                     </a>
                     <a href="https://www.linkedin.com/in/devshreesaini" target="_blank" class="contact-link">
                         <i class="fab fa-linkedin-in mr-2"></i>
-                        LinkedIn
+                        <span data-translate="linkedin">LinkedIn</span>
                     </a>
                     <a href="https://github.com/devam29" target="_blank" class="contact-link">
                         <i class="fab fa-github mr-2"></i>
-                        GitHub
+                        <span data-translate="github">GitHub</span>
                     </a>
                     <a href="tel:+41767519687" class="contact-link">
                         <i class="fas fa-phone mr-2"></i>
-                        Call Me
+                        <span data-translate="call_me">Call Me</span>
                     </a>
                 </div>
             </div>
@@ -1758,9 +2002,9 @@
     </section>
 
     <!-- Map Section -->
-    <section id="work-locations" class="py-20 px-4 bg-space-blue bg-opacity-30">
+    <section id="work-locations" class="section-spacing px-4 bg-space-blue bg-opacity-30">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold mb-12 text-center text-cyan-400 section-heading">
+            <h2 class="section-heading text-center text-earth-blue" data-translate="work_locations">
                 <i class="fas fa-map-marked-alt mr-2"></i>
                 WORK LOCATIONS
             </h2>
@@ -1774,38 +2018,40 @@
     <footer class="py-8 bg-space-blue text-center">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-center space-x-6 mb-6">
-                <a href="mailto:devamss29@gmail.com" class="text-cyan-400 hover:text-cyan-300 transition-colors">
+                <a href="mailto:devamss29@gmail.com" class="text-earth-blue hover:text-cyan-300 transition-colors">
                     <i class="fas fa-envelope text-xl"></i>
                 </a>
-                <a href="https://www.linkedin.com/in/devshreesaini" target="_blank" class="text-cyan-400 hover:text-cyan-300 transition-colors">
+                <a href="https://www.linkedin.com/in/devshreesaini" target="_blank" class="text-earth-blue hover:text-cyan-300 transition-colors">
                     <i class="fab fa-linkedin-in text-xl"></i>
                 </a>
-                <a href="https://github.com/devam29" target="_blank" class="text-cyan-400 hover:text-cyan-300 transition-colors">
+                <a href="https://github.com/devam29" target="_blank" class="text-earth-blue hover:text-cyan-300 transition-colors">
                     <i class="fab fa-github text-xl"></i>
                 </a>
-                <a href="https://raw.githubusercontent.com/devam29/Resume/main/CV_DevShreeSaini.pdf" class="text-cyan-400 hover:text-cyan-300 transition-colors">
+                <a href="https://raw.githubusercontent.com/devam29/Resume/main/CV_DevShreeSaini.pdf" class="text-earth-blue hover:text-cyan-300 transition-colors">
                     <i class="fas fa-file-pdf text-xl"></i>
                 </a>
             </div>
             
-            <p class="text-sm mb-2">
+            <p class="text-sm mb-2 text-space-light" data-translate="footer_text">
                 <i class="fas fa-satellite mr-1"></i> 
                 Dev Shree Saini | Geospatial Engineer & Climate Researcher
             </p>
-            <p class="text-xs text-gray-400">
-                Built with <i class="fas fa-heart text-cyan-400"></i> and <i class="fas fa-code text-satellite-gold"></i> | 
+            <p class="text-xs text-gray-400" data-translate="footer_built">
+                Built with <i class="fas fa-heart text-earth-blue"></i> and <i class="fas fa-code text-satellite-gold"></i> | 
                 © 2025 | All systems operational <i class="fas fa-check-circle text-green-400"></i>
             </p>
         </div>
     </footer>
 
     <!-- Back to Top Button -->
-    <a href="#" id="back-to-top" class="fixed bottom-6 right-6 bg-cyan-600 text-white p-3 rounded-full shadow-lg hover:bg-cyan-700 transition-colors hidden">
+    <a href="#" id="back-to-top" class="fixed bottom-6 right-6 bg-earth-blue text-white p-3 rounded-full shadow-lg hover:bg-cyan-700 transition-colors hidden">
         <i class="fas fa-arrow-up"></i>
     </a>
 
     <!-- JavaScript -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Include the translator script -->
+    <script src="js/translator.js"></script>
     <script>
         // Create space background elements
         function createSpaceElements() {
@@ -2000,7 +2246,7 @@
                 [45.5017, -73.5673]
             ],
             {
-                color: 'rgba(208, 214, 249, 0.3)',
+                color: 'rgba(226, 232, 240, 0.3)',
                 dashArray: '5, 5'
             }
         ).addTo(map);
@@ -2011,7 +2257,7 @@
                 [12.9716, 79.1593]
             ],
             {
-                color: 'rgba(208, 214, 249, 0.3)',
+                color: 'rgba(226, 232, 240, 0.3)',
                 dashArray: '5, 5'
             }
         ).addTo(map);
@@ -2102,7 +2348,7 @@
                             </div>
                             <div class="space-y-2">
                                 ${project.links.map(link => `
-                                    <a href="${link.url}" target="_blank" class="inline-flex items-center px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-full transition-colors mr-2">
+                                    <a href="${link.url}" target="_blank" class="inline-flex items-center px-4 py-2 bg-earth-blue hover:bg-cyan-700 text-white rounded-full transition-colors mr-2 font-semibold">
                                         <i class="fas ${link.icon} mr-2"></i>
                                         ${link.text}
                                     </a>
@@ -2110,10 +2356,10 @@
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-2xl font-bold mb-2">${project.title}</h3>
+                            <h3 class="text-2xl font-bold mb-2 text-space-light">${project.title}</h3>
                             <p class="text-sm text-gray-400 mb-4">${project.subtitle}</p>
                             <p class="text-space-light opacity-90 mb-6">${project.description}</p>
-                            <h4 class="text-lg font-semibold mb-2 text-cyan-400">Project Details</h4>
+                            <h4 class="text-lg font-semibold mb-2 text-earth-blue">Project Details</h4>
                             <ul class="list-disc pl-5 space-y-2 text-space-light opacity-90 mb-6">
                                 ${project.details.map(detail => `<li>${detail}</li>`).join('')}
                             </ul>
