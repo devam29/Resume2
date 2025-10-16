@@ -6,7 +6,7 @@
     <meta name="description" content="Portfolio of Dev Shree Saini, Geomatics Engineering Graduate Student and Climate Science Researcher at ETH Zurich">
     <meta property="og:title" content="Dev Shree Saini | Geospatial Engineer & Climate Researcher">
     <meta property="og:description" content="Satellite data specialist developing climate solutions through geospatial technologies and machine learning">
-    <meta property="og:image" content="./images/dsaini.jpg">
+    <meta property="og:image" content="https://raw.githubusercontent.com/devam29/Resume2/main/dsaini.jpg">
     <meta name="keywords" content="Geomatics Engineering ETH Zurich, Geospatial Portfolio, Climate AI, Satellite Data, Earth Observation, Remote Sensing Projects, Flood Detection, Machine Learning">
     
     <!-- Schema.org markup for Google -->
@@ -50,6 +50,7 @@
             --neon-green: #39FF14;
             --card-bg: rgba(15, 52, 96, 0.3);
             --professional-blue: #0F3460;
+            --interactive-blue: #38BDF8;
         }
         
         body {
@@ -647,29 +648,6 @@
             margin: 2rem 0;
         }
         
-        /* Skill Proficiency */
-        .skill-proficiency {
-            margin-bottom: 1.5rem;
-        }
-        
-        .skill-header {
-            display: flex;
-            justify-content: between;
-            align-items: center;
-            margin-bottom: 0.5rem;
-        }
-        
-        .skill-name {
-            font-weight: 600;
-            color: var(--space-light);
-        }
-        
-        .skill-level {
-            font-size: 0.8rem;
-            color: var(--earth-blue);
-            font-weight: 500;
-        }
-        
         /* Enhanced Typography */
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Space Grotesk', sans-serif;
@@ -710,6 +688,46 @@
         .section-spacing {
             padding-top: 6rem;
             padding-bottom: 6rem;
+        }
+
+        /* Interactive Links */
+        .interactive-link {
+            color: var(--interactive-blue);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid transparent;
+        }
+        
+        .interactive-link:hover {
+            color: var(--earth-blue);
+            border-bottom-color: var(--earth-blue);
+            transform: translateY(-1px);
+        }
+        
+        .view-project-btn, .view-certificate-btn, .read-paper-btn {
+            color: var(--interactive-blue);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .view-project-btn:hover, .view-certificate-btn:hover, .read-paper-btn:hover {
+            color: var(--earth-blue);
+            transform: translateY(-2px);
+        }
+        
+        /* Earth caption */
+        .earth-caption {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            background: rgba(10, 14, 23, 0.8);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 0 20px;
+            font-style: italic;
+            color: var(--satellite-gold);
         }
         
         @media (min-width: 768px) {
@@ -913,29 +931,29 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="hero" class="min-h-screen flex items-center justify-center text-center pt-24 md:pt-16 px-4 relative overflow-hidden section-spacing">
+    <section id="hero" class="min-h-screen flex items-center justify-center text-center pt-32 md:pt-24 px-4 relative overflow-hidden section-spacing">
         <div class="max-w-4xl mx-auto relative z-10">
-            <div class="relative inline-block mb-8">
+            <div class="relative inline-block mb-12">
                 <img src="https://raw.githubusercontent.com/devam29/Resume2/main/dsaini.jpg" 
-                     class="w-40 h-40 rounded-full border-4 border-earth-blue earth-glow object-cover" 
+                     class="w-48 h-48 rounded-full border-4 border-earth-blue earth-glow object-cover mx-auto" 
                      alt="Dev Shree Saini">
                 <div class="absolute -bottom-2 -right-2 bg-space-blue rounded-full p-2 border border-space-light">
                     <i class="fas fa-satellite text-satellite-gold"></i>
                 </div>
             </div>
             
-            <h1 class="text-4xl md:text-5xl font-bold mb-4 hero-title" data-translate="hero_title">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 hero-title" data-translate="hero_title">
                 <span>DEV SHREE SAINI</span>
             </h1>
             
-            <p class="text-xl text-gray-300 mb-6 font-mono" data-translate="hero_subtitle">Geospatial Engineer | Climate Researcher | ETH Zurich</p>
+            <p class="text-xl text-gray-300 mb-8 font-mono" data-translate="hero_subtitle">Geospatial Engineer | Climate Researcher | ETH Zurich</p>
             
-            <div class="inline-flex items-center space-x-2 bg-space-blue bg-opacity-50 px-4 py-2 rounded-full mb-6 border border-space-light border-opacity-20">
+            <div class="inline-flex items-center space-x-2 bg-space-blue bg-opacity-50 px-4 py-2 rounded-full mb-8 border border-space-light border-opacity-20">
                 <i class="fas fa-map-marker-alt text-satellite-gold"></i>
                 <span data-translate="hero_location">Zurich, Switzerland</span>
             </div>
             
-            <div class="flex flex-wrap justify-center gap-4 mt-6">
+            <div class="flex flex-wrap justify-center gap-4 mt-8">
                 <a href="https://raw.githubusercontent.com/devam29/Resume/main/CV_DevShreeSaini.pdf" 
                    class="inline-flex items-center px-6 py-3 bg-earth-blue hover:bg-cyan-700 text-white rounded-full transition-colors shadow-lg hover:shadow-cyan-500/20 font-semibold">
                     <i class="fas fa-file-download mr-2"></i>
@@ -949,20 +967,20 @@
             </div>
             
             <!-- Professional Summary Section -->
-            <div class="executive-summary mt-12">
+            <div class="executive-summary mt-16">
                 <h2 class="text-2xl font-bold mb-6 text-center text-space-light">Geospatial Engineering Specialist</h2>
                 <p class="text-lead text-center mb-6">
                     Master's candidate at ETH Zurich leveraging satellite data and machine learning 
-                    to develop climate resilience solutions. 3+ years experience in flood detection, 
+                    to develop climate resilience solutions. 2+ years experience in flood detection, 
                     hydrological modeling, and environmental monitoring through remote sensing technologies.
                 </p>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
                     <div class="text-center">
-                        <div class="text-2xl font-bold text-earth-blue mb-2">3+</div>
+                        <div class="text-2xl font-bold text-earth-blue mb-2">2+</div>
                         <div class="text-sm text-space-light">Years Experience</div>
                     </div>
                     <div class="text-center">
-                        <div class="text-2xl font-bold text-satellite-gold mb-2">10+</div>
+                        <div class="text-2xl font-bold text-satellite-gold mb-2">5+</div>
                         <div class="text-sm text-space-light">Projects Completed</div>
                     </div>
                     <div class="text-center">
@@ -972,7 +990,7 @@
                 </div>
             </div>
             
-            <div class="mt-8 max-w-2xl mx-auto bg-space-blue bg-opacity-50 p-6 rounded-lg border border-earth-blue border-opacity-30">
+            <div class="mt-12 max-w-2xl mx-auto bg-space-blue bg-opacity-50 p-6 rounded-lg border border-earth-blue border-opacity-30">
                 <h3 class="text-lg font-semibold text-earth-blue mb-2" data-translate="professional_branding">Professional Branding Statement</h3>
                 <p class="text-space-light" data-translate="branding_text">
                     <i class="fas fa-quote-left text-satellite-gold mr-1"></i>
@@ -1040,8 +1058,12 @@
                     </div>
                     
                     <!-- 3D Earth Visualization -->
-                    <div id="earth-container" class="mt-6 h-64 rounded-lg">
+                    <div id="earth-container" class="mt-6 h-64 rounded-lg relative">
                         <!-- Three.js Earth will be rendered here -->
+                        <div class="earth-caption">
+                            <i class="fas fa-compass mr-2"></i>
+                            Explore our planet through interactive geospatial data visualization
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1068,52 +1090,55 @@
                     WHAT IS GEOSPATIAL ENGINEERING?
                 </h2>
                 
-                <div class="space-y-4 max-w-3xl mx-auto">
-                    <!-- Item 1 -->
+                <!-- Single Visual Aid at Top -->
+                <div class="max-w-4xl mx-auto mb-12">
+                    <div class="visual-aid" style="background-image: url('https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcWJhZzV4Y3VwY2N2d2R2d3V0dWl1bHZ3d3R4dGJ5Z2R3eG5mY3B6eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7btPCcdNniyf0ArS/giphy.gif')"></div>
+                    <p class="text-center text-space-light opacity-90 mt-4 text-sm">
+                        Visualizing Earth's data from space to solve real-world challenges
+                    </p>
+                </div>
+                
+                <div class="space-y-6 max-w-4xl mx-auto">
+                    <!-- All sections open by default -->
                     <div class="card overflow-hidden">
-                        <button class="accordion-btn w-full flex justify-between items-center p-6 text-left">
+                        <div class="accordion-btn w-full flex justify-between items-center p-6 text-left active">
                             <div class="flex items-center">
                                 <i class="fas fa-satellite text-2xl mr-4 text-satellite-gold"></i>
                                 <h3 class="text-xl font-bold text-space-light" data-translate="satellite_data">Satellite Data</h3>
                             </div>
-                            <i class="fas fa-chevron-down transition-transform duration-300 text-earth-blue"></i>
-                        </button>
-                        <div class="accordion-content px-6 pb-6">
-                            <div class="visual-aid" style="background-image: url('https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcWJhZzV4Y3VwY2N2d2R2d3V0dWl1bHZ3d3R4dGJ5Z2R3eG5mY3B6eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7btPCcdNniyf0ArS/giphy.gif')"></div>
+                            <i class="fas fa-chevron-down transition-transform duration-300 text-earth-blue rotate-180"></i>
+                        </div>
+                        <div class="accordion-content px-6 pb-6 open">
                             <p class="text-space-light opacity-90" data-translate="satellite_data_text">
                                 Like a doctor uses X-rays to see inside the body, we use satellite images to see Earth's health from space. We process data from various satellite sensors (optical, radar, LiDAR) to monitor environmental changes, track deforestation, measure sea level rise, and detect urban expansion.
                             </p>
                         </div>
                     </div>
                     
-                    <!-- Item 2 -->
                     <div class="card overflow-hidden">
-                        <button class="accordion-btn w-full flex justify-between items-center p-6 text-left">
+                        <div class="accordion-btn w-full flex justify-between items-center p-6 text-left active">
                             <div class="flex items-center">
                                 <i class="fas fa-map-marked-alt text-2xl mr-4 text-satellite-gold"></i>
                                 <h3 class="text-xl font-bold text-space-light" data-translate="mapping_analysis">Mapping & Analysis</h3>
                             </div>
-                            <i class="fas fa-chevron-down transition-transform duration-300 text-earth-blue"></i>
-                        </button>
-                        <div class="accordion-content px-6 pb-6">
-                            <div class="visual-aid" style="background-image: url('https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcWJhZzV4Y3VwY2N2d2R2d3V0dWl1bHZ3d3R4dGJ5Z2R3eG5mY3B6eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7btPCcdNniyf0ArS/giphy.gif')"></div>
+                            <i class="fas fa-chevron-down transition-transform duration-300 text-earth-blue rotate-180"></i>
+                        </div>
+                        <div class="accordion-content px-6 pb-6 open">
                             <p class="text-space-light opacity-90" data-translate="mapping_analysis_text">
                                 Think of Google Maps, but with superpowers to predict floods, track deforestation, and monitor climate change. We create intelligent maps that help understand complex environmental patterns, analyze spatial relationships, and make data-driven decisions for sustainable development.
                             </p>
                         </div>
                     </div>
                     
-                    <!-- Item 3 -->
                     <div class="card overflow-hidden">
-                        <button class="accordion-btn w-full flex justify-between items-center p-6 text-left">
+                        <div class="accordion-btn w-full flex justify-between items-center p-6 text-left active">
                             <div class="flex items-center">
                                 <i class="fas fa-robot text-2xl mr-4 text-satellite-gold"></i>
                                 <h3 class="text-xl font-bold text-space-light" data-translate="ai_solutions">AI Solutions</h3>
                             </div>
-                            <i class="fas fa-chevron-down transition-transform duration-300 text-earth-blue"></i>
-                        </button>
-                        <div class="accordion-content px-6 pb-6">
-                            <div class="visual-aid" style="background-image: url('https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcWJhZzV4Y3VwY2N2d2R2d3V0dWl1bHZ3d3R4dGJ5Z2R3eG5mY3B6eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7btPCcdNniyf0ArS/giphy.gif')"></div>
+                            <i class="fas fa-chevron-down transition-transform duration-300 text-earth-blue rotate-180"></i>
+                        </div>
+                        <div class="accordion-content px-6 pb-6 open">
                             <p class="text-space-light opacity-90" data-translate="ai_solutions_text">
                                 Similar to facial recognition, but for Earth's features - identifying floods, droughts, and urban growth patterns. We train computers to automatically detect environmental changes from satellite data using deep learning models like CNNs and transformers, enabling real-time monitoring at global scales.
                             </p>
@@ -1174,7 +1199,7 @@
                     <div class="card p-8">
                         <div class="flex flex-col md:flex-row md:items-center mb-6">
                             <div class="flex items-center mb-4 md:mb-0 md:w-1/3">
-                                <img src="./images/eth.png" 
+                                <img src="https://raw.githubusercontent.com/devam29/Resume2/main/eth.png" 
                                      alt="ETH Zurich Logo" 
                                      class="h-12 mr-4">
                                 <div>
@@ -1208,7 +1233,7 @@
                     <div class="card p-8">
                         <div class="flex flex-col md:flex-row md:items-center mb-6">
                             <div class="flex items-center mb-4 md:mb-0 md:w-1/3">
-                                <img src="./images/vit.png" 
+                                <img src="https://raw.githubusercontent.com/devam29/Resume2/main/vit.png" 
                                      alt="VIT Logo" 
                                      class="h-12 mr-4">
                                 <div>
@@ -1254,7 +1279,7 @@
                     <div class="card p-8">
                         <div class="flex flex-col md:flex-row md:items-center mb-6">
                             <div class="flex items-center mb-4 md:mb-0 md:w-1/3">
-                                <img src="./images/iirs.png" 
+                                <img src="https://raw.githubusercontent.com/devam29/Resume2/main/iirs.png" 
                                      alt="ISRO Logo" 
                                      class="h-12 mr-4">
                                 <div>
@@ -1289,7 +1314,7 @@
                     <div class="card p-8">
                         <div class="flex flex-col md:flex-row md:items-center mb-6">
                             <div class="flex items-center mb-4 md:mb-0 md:w-1/3">
-                                <img src="./images/concordia.jpg" 
+                                <img src="https://raw.githubusercontent.com/devam29/Resume2/main/concordia.jpg" 
                                      alt="Concordia Logo" 
                                      class="h-12 mr-4">
                                 <div>
@@ -1323,7 +1348,7 @@
                     <div class="card p-8">
                         <div class="flex flex-col md:flex-row md:items-center mb-6">
                             <div class="flex items-center mb-4 md:mb-0 md:w-1/3">
-                                <img src="./images/vit.png" 
+                                <img src="https://raw.githubusercontent.com/devam29/Resume2/main/vit.png" 
                                      alt="VIT Logo" 
                                      class="h-12 mr-4">
                                 <div>
@@ -1407,48 +1432,7 @@
                 </div>
             </div>
 
-            <!-- Skill Proficiency Section -->
-            <div class="card p-8 mt-8">
-                <h3 class="text-2xl font-bold mb-6 text-earth-blue text-center">Skill Proficiency</h3>
-                <div class="space-y-6">
-                    <div class="skill-proficiency">
-                        <div class="skill-header">
-                            <span class="skill-name">Python & Machine Learning</span>
-                            <span class="skill-level">Advanced</span>
-                        </div>
-                        <div class="language-meter">
-                            <div class="language-meter-fill" style="width: 90%"></div>
-                        </div>
-                    </div>
-                    <div class="skill-proficiency">
-                        <div class="skill-header">
-                            <span class="skill-name">Remote Sensing & GIS</span>
-                            <span class="skill-level">Advanced</span>
-                        </div>
-                        <div class="language-meter">
-                            <div class="language-meter-fill" style="width: 85%"></div>
-                        </div>
-                    </div>
-                    <div class="skill-proficiency">
-                        <div class="skill-header">
-                            <span class="skill-name">Hydrological Modeling</span>
-                            <span class="skill-level">Proficient</span>
-                        </div>
-                        <div class="language-meter">
-                            <div class="language-meter-fill" style="width: 80%"></div>
-                        </div>
-                    </div>
-                    <div class="skill-proficiency">
-                        <div class="skill-header">
-                            <span class="skill-name">Cloud Computing</span>
-                            <span class="skill-level">Intermediate</span>
-                        </div>
-                        <div class="language-meter">
-                            <div class="language-meter-fill" style="width: 70%"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- Removed Skill Proficiency Section -->
         </div>
     </section>
 
@@ -1464,7 +1448,7 @@
                 <!-- Project 1 -->
                 <div class="card rounded-lg overflow-hidden group project-card" data-project="gnss">
                     <div class="relative overflow-hidden h-48">
-                        <img src="./images/1596.jpg" 
+                        <img src="https://raw.githubusercontent.com/devam29/Resume2/main/1596.jpg" 
                              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
                              alt="GNSS Project">
                         <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
@@ -1478,7 +1462,7 @@
                         <p class="text-space-light opacity-90 mb-4" data-translate="gnss_description">
                             Machine learning model for rainfall prediction using GNSS signal delay and ERA5 datasets with satellite-derived atmospheric data.
                         </p>
-                        <button class="view-project-btn inline-flex items-center text-earth-blue hover:text-cyan-300 transition-colors font-semibold">
+                        <button class="view-project-btn inline-flex items-center text-interactive-blue hover:text-earth-blue transition-colors font-semibold">
                             <i class="fas fa-search mr-2"></i>
                             <span data-translate="view_details">View Details</span>
                         </button>
@@ -1488,7 +1472,7 @@
                 <!-- Project 2 -->
                 <div class="card rounded-lg overflow-hidden group project-card" data-project="flood">
                     <div class="relative overflow-hidden h-48">
-                        <img src="./images/flood.jpg" 
+                        <img src="https://raw.githubusercontent.com/devam29/Resume2/main/flood.jpg" 
                              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
                              alt="Flood Project">
                         <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
@@ -1502,7 +1486,7 @@
                         <p class="text-space-light opacity-90 mb-4" data-translate="flood_description">
                             SWAT model with NSE: 0.84 and R²: 0.90 for flood risk analysis using satellite imagery and hydrological modeling.
                         </p>
-                        <button class="view-project-btn inline-flex items-center text-earth-blue hover:text-cyan-300 transition-colors font-semibold">
+                        <button class="view-project-btn inline-flex items-center text-interactive-blue hover:text-earth-blue transition-colors font-semibold">
                             <i class="fas fa-search mr-2"></i>
                             <span data-translate="view_details">View Details</span>
                         </button>
@@ -1512,7 +1496,7 @@
                 <!-- Project 3 -->
                 <div class="card rounded-lg overflow-hidden group project-card" data-project="groundwater">
                     <div class="relative overflow-hidden h-48">
-                        <img src="./images/groundwater.jpg" 
+                        <img src="https://raw.githubusercontent.com/devam29/Resume2/main/groundwater.jpg" 
                              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
                              alt="Groundwater Project">
                         <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
@@ -1526,7 +1510,7 @@
                         <p class="text-space-light opacity-90 mb-4" data-translate="groundwater_description">
                             AHP analysis using satellite data and GIS to identify 89% medium to high potential groundwater zones.
                         </p>
-                        <button class="view-project-btn inline-flex items-center text-earth-blue hover:text-cyan-300 transition-colors font-semibold">
+                        <button class="view-project-btn inline-flex items-center text-interactive-blue hover:text-earth-blue transition-colors font-semibold">
                             <i class="fas fa-search mr-2"></i>
                             <span data-translate="view_details">View Details</span>
                         </button>
@@ -1567,7 +1551,7 @@
                                 Analyzed precipitation impacts on water resources in the Cauvery Basin using satellite data and hydrological models.
                             </p>
                             <a href="https://doi.org/10.1038/s41598-023-41417-6" target="_blank"
-                               class="inline-flex items-center text-earth-blue hover:text-cyan-300 transition-colors font-semibold">
+                               class="read-paper-btn inline-flex items-center text-interactive-blue hover:text-earth-blue transition-colors font-semibold">
                                 <i class="fas fa-external-link-alt mr-2"></i>
                                 <span data-translate="read_paper">Read Paper</span>
                             </a>
@@ -1587,7 +1571,7 @@
                                 Studied river cross-section width for flood detection using HEC-RAS and GIS with satellite-derived DEMs.
                             </p>
                             <a href="https://doi.org/10.17491/jgsi/2024/173843" target="_blank"
-                               class="inline-flex items-center text-earth-blue hover:text-cyan-300 transition-colors font-semibold">
+                               class="read-paper-btn inline-flex items-center text-interactive-blue hover:text-earth-blue transition-colors font-semibold">
                                 <i class="fas fa-external-link-alt mr-2"></i>
                                 <span data-translate="read_paper">Read Paper</span>
                             </a>
@@ -1607,7 +1591,7 @@
                                 Investigated LULC impacts on Chilika Lake's ecosystem services using multi-temporal satellite imagery.
                             </p>
                             <a href="https://doi.org/10.1007/s12237-025-01509-0" target="_blank"
-                               class="inline-flex items-center text-earth-blue hover:text-cyan-300 transition-colors font-semibold">
+                               class="read-paper-btn inline-flex items-center text-interactive-blue hover:text-earth-blue transition-colors font-semibold">
                                 <i class="fas fa-external-link-alt mr-2"></i>
                                 <span data-translate="read_paper">Read Paper</span>
                             </a>
@@ -1628,7 +1612,7 @@
                                 Presented research on filtration systems for mesotrophic lakes at environmental engineering conference.
                             </p>
                             <a href="https://doi.org/10.1007/978-3-031-61515-3_22" target="_blank"
-                               class="inline-flex items-center text-earth-blue hover:text-cyan-300 transition-colors font-semibold">
+                               class="read-paper-btn inline-flex items-center text-interactive-blue hover:text-earth-blue transition-colors font-semibold">
                                 <i class="fas fa-external-link-alt mr-2"></i>
                                 <span data-translate="read_paper">Read Paper</span>
                             </a>
@@ -1661,7 +1645,7 @@
                                 Awarded prestigious MITACS scholarship for international research internship at Concordia University, Canada, selected among top candidates nationwide.
                             </p>
                             <a href="https://drive.google.com/file/d/1QwDwROCIen6ByBGZaBxa2HMLi5a6QlAM/view" target="_blank"
-                               class="inline-flex items-center text-earth-blue hover:text-cyan-300 transition-colors font-semibold">
+                               class="view-certificate-btn inline-flex items-center text-interactive-blue hover:text-earth-blue transition-colors font-semibold">
                                 <i class="fas fa-external-link-alt mr-2"></i>
                                 <span data-translate="view_certificate">View Certificate</span>
                             </a>
@@ -1682,7 +1666,7 @@
                                 1st place in national competition for "Implementable Local Action Plan for Road Safety". Proposal was considered for implementation by IIT Madras.
                             </p>
                             <a href="https://drive.google.com/file/d/1N3uccDLDTKydMsWo24E_q_mLWODFtH-Q/view" target="_blank"
-                               class="inline-flex items-center text-earth-blue hover:text-cyan-300 transition-colors font-semibold">
+                               class="view-certificate-btn inline-flex items-center text-interactive-blue hover:text-earth-blue transition-colors font-semibold">
                                 <i class="fas fa-external-link-alt mr-2"></i>
                                 <span data-translate="view_certificate">View Certificate</span>
                             </a>
@@ -1703,7 +1687,7 @@
                                 Secured 2nd rank in Civil Engineering department with CGPA of 9.33/10.0, recognized for academic excellence among 150 students.
                             </p>
                             <a href="https://drive.google.com/file/d/1D6tUMSp7qmryGr5cjzmbHxw8Wj45mLOB/view" target="_blank"
-                               class="inline-flex items-center text-earth-blue hover:text-cyan-300 transition-colors font-semibold">
+                               class="view-certificate-btn inline-flex items-center text-interactive-blue hover:text-earth-blue transition-colors font-semibold">
                                 <i class="fas fa-external-link-alt mr-2"></i>
                                 <span data-translate="view_certificate">View Certificate</span>
                             </a>
@@ -1724,7 +1708,7 @@
                                 Awarded university merit scholarship for three consecutive years recognizing consistent academic performance in top 5% of class.
                             </p>
                             <a href="https://drive.google.com/file/d/1misYhC8elOwVaynWjZoDz-48amL2P_bz/view" target="_blank"
-                               class="inline-flex items-center text-earth-blue hover:text-cyan-300 transition-colors font-semibold">
+                               class="view-certificate-btn inline-flex items-center text-interactive-blue hover:text-earth-blue transition-colors font-semibold">
                                 <i class="fas fa-external-link-alt mr-2"></i>
                                 <span data-translate="view_certificates">View Certificates</span>
                             </a>
@@ -1786,7 +1770,7 @@
                     <i class="fas fa-pen-fancy text-3xl mb-3 text-satellite-gold"></i>
                     <h3 class="text-lg font-semibold text-space-light" data-translate="hindi_poetry">Hindi Poetry</h3>
                     <p class="text-sm text-gray-400 mt-1" data-translate="poetry_desc">Bilingual writer</p>
-                    <a href="https://example.com/poetry" target="_blank" class="text-xs text-earth-blue mt-2 hover:underline font-semibold" data-translate="view_samples">View Samples</a>
+                    <a href="https://example.com/poetry" target="_blank" class="interactive-link text-xs mt-2 font-semibold" data-translate="view_samples">View Samples</a>
                 </div>
                 
                 <!-- Hobby 5 -->
@@ -1840,7 +1824,7 @@
                             <p class="text-space-light opacity-90 mb-4" data-translate="blog_description">
                                 I'm currently developing a blog to share insights on geospatial technologies, climate research, and the intersection of AI with Earth observation.
                             </p>
-                            <div class="flex items-center text-sm text-earth-blue font-semibold">
+                            <div class="flex items-center text-sm text-interactive-blue font-semibold">
                                 <i class="fas fa-cog fa-spin mr-2"></i>
                                 <span data-translate="work_in_progress">Work in Progress</span>
                             </div>
@@ -1858,7 +1842,7 @@
                             <p class="text-space-light opacity-90 mb-4" data-translate="writing_description">
                                 I occasionally write technical articles about geospatial technologies, climate science, and engineering solutions.
                             </p>
-                            <a href="#connect" class="inline-flex items-center text-earth-blue hover:text-cyan-300 transition-colors font-semibold">
+                            <a href="#connect" class="interactive-link inline-flex items-center text-interactive-blue hover:text-earth-blue transition-colors font-semibold">
                                 <i class="fas fa-paper-plane mr-2"></i>
                                 <span data-translate="contact_collaborations">Contact for collaborations</span>
                             </a>
@@ -1906,7 +1890,7 @@
                         <span class="text-sm text-gray-400" data-translate="duolingo_german">A2 | 1+ year Duolingo streak</span>
                     </div>
                     <div class="language-meter">
-                        <div class="language-meter-fill" style="width: 30%"></div>
+                        <div class="language-meter-fill" style="width: 45%"></div>
                     </div>
                 </div>
                 
@@ -2051,7 +2035,7 @@
     <!-- JavaScript -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <!-- Include the translator script -->
-    <script src="js/translator.js"></script>
+    <script src="./js/translator.js"></script>
     <script>
         // Create space background elements
         function createSpaceElements() {
@@ -2273,7 +2257,7 @@
             gnss: {
                 title: "GNSS Precipitation Prediction",
                 subtitle: "ETH Zurich • 2024",
-                image: "./images/1596.jpg",
+                image: "https://raw.githubusercontent.com/devam29/Resume2/main/1596.jpg",
                 description: "Developed a machine learning model for rainfall prediction using GNSS signal delay and ERA5 datasets with satellite-derived atmospheric data. The model achieved 85% accuracy in predicting short-duration precipitation events, which is crucial for flood early warning systems.",
                 details: [
                     "Processed and analyzed GNSS signal delay data from 50+ stations",
@@ -2293,7 +2277,7 @@
             flood: {
                 title: "Flood Risk Assessment",
                 subtitle: "Dhansiri River Basin, India",
-                image: "./images/flood.jpg",
+                image: "https://raw.githubusercontent.com/devam29/Resume2/main/flood.jpg",
                 description: "Conducted comprehensive flood risk analysis using SWAT hydrological model with NSE: 0.84 and R²: 0.90. The project integrated satellite imagery and hydrological modeling to identify high-risk zones and recommend mitigation strategies.",
                 details: [
                     "Calibrated SWAT model with NSE: 0.84 and R²: 0.90",
@@ -2313,7 +2297,7 @@
             groundwater: {
                 title: "Groundwater Sustainability",
                 subtitle: "Ahmedabad, India",
-                image: "./images/groundwater.jpg",
+                image: "https://raw.githubusercontent.com/devam29/Resume2/main/groundwater.jpg",
                 description: "AHP analysis using satellite data and GIS to identify 89% medium to high potential groundwater zones. The study helped local authorities in sustainable water resource management and planning.",
                 details: [
                     "Analyzed satellite-derived groundwater indicators",
@@ -2390,7 +2374,7 @@
             }
         });
 
-        // Geospatial Explorer Button
+        // Geospatial Explorer Button - All sections open with one click
         document.getElementById('geospatial-explorer-btn').addEventListener('click', function() {
             const content = document.getElementById('field-explanation-content');
             content.classList.toggle('hidden');
@@ -2521,30 +2505,9 @@
         
         earthObserver.observe(document.getElementById('earth-container'));
 
-        // Accordion functionality
-        document.querySelectorAll('.accordion-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const content = btn.nextElementSibling;
-                
-                // Close all other accordion items
-                document.querySelectorAll('.accordion-content').forEach(item => {
-                    if (item !== content) {
-                        item.classList.remove('open');
-                        item.previousElementSibling.classList.remove('active');
-                    }
-                });
-                
-                // Toggle current item
-                btn.classList.toggle('active');
-                content.classList.toggle('open');
-                
-                // Scroll to the accordion for better mobile experience
-                if (content.classList.contains('open')) {
-                    setTimeout(() => {
-                        btn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                    }, 100);
-                }
-            });
+        // All accordions open by default for geospatial section
+        document.querySelectorAll('.accordion-content').forEach(content => {
+            content.classList.add('open');
         });
     </script>
 </body>
