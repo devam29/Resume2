@@ -9,7 +9,6 @@
     <meta property="og:image" content="https://raw.githubusercontent.com/devam29/Resume2/main/dsaini.jpg">
     <meta name="keywords" content="Geomatics Engineering ETH Zurich, Geospatial Portfolio, Climate AI, Satellite Data, Earth Observation, Remote Sensing Projects, Flood Detection, Machine Learning">
     
-    <!-- Schema.org markup for Google -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -39,9 +38,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        /* ===== LIGHT & DARK THEME VARIABLES ===== */
+        /* ===== THEME VARIABLES ===== */
         :root {
-            /* Dark Theme (Space) - Default */
             --bg-primary: #0A0E17;
             --bg-secondary: #0F3460;
             --bg-card: rgba(15, 52, 96, 0.3);
@@ -64,7 +62,6 @@
             --star-opacity: 0.3;
         }
         
-        /* Light Theme (Sky) */
         .light-theme {
             --bg-primary: #F0F9FF;
             --bg-secondary: #E0F2FE;
@@ -88,6 +85,7 @@
             --star-opacity: 0.15;
         }
 
+        * { box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-primary);
@@ -99,902 +97,303 @@
             scroll-behavior: smooth;
             line-height: 1.6;
             transition: background-color 0.3s ease, color 0.3s ease;
+            margin: 0;
         }
         
+        /* Scroll Progress */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            z-index: 1001;
+            transition: width 0.1s ease;
+        }
+
+        /* Floating CV Button */
+        .floating-cv {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-primary);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 4px 20px rgba(0, 180, 216, 0.3);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-light);
+        }
+        .floating-cv:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 180, 216, 0.4);
+            background: var(--accent-secondary);
+            color: #0A0E17;
+        }
+
+        /* Navigation */
         .navbar {
             transition: all 0.3s ease;
             background: var(--nav-bg);
             backdrop-filter: blur(15px);
             border-bottom: 1px solid var(--border-light);
+            padding: 0.6rem 0;
         }
-        
-        .navbar.scrolled {
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            border-bottom: 1px solid var(--accent-primary);
+        .navbar.scrolled { box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); border-bottom: 1px solid var(--accent-primary); }
+        .nav-container { max-width: 1280px; margin: 0 auto; padding: 0 1rem; display: flex; justify-content: space-between; align-items: center; }
+        .nav-brand { display: flex; align-items: center; gap: 0.5rem; font-weight: 700; font-size: 1.25rem; color: var(--text-primary); }
+        .nav-controls { display: flex; align-items: center; gap: 0.5rem; }
+        .nav-links { display: none; }
+        @media (min-width: 1024px) { .nav-links { display: flex; align-items: center; gap: 0.25rem; margin-right: 0.5rem; } }
+        .nav-links a { color: var(--text-primary); padding: 0.5rem 0.6rem; font-size: 0.85rem; font-weight: 500; transition: color 0.2s; white-space: nowrap; }
+        .nav-links a:hover { color: var(--accent-primary); }
+        .theme-btn, .lang-btn {
+            padding: 0.4rem 0.7rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;
+            cursor: pointer; background: transparent; border: 1px solid var(--border-light);
+            color: var(--text-primary); display: flex; align-items: center; gap: 0.25rem; white-space: nowrap;
         }
-        
-        .card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
-            background: var(--bg-card);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border-light);
-            border-radius: 12px;
-        }
-        
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 180, 216, 0.15);
-            border-color: var(--card-hover-border);
-        }
-        
-        .active-nav {
-            color: var(--accent-primary);
-            position: relative;
-            font-weight: 600;
-        }
-        
-        .active-nav::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: var(--accent-primary);
-        }
-        
-        .mobile-menu {
-            display: none;
-            background: var(--nav-bg);
-        }
-        
-        .satellite-track {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .satellite-track::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
-            animation: satelliteOrbit 8s linear infinite;
-        }
-        
-        @keyframes satelliteOrbit {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-        
-        .loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--loader-bg);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease;
-        }
-        
-        .loader-content {
-            text-align: center;
-            position: relative;
-        }
-        
-        .loader-satellite {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            animation: float 3s ease-in-out infinite;
-            color: var(--accent-primary);
-            text-shadow: 0 0 10px var(--accent-primary);
-        }
-        
-        .loader-text {
-            font-size: 1.5rem;
-            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: gradientShift 5s ease infinite;
-            background-size: 200% 200%;
-            font-weight: 500;
-        }
-        
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            25% { transform: translateY(-10px) rotate(5deg); }
-            50% { transform: translateY(0) rotate(0deg); }
-            75% { transform: translateY(-10px) rotate(-5deg); }
-        }
-        
-        .section-heading {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 3rem;
-            font-weight: 700;
-            font-size: 2.5rem;
-        }
-        
-        .section-heading::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-            border-radius: 2px;
-        }
-        
-        .earth-glow {
-            box-shadow: 0 0 30px rgba(0, 180, 216, 0.4);
-        }
-        
-        .skill-badge {
-            display: inline-block;
-            background: var(--skill-badge-bg);
-            border: 1px solid var(--skill-badge-border);
-            border-radius: 20px;
-            padding: 0.5rem 1rem;
-            font-size: 0.8rem;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            color: var(--text-primary);
-        }
-        
-        .skill-badge:hover {
-            background: rgba(0, 180, 216, 0.25);
-            transform: translateY(-2px);
-        }
-        
-        #map {
-            height: 400px;
-            border-radius: 12px;
-            border: 1px solid var(--accent-primary);
-        }
-        
-        .leaflet-popup-content-wrapper {
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            border: 1px solid var(--accent-primary);
-            border-radius: 8px;
-        }
-        
-        .timeline-item {
-            position: relative;
-            padding-left: 2rem;
-            margin-bottom: 2.5rem;
-        }
-        
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0.25rem;
-            width: 1rem;
-            height: 1rem;
-            background: var(--timeline-dot);
-            border-radius: 50%;
-            border: 2px solid var(--accent-primary);
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
-        }
-        
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
-            overflow-y: auto;
-        }
-        
-        .modal-content {
-            background: var(--modal-bg);
-            margin: 2% auto;
-            padding: 2.5rem;
-            border-radius: 16px;
-            max-width: 900px;
-            position: relative;
-            animation: modalFadeIn 0.3s ease-out;
-            border: 1px solid var(--accent-primary);
-            box-shadow: 0 0 50px rgba(0, 180, 216, 0.3);
-            color: var(--text-primary);
-        }
-        
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: translateY(-50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .close-modal {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--accent-secondary);
-            transition: transform 0.3s ease;
-            background: rgba(0, 0, 0, 0.1);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .close-modal:hover {
-            transform: rotate(90deg);
-            background: rgba(0, 0, 0, 0.2);
-        }
-        
-        #earth-container {
-            width: 100%;
-            height: 400px;
-            border-radius: 12px;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .accordion-btn {
-            transition: all 0.3s ease;
-            padding: 1.5rem;
-            width: 100%;
-            text-align: left;
-            border-radius: 8px;
-            color: var(--text-primary);
-        }
-        
-        .accordion-btn:hover {
-            background: rgba(0, 180, 216, 0.1);
-        }
-        
-        .accordion-btn.active i.fa-chevron-down {
-            transform: rotate(180deg);
-        }
-        
-        .accordion-content {
-            transition: all 0.3s ease-out;
-            max-height: 0;
-            overflow: hidden;
-        }
-        
-        .accordion-content.open {
-            max-height: 500px;
-        }
-        
-        .timeline-content {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .contact-links {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-        
-        .contact-link {
-            display: flex;
-            align-items: center;
-            padding: 1rem 2rem;
-            background: var(--skill-badge-bg);
-            border: 1px solid var(--skill-badge-border);
-            border-radius: 50px;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            color: var(--text-primary);
-        }
-        
-        .contact-link:hover {
-            background: rgba(0, 180, 216, 0.3);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 180, 216, 0.2);
-        }
-        
-        .why-it-matters-container {
-            margin-top: 3rem;
-        }
-
-        .geospatial-explorer {
-            position: relative;
-            overflow: hidden;
-            border: 1px solid var(--accent-primary);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border-radius: 16px;
-        }
-        
-        .geospatial-explorer:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 180, 216, 0.2);
-            border-color: var(--accent-secondary);
-        }
-        
-        .achievement-card {
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            border-radius: 12px;
-        }
-        
-        .achievement-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: var(--accent-secondary);
-            transition: all 0.3s ease;
-        }
-        
-        .hobby-item {
-            transition: all 0.3s ease;
-            transform-style: preserve-3d;
-            border-radius: 12px;
-        }
-        
-        .language-meter {
-            height: 8px;
-            background: rgba(0, 180, 216, 0.2);
-            border-radius: 4px;
-            overflow: hidden;
-            margin-top: 0.5rem;
-        }
-        
-        .language-meter-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-            border-radius: 4px;
-            transition: width 1s ease-in-out;
-        }
-        
-        .blog-card {
-            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-            border-radius: 12px;
-        }
-        
-        .space-particle {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            pointer-events: none;
-        }
-        
-        .floating-astronaut {
-            position: absolute;
-            animation: floatAstronaut 6s ease-in-out infinite;
-            opacity: 0.5;
-            z-index: -1;
-        }
-        
-        @keyframes floatAstronaut {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
-        }
-        
-        .terminal-window {
-            background: rgba(0, 0, 0, 0.8);
-            border: 1px solid var(--accent-primary);
-            border-radius: 8px;
-            padding: 1.5rem;
-            font-family: 'Space Mono', monospace;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .terminal-window::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 35px;
-            background: rgba(0, 0, 0, 0.4);
-            border-bottom: 1px solid var(--accent-primary);
-        }
-        
-        .terminal-window::after {
-            content: 'terminal';
-            position: absolute;
-            top: 8px;
-            left: 15px;
-            color: var(--accent-primary);
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-        
-        .terminal-cursor {
-            display: inline-block;
-            width: 10px;
-            height: 20px;
-            background: var(--accent-primary);
-            animation: blink 1s step-end infinite;
-            vertical-align: middle;
-            margin-left: 2px;
-        }
-        
-        @keyframes blink {
-            from, to { opacity: 1; }
-            50% { opacity: 0; }
-        }
-        
-        .visual-aid {
-            width: 100%;
-            height: 200px;
-            background-size: cover;
-            background-position: center;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            border: 1px solid var(--border-light);
-        }
-        
+        .lang-btn.active { background: var(--accent-primary); color: white; border-color: var(--accent-primary); }
         .hire-me-btn {
             background: linear-gradient(135deg, var(--accent-secondary), #FFA500);
-            color: #0A0E17;
-            font-weight: 600;
-            border-radius: 50px;
-            padding: 0.75rem 1.5rem;
-            transition: all 0.3s ease;
+            color: #0A0E17 !important; font-weight: 600; border-radius: 50px;
+            padding: 0.45rem 1rem !important; transition: all 0.3s ease; white-space: nowrap;
         }
-        
-        .hire-me-btn:hover {
-            background: linear-gradient(135deg, #FFD700, #FF8C00);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
-        }
-        
-        .audience-tagline {
-            background: rgba(0, 180, 216, 0.1);
-            border-left: 4px solid var(--accent-secondary);
-            padding: 1.25rem;
-            margin: 2rem 0;
-            font-style: italic;
-            border-radius: 0 8px 8px 0;
-        }
-        
-        .lang-btn {
-            padding: 0.5rem 1rem;
-            border: 1px solid;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .lang-btn.active {
-            background: var(--accent-primary);
-            color: white;
-            border-color: var(--accent-primary);
-        }
-        
-        .lang-btn:not(.active) {
-            background: transparent;
-            color: var(--text-primary);
-            border-color: var(--border-light);
-        }
-        
-        .theme-btn {
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--border-light);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            background: transparent;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .theme-btn:hover {
-            border-color: var(--accent-primary);
-            color: var(--accent-primary);
-        }
+        .hire-me-btn:hover { background: linear-gradient(135deg, #FFD700, #FF8C00); transform: translateY(-2px); }
 
-        .executive-summary {
-            background: var(--executive-bg);
-            border-radius: 16px;
-            padding: 3rem;
-            margin: 2rem 0;
+        /* Interactive Timeline */
+        .timeline-horizontal {
+            display: flex; overflow-x: auto; padding: 2rem 0.5rem 1.5rem; gap: 0;
+            scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; cursor: grab;
         }
-        
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 700;
-            line-height: 1.2;
+        .timeline-horizontal::-webkit-scrollbar { height: 4px; }
+        .timeline-horizontal::-webkit-scrollbar-thumb { background: var(--accent-primary); border-radius: 4px; }
+        .timeline-node {
+            flex: 0 0 170px; scroll-snap-align: start; position: relative; padding: 0 8px;
         }
-        
-        h1 {
-            font-size: 3.5rem;
-            background: var(--heading-gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+        .timeline-node::before {
+            content: ''; position: absolute; top: -8px; left: 50%; transform: translateX(-50%);
+            width: 12px; height: 12px; background: var(--timeline-dot); border-radius: 50%;
+            border: 2px solid var(--accent-primary); z-index: 2;
         }
-        
-        p {
-            color: var(--text-secondary);
-            line-height: 1.7;
+        .timeline-node::after {
+            content: ''; position: absolute; top: -4px; left: 0; right: 0; height: 2px;
+            background: var(--border-light); z-index: 1;
         }
-        
-        .text-lead {
-            font-size: 1.25rem;
-            color: var(--text-primary);
-            font-weight: 300;
+        .timeline-node:first-child::after { left: 50%; }
+        .timeline-node:last-child::after { right: 50%; }
+        .timeline-card {
+            background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border-light);
+            border-radius: 12px; padding: 1.25rem 1rem; margin-top: 20px; transition: all 0.3s ease;
+            cursor: pointer; height: 100%;
         }
-        
-        .section-spacing {
-            padding-top: 6rem;
-            padding-bottom: 6rem;
-        }
+        .timeline-card:hover { transform: translateY(-4px); border-color: var(--card-hover-border); box-shadow: 0 10px 25px rgba(0, 180, 216, 0.15); }
+        .timeline-year { font-size: 1rem; font-weight: 700; color: var(--accent-primary); margin-bottom: 0.25rem; }
+        .timeline-title { font-weight: 600; color: var(--text-primary); font-size: 0.9rem; }
+        .timeline-org { font-size: 0.75rem; color: var(--text-muted); }
 
-        .interactive-link {
-            color: #38BDF8;
-            font-weight: 600;
+        /* Research Radar */
+        .map-wrapper { position: relative; }
+        .radar-sweep {
+            position: absolute; top: 50%; left: 50%; width: 100%; height: 100%;
+            transform: translate(-50%, -50%); pointer-events: none; z-index: 400;
+        }
+        .radar-sweep::before {
+            content: ''; position: absolute; top: 50%; left: 50%; width: 200%; height: 200%;
+            background: conic-gradient(from 0deg, transparent 0deg, var(--accent-primary) 360deg);
+            opacity: 0.06; animation: radarSpin 8s linear infinite; transform-origin: center;
+        }
+        @keyframes radarSpin { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+        /* Skills Constellation */
+        #skills-constellation { position: relative; min-height: 400px; margin: 2rem 0; }
+        .constellation-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+        .skills-grid-constellation {
+            position: relative; z-index: 2; display: grid; grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem; padding: 1rem;
+        }
+        @media (min-width: 768px) { .skills-grid-constellation { grid-template-columns: repeat(4, 1fr); } }
+        .skill-node {
+            background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border-light);
+            border-radius: 16px; padding: 1.5rem 1rem; text-align: center; transition: all 0.3s ease;
+        }
+        .skill-node:hover { transform: scale(1.05); border-color: var(--card-hover-border); box-shadow: 0 0 25px rgba(0, 180, 216, 0.2); }
+        .skill-node i { font-size: 2rem; color: var(--accent-primary); margin-bottom: 0.75rem; }
+        .skill-node h4 { font-weight: 600; color: var(--text-primary); margin-bottom: 0.5rem; }
+        .skill-node p { font-size: 0.8rem; color: var(--text-muted); }
+
+        /* Parallax */
+        .parallax-slow { transition: transform 0.1s ease-out; }
+
+        /* Share Button */
+        .share-btn {
+            display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem;
+            background: var(--skill-badge-bg); border: 1px solid var(--skill-badge-border);
+            border-radius: 50px; color: var(--text-primary); font-weight: 500; cursor: pointer;
             transition: all 0.3s ease;
-            border-bottom: 1px solid transparent;
         }
-        
-        .view-project-btn, .view-certificate-btn, .read-paper-btn {
-            color: #38BDF8;
-            font-weight: 600;
-            transition: all 0.3s ease;
+        .share-btn:hover { background: rgba(0, 180, 216, 0.2); transform: translateY(-2px); }
+        .share-tooltip {
+            position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
+            background: var(--modal-bg); color: var(--text-primary); padding: 0.75rem 1.5rem;
+            border-radius: 50px; border: 1px solid var(--accent-primary); box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 10000; opacity: 0; transition: opacity 0.3s; pointer-events: none;
         }
-        
-        .earth-caption {
-            position: absolute;
-            bottom: 20px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            background: rgba(10, 14, 23, 0.8);
-            padding: 10px;
-            border-radius: 8px;
-            margin: 0 20px;
-            font-style: italic;
-            color: var(--accent-secondary);
-        }
+        .share-tooltip.show { opacity: 1; }
 
-        /* Light theme specific overrides */
-        .light-theme .navbar {
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        .light-theme .card {
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-        }
-        .light-theme .terminal-window {
-            background: #1E293B;
-            color: #E2E8F0;
-        }
-        .light-theme .loader-text {
-            background: linear-gradient(90deg, #0284C7, #F59E0B);
-            -webkit-background-clip: text;
-            background-clip: text;
-        }
-        .light-theme .hire-me-btn {
-            color: white;
-            background: linear-gradient(135deg, #0284C7, #0369A1);
-        }
-        .light-theme .leaflet-popup-content-wrapper {
-            background: white;
-            color: #0F172A;
-        }
+        /* Existing styles */
+        .card { transition: transform 0.3s, box-shadow 0.3s, background 0.3s, border-color 0.3s; background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border-light); border-radius: 12px; }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0, 180, 216, 0.15); border-color: var(--card-hover-border); }
+        .active-nav { color: var(--accent-primary); font-weight: 600; }
+        .mobile-menu { display: none; background: var(--nav-bg); }
+        .satellite-track { position: relative; overflow: hidden; }
+        .satellite-track::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--accent-primary), transparent); animation: satelliteOrbit 8s linear infinite; }
+        @keyframes satelliteOrbit { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        .loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--loader-bg); display: flex; align-items: center; justify-content: center; z-index: 9999; transition: opacity 0.5s; }
+        .loader-satellite { font-size: 3rem; color: var(--accent-primary); animation: float 3s ease-in-out infinite; }
+        .loader-text { font-size: 1.5rem; background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary)); -webkit-background-clip: text; background-clip: text; color: transparent; animation: gradientShift 5s ease infinite; background-size: 200% 200%; }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
+        .section-heading { position: relative; display: inline-block; margin-bottom: 3rem; font-weight: 700; font-size: 2.5rem; }
+        .section-heading::after { content: ''; position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); width: 80px; height: 4px; background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary)); border-radius: 2px; }
+        .skill-badge { display: inline-block; background: var(--skill-badge-bg); border: 1px solid var(--skill-badge-border); border-radius: 20px; padding: 0.5rem 1rem; font-size: 0.8rem; margin: 0.25rem; font-weight: 500; color: var(--text-primary); }
+        #map { height: 400px; border-radius: 12px; border: 1px solid var(--accent-primary); }
+        .timeline-item { position: relative; padding-left: 2rem; margin-bottom: 2.5rem; }
+        .timeline-item::before { content: ''; position: absolute; left: 0; top: 0.25rem; width: 1rem; height: 1rem; background: var(--timeline-dot); border-radius: 50%; border: 2px solid var(--accent-primary); animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); } }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); z-index: 1000; overflow-y: auto; }
+        .modal-content { background: var(--modal-bg); margin: 2% auto; padding: 2.5rem; border-radius: 16px; max-width: 900px; border: 1px solid var(--accent-primary); color: var(--text-primary); }
+        .close-modal { position: absolute; top: 1.5rem; right: 1.5rem; font-size: 1.5rem; cursor: pointer; color: var(--accent-secondary); }
+        #earth-container { width: 100%; height: 400px; border-radius: 12px; overflow: hidden; }
+        .accordion-btn { padding: 1.5rem; width: 100%; text-align: left; color: var(--text-primary); }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s; }
+        .accordion-content.open { max-height: 500px; }
+        .executive-summary { background: var(--executive-bg); border-radius: 16px; padding: 3rem; margin: 2rem 0; }
+        h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
+        h1 { font-size: 3.5rem; background: var(--heading-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .section-spacing { padding-top: 6rem; padding-bottom: 6rem; }
+        .contact-link { display: flex; align-items: center; padding: 1rem 2rem; background: var(--skill-badge-bg); border: 1px solid var(--skill-badge-border); border-radius: 50px; color: var(--text-primary); }
+        .back-to-top { position: fixed; bottom: 24px; right: 24px; z-index: 998; background: var(--accent-primary); color: white; padding: 12px 16px; border-radius: 50%; opacity: 0; visibility: hidden; transition: all 0.3s; }
+        .back-to-top.visible { opacity: 1; visibility: visible; }
+        .floating-astronaut { position: absolute; opacity: 0.4; z-index: -1; animation: floatAstronaut 6s ease-in-out infinite; }
+        @keyframes floatAstronaut { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-20px);} }
+        .audience-tagline { background: rgba(0, 180, 216, 0.1); border-left: 4px solid var(--accent-secondary); padding: 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+        .achievement-card { position: relative; overflow: hidden; }
+        .achievement-card::after { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent-secondary); }
+        .hobby-item { transition: all 0.3s; border-radius: 12px; }
+        .language-meter { height: 8px; background: rgba(0, 180, 216, 0.2); border-radius: 4px; margin-top: 0.5rem; }
+        .language-meter-fill { height: 100%; background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary)); border-radius: 4px; }
+        .blog-card { transition: all 0.5s; border-radius: 12px; }
+        .view-project-btn, .view-certificate-btn, .read-paper-btn { color: #38BDF8; font-weight: 600; transition: all 0.3s ease; }
+        .earth-caption { position: absolute; bottom: 20px; left: 0; right: 0; text-align: center; background: rgba(10, 14, 23, 0.8); padding: 10px; border-radius: 8px; margin: 0 20px; font-style: italic; color: var(--accent-secondary); }
+        .geospatial-explorer { position: relative; overflow: hidden; border: 1px solid var(--accent-primary); transition: all 0.3s ease; cursor: pointer; border-radius: 16px; }
+        .geospatial-explorer:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0, 180, 216, 0.2); border-color: var(--accent-secondary); }
+        .terminal-window { background: rgba(0, 0, 0, 0.8); border: 1px solid var(--accent-primary); border-radius: 8px; padding: 1.5rem; font-family: 'Space Mono', monospace; position: relative; overflow: hidden; }
+        .terminal-window::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 35px; background: rgba(0, 0, 0, 0.4); border-bottom: 1px solid var(--accent-primary); }
+        .terminal-window::after { content: 'terminal'; position: absolute; top: 8px; left: 15px; color: var(--accent-primary); font-size: 0.8rem; font-weight: 600; }
+        .terminal-cursor { display: inline-block; width: 10px; height: 20px; background: var(--accent-primary); animation: blink 1s step-end infinite; vertical-align: middle; margin-left: 2px; }
+        @keyframes blink { from, to { opacity: 1; } 50% { opacity: 0; } }
+        .visual-aid { width: 100%; height: 200px; background-size: cover; background-position: center; border-radius: 8px; margin-bottom: 1rem; border: 1px solid var(--border-light); }
         
-        @media (min-width: 768px) {
-            .timeline-content {
-                flex-direction: row;
-            }
-            .timeline-content > div {
-                width: 50%;
-            }
-            h1 {
-                font-size: 4rem;
-            }
-        }
-
         @media (max-width: 768px) {
-            .mobile-menu.active {
-                display: flex;
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                padding: 1rem;
-                z-index: 100;
-            }
-            .hero-title {
-                font-size: 2.5rem !important;
-            }
-            #earth-container {
-                height: 300px;
-            }
-            .modal-content {
-                width: 95%;
-                margin: 5% auto;
-                padding: 1.5rem;
-            }
-            .contact-links {
-                flex-direction: column;
-                align-items: center;
-            }
-            .contact-link {
-                width: 100%;
-                justify-content: center;
-            }
-            .section-heading {
-                font-size: 2rem;
-            }
-            .executive-summary {
-                padding: 2rem 1rem;
-            }
+            .nav-controls { gap: 0.25rem; }
+            .theme-btn span, .lang-btn { font-size: 0.65rem; padding: 0.3rem 0.5rem; }
+            .hire-me-btn { padding: 0.4rem 0.8rem !important; font-size: 0.75rem; }
+            h1 { font-size: 2.5rem; }
+            .section-heading { font-size: 2rem; }
+            .executive-summary { padding: 2rem 1rem; }
+            .floating-cv { padding: 10px 16px; bottom: 16px; left: 16px; }
+            .mobile-menu.active { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; padding: 1rem; z-index: 100; background: var(--nav-bg); }
         }
     </style>
 </head>
 <body>
-    <!-- Space Background Elements -->
+    <div id="scroll-progress"></div>
+
+    <a href="https://raw.githubusercontent.com/devam29/Resume/main/CV_DevShreeSaini.pdf" class="floating-cv" download>
+        <i class="fas fa-file-pdf"></i><span>Download CV</span>
+    </a>
+
     <div id="space-elements"></div>
     
-    <!-- Floating Astronaut -->
-    <div class="floating-astronaut" style="top: 20%; left: 5%;">
-        <i class="fas fa-user-astronaut text-4xl text-cyan-400 opacity-50"></i>
+    <div class="floating-astronaut parallax-slow" style="top: 20%; left: 5%;" data-speed="0.05">
+        <i class="fas fa-user-astronaut text-4xl text-cyan-400"></i>
     </div>
-    
-    <div class="floating-astronaut" style="top: 70%; left: 90%; animation-delay: 2s;">
-        <i class="fas fa-satellite text-4xl text-satellite-gold opacity-50"></i>
+    <div class="floating-astronaut parallax-slow" style="top: 70%; left: 90%;" data-speed="0.08">
+        <i class="fas fa-satellite text-4xl text-yellow-400"></i>
     </div>
 
-    <!-- Loading Screen -->
     <div class="loader">
         <div class="loader-content">
-            <div class="loader-satellite">
-                <i class="fas fa-rocket"></i>
-            </div>
-            <p class="loader-text text-xl mb-4">Launching Dev's Portfolio!! </p>
-            <div class="terminal-window max-w-md w-full text-green-400 text-sm mb-4">
-                <div class="mt-8">
-                    <span class="text-cyan-400">$</span> Initializing geospatial modules...<br>
-                    <span class="text-cyan-400">$</span> Loading personal data...<br>
-                    <span class="text-cyan-400">$</span> Connecting to research databases...<br>
-                    <span class="text-cyan-400">$</span> Ready in <span id="countdown">3</span><span class="terminal-cursor"></span>
-                </div>
-            </div>
-            <div class="w-64 h-1 bg-gray-700 rounded-full mt-4 overflow-hidden">
-                <div class="h-full bg-gradient-to-r from-cyan-400 to-satellite-gold rounded-full progress-bar-loading"></div>
-            </div>
+            <div class="loader-satellite"><i class="fas fa-rocket"></i></div>
+            <p class="loader-text text-xl mb-4">Launching Dev's Portfolio!!</p>
+            <div class="terminal-window max-w-md w-full text-green-400 text-sm mb-4"><div class="mt-8"><span class="text-cyan-400">$</span> Initializing geospatial modules...<br><span class="text-cyan-400">$</span> Loading personal data...<br><span class="text-cyan-400">$</span> Connecting to research databases...<br><span class="text-cyan-400">$</span> Ready in <span id="countdown">3</span><span class="terminal-cursor"></span></div></div>
+            <div class="w-64 h-1 bg-gray-700 rounded-full mt-4 overflow-hidden"><div class="h-full bg-gradient-to-r from-cyan-400 to-yellow-400 rounded-full progress-bar-loading"></div></div>
         </div>
     </div>
 
-    <!-- Navigation -->
-    <nav class="navbar fixed top-0 w-full z-50 py-4">
-        <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <i class="fas fa-satellite text-[--accent-primary]"></i>
-                <h1 class="text-xl font-bold tracking-tight" style="color: var(--text-primary);">DEV SHREE SAINI</h1>
-            </div>
-            
-            <div class="flex items-center space-x-4">
-                <!-- Theme Switcher -->
-                <button id="theme-toggle" class="theme-btn">
-                    <i class="fas fa-sun"></i>
-                    <span>Light</span>
-                </button>
-                
-                <!-- Language Switcher -->
-                <div class="language-switcher mr-4">
-                    <button class="lang-btn active" data-lang="en">EN</button>
-                    <button class="lang-btn" data-lang="fr">FR</button>
-                    <button class="lang-btn" data-lang="de">DE</button>
-                    <button class="lang-btn" data-lang="hi">HI</button>
+    <nav class="navbar fixed top-0 w-full z-50">
+        <div class="nav-container">
+            <div class="nav-brand"><i class="fas fa-satellite text-[--accent-primary]"></i><span>DEV SHREE SAINI</span></div>
+            <div class="nav-controls">
+                <div class="nav-links">
+                    <a href="#about">About</a><a href="#education">Education</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#publications">Publications</a><a href="#achievements">Achievements</a><a href="#connect">Connect</a>
                 </div>
-                
-                <button class="md:hidden" id="menu-toggle" style="color: var(--text-primary);">
-                    <i class="fas fa-bars text-xl"></i>
-                </button>
-                
-                <ul class="hidden md:flex space-x-6 items-center" style="color: var(--text-primary);">
-                    <li><a href="#about" class="hover:text-[--accent-primary] transition-colors">About</a></li>
-                    <li><a href="#education" class="hover:text-[--accent-primary] transition-colors">Education</a></li>
-                    <li><a href="#experience" class="hover:text-[--accent-primary] transition-colors">Experience</a></li>
-                    <li><a href="#skills" class="hover:text-[--accent-primary] transition-colors">Skills</a></li>
-                    <li><a href="#projects" class="hover:text-[--accent-primary] transition-colors">Projects</a></li>
-                    <li><a href="#publications" class="hover:text-[--accent-primary] transition-colors">Publications</a></li>
-                    <li><a href="#achievements" class="hover:text-[--accent-primary] transition-colors">Achievements</a></li>
-                    <li><a href="#connect" class="hover:text-[--accent-primary] transition-colors">Connect</a></li>
-                    <li>
-                        <a href="#connect" class="hire-me-btn px-4 py-2 transition-all shadow-lg">
-                            <i class="fas fa-handshake mr-2"></i>
-                            <span>Hire Me</span>
-                        </a>
-                    </li>
-                </ul>
+                <button id="theme-toggle" class="theme-btn"><i class="fas fa-sun"></i><span>Light</span></button>
+                <div style="display: flex; gap: 0.15rem;"><button class="lang-btn active" data-lang="en">EN</button><button class="lang-btn" data-lang="fr">FR</button><button class="lang-btn" data-lang="de">DE</button><button class="lang-btn" data-lang="hi">HI</button></div>
+                <a href="#connect" class="hire-me-btn"><i class="fas fa-handshake"></i><span>Hire Me</span></a>
+                <button class="md:hidden" id="menu-toggle" style="color: var(--text-primary);"><i class="fas fa-bars text-xl"></i></button>
             </div>
-            
-            <ul class="mobile-menu hidden" id="mobile-menu">
-                <li class="py-2"><a href="#about" class="block hover:text-[--accent-primary] transition-colors">About</a></li>
-                <li class="py-2"><a href="#education" class="block hover:text-[--accent-primary] transition-colors">Education</a></li>
-                <li class="py-2"><a href="#experience" class="block hover:text-[--accent-primary] transition-colors">Experience</a></li>
-                <li class="py-2"><a href="#skills" class="block hover:text-[--accent-primary] transition-colors">Skills</a></li>
-                <li class="py-2"><a href="#projects" class="block hover:text-[--accent-primary] transition-colors">Projects</a></li>
-                <li class="py-2"><a href="#publications" class="block hover:text-[--accent-primary] transition-colors">Publications</a></li>
-                <li class="py-2"><a href="#achievements" class="block hover:text-[--accent-primary] transition-colors">Achievements</a></li>
-                <li class="py-2"><a href="#connect" class="block hover:text-[--accent-primary] transition-colors">Connect</a></li>
-                <li class="py-2">
-                    <a href="#connect" class="hire-me-btn block text-center px-4 py-2 transition-all">
-                        <i class="fas fa-handshake mr-2"></i>
-                        <span>Hire Me</span>
-                    </a>
-                </li>
-            </ul>
         </div>
+        <ul class="mobile-menu hidden" id="mobile-menu">
+            <li><a href="#about">About</a></li><li><a href="#education">Education</a></li><li><a href="#experience">Experience</a></li><li><a href="#skills">Skills</a></li><li><a href="#projects">Projects</a></li><li><a href="#publications">Publications</a></li><li><a href="#achievements">Achievements</a></li><li><a href="#connect">Connect</a></li>
+        </ul>
     </nav>
 
     <!-- Hero Section -->
-    <section id="hero" class="min-h-screen flex items-center justify-center text-center pt-32 md:pt-24 px-4 relative overflow-hidden section-spacing">
+    <section id="hero" class="min-h-screen flex items-center justify-center text-center pt-32 px-4 relative section-spacing">
         <div class="max-w-4xl mx-auto relative z-10">
-            <div class="relative inline-block mb-12">
-                <img src="https://raw.githubusercontent.com/devam29/Resume2/main/dsaini.jpg" 
-                     class="w-48 h-48 rounded-full border-4 border-[--accent-primary] earth-glow object-cover mx-auto" 
-                     alt="Dev Shree Saini">
-                <div class="absolute -bottom-2 -right-2 bg-[--bg-secondary] rounded-full p-2 border border-[--text-primary]">
-                    <i class="fas fa-satellite text-[--accent-secondary]"></i>
-                </div>
-            </div>
-            
-            <h1 class="text-4xl md:text-5xl font-bold mb-6 hero-title">
-                <span>DEV SHREE SAINI</span>
-            </h1>
-            
+            <div class="relative inline-block mb-12"><img src="https://raw.githubusercontent.com/devam29/Resume2/main/dsaini.jpg" class="w-48 h-48 rounded-full border-4 border-[--accent-primary] earth-glow object-cover mx-auto" alt="Dev Shree Saini"><div class="absolute -bottom-2 -right-2 bg-[--bg-secondary] rounded-full p-2 border border-[--text-primary]"><i class="fas fa-satellite text-[--accent-secondary]"></i></div></div>
+            <h1 class="hero-title">DEV SHREE SAINI</h1>
             <p class="text-xl mb-8 font-mono" style="color: var(--text-secondary);">Geospatial Engineer | Climate Researcher | ETH Zurich</p>
-            
-            <div class="inline-flex items-center space-x-2 bg-[--bg-secondary] bg-opacity-50 px-4 py-2 rounded-full mb-8 border border-[--border-light]">
-                <i class="fas fa-map-marker-alt text-[--accent-secondary]"></i>
-                <span>Zurich, Switzerland</span>
-            </div>
-            
+            <div class="inline-flex items-center space-x-2 bg-[--bg-secondary] bg-opacity-50 px-4 py-2 rounded-full mb-8 border border-[--border-light]"><i class="fas fa-map-marker-alt text-[--accent-secondary]"></i><span>Zurich, Switzerland</span></div>
             <div class="flex flex-wrap justify-center gap-4 mt-8">
-                <a href="https://raw.githubusercontent.com/devam29/Resume/main/CV_DevShreeSaini.pdf" 
-                   class="inline-flex items-center px-6 py-3 bg-[--accent-primary] hover:bg-cyan-700 text-white rounded-full transition-colors shadow-lg font-semibold">
-                    <i class="fas fa-file-download mr-2"></i>
-                    <span>Download Resume</span>
-                </a>
-                <a href="#connect" 
-                   class="inline-flex items-center px-6 py-3 bg-transparent border border-[--accent-primary] hover:bg-[--accent-primary] hover:bg-opacity-10 text-[--accent-primary] rounded-full transition-colors font-semibold">
-                    <i class="fas fa-paper-plane mr-2"></i>
-                    <span>Contact Me</span>
-                </a>
+                <a href="https://raw.githubusercontent.com/devam29/Resume/main/CV_DevShreeSaini.pdf" class="inline-flex items-center px-6 py-3 bg-[--accent-primary] hover:bg-cyan-700 text-white rounded-full shadow-lg font-semibold"><i class="fas fa-file-download mr-2"></i>Download Resume</a>
+                <a href="#connect" class="inline-flex items-center px-6 py-3 bg-transparent border border-[--accent-primary] hover:bg-[--accent-primary] hover:bg-opacity-10 text-[--accent-primary] rounded-full font-semibold"><i class="fas fa-paper-plane mr-2"></i>Contact Me</a>
             </div>
-            
-            <!-- Professional Summary Section -->
             <div class="executive-summary mt-16">
                 <h2 class="text-2xl font-bold mb-6 text-center" style="color: var(--text-primary);">Geospatial Engineering Specialist</h2>
-                <p class="text-lead text-center mb-6">
-                    Master's candidate at ETH Zurich leveraging satellite data and machine learning 
-                    to develop climate resilience solutions. 2+ years experience in flood detection, 
-                    hydrological modeling, and environmental monitoring through remote sensing technologies.
-                </p>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-                    <div class="text-center">
-                        <div class="text-2xl font-bold text-[--accent-primary] mb-2">2+</div>
-                        <div class="text-sm" style="color: var(--text-primary);">Years Experience</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-2xl font-bold text-[--accent-secondary] mb-2">5+</div>
-                        <div class="text-sm" style="color: var(--text-primary);">Projects Completed</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-2xl font-bold text-[--accent-primary] mb-2">5</div>
-                        <div class="text-sm" style="color: var(--text-primary);">Research Publications</div>
-                    </div>
-                </div>
+                <p class="text-lead text-center mb-6">Master's candidate at ETH Zurich leveraging satellite data and machine learning to develop climate resilience solutions. 2+ years experience in flood detection, hydrological modeling, and environmental monitoring through remote sensing technologies.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8"><div class="text-center"><div class="text-2xl font-bold text-[--accent-primary] mb-2">2+</div><div class="text-sm" style="color: var(--text-primary);">Years Experience</div></div><div class="text-center"><div class="text-2xl font-bold text-[--accent-secondary] mb-2">5+</div><div class="text-sm" style="color: var(--text-primary);">Projects Completed</div></div><div class="text-center"><div class="text-2xl font-bold text-[--accent-primary] mb-2">5</div><div class="text-sm" style="color: var(--text-primary);">Research Publications</div></div></div>
             </div>
-            
             <div class="mt-12 max-w-2xl mx-auto bg-[--bg-secondary] bg-opacity-50 p-6 rounded-lg border border-[--border-light]">
                 <h3 class="text-lg font-semibold text-[--accent-primary] mb-2">Professional Branding Statement</h3>
-                <p style="color: var(--text-primary);">
-                    <i class="fas fa-quote-left text-[--accent-secondary] mr-1"></i>
-                    Combining environmental science with tech to build real-world climate solutions through geospatial AI and Earth observation.
-                    <i class="fas fa-quote-right text-[--accent-secondary] ml-1"></i>
-                </p>
-                
-                <div class="audience-tagline text-sm mt-4 text-left">
-                    <i class="fas fa-info-circle text-[--accent-secondary] mr-2"></i>
-                    This portfolio is crafted for researchers, recruiters, and curious minds who want to explore how space tech meets climate challenges.
-                </div>
+                <p style="color: var(--text-primary);"><i class="fas fa-quote-left text-[--accent-secondary] mr-1"></i>Combining environmental science with tech to build real-world climate solutions through geospatial AI and Earth observation.<i class="fas fa-quote-right text-[--accent-secondary] ml-1"></i></p>
+                <div class="audience-tagline text-sm mt-4 text-left"><i class="fas fa-info-circle text-[--accent-secondary] mr-2"></i>This portfolio is crafted for researchers, recruiters, and curious minds who want to explore how space tech meets climate challenges.</div>
             </div>
         </div>
-        
         <div id="hero-space-elements"></div>
     </section>
 
     <!-- About Section -->
     <section id="about" class="section-spacing px-4 satellite-track">
         <div class="max-w-7xl mx-auto">
-            <h2 class="section-heading text-center text-[--accent-primary]">
-                <i class="fas fa-user-astronaut mr-2"></i>
-                ABOUT ME
-            </h2>
-            
+            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-user-astronaut mr-2"></i>ABOUT ME</h2>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div class="card p-8">
-                    <div class="flex items-start mb-6">
-                        <div class="bg-[--accent-primary] p-3 rounded-full mr-4">
-                            <i class="fas fa-satellite-dish text-white"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Geospatial Vision</h3>
-                            <p style="color: var(--text-secondary);">
-                                Passionate graduate student specializing in climate science and environmental data analysis, with hands-on experience in satellite-based flood detection and land use dynamics. Skilled in leveraging machine learning and geospatial technologies to address climate resilience and sustainability.
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <div class="flex items-start">
-                        <div class="bg-[--accent-secondary] p-3 rounded-full mr-4 text-black">
-                            <i class="fas fa-bullseye"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Career Objective</h3>
-                            <p style="color: var(--text-secondary);">
-                                To apply my expertise in geospatial analysis and remote sensing to develop innovative solutions for climate change adaptation and disaster risk reduction, while contributing to interdisciplinary research at the intersection of technology and environmental science.
-                            </p>
-                        </div>
-                    </div>
+                    <div class="flex items-start mb-6"><div class="bg-[--accent-primary] p-3 rounded-full mr-4"><i class="fas fa-satellite-dish text-white"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Geospatial Vision</h3><p style="color: var(--text-secondary);">Passionate graduate student specializing in climate science and environmental data analysis, with hands-on experience in satellite-based flood detection and land use dynamics. Skilled in leveraging machine learning and geospatial technologies to address climate resilience and sustainability.</p></div></div>
+                    <div class="flex items-start"><div class="bg-[--accent-secondary] p-3 rounded-full mr-4 text-black"><i class="fas fa-bullseye"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Career Objective</h3><p style="color: var(--text-secondary);">To apply my expertise in geospatial analysis and remote sensing to develop innovative solutions for climate change adaptation and disaster risk reduction, while contributing to interdisciplinary research at the intersection of technology and environmental science.</p></div></div>
                 </div>
-                
                 <div class="card p-8">
-                    <div class="flex items-start mb-6">
-                        <div class="bg-[--accent-secondary] p-3 rounded-full mr-4 text-black">
-                            <i class="fas fa-globe-americas"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Research Focus</h3>
-                            <p style="color: var(--text-secondary);">
-                                Currently pursuing my Master's in Geomatics Engineering at ETH Zurich, I'm driven by research that informs practical, tech-enabled climate solutions. My work spans from GNSS-based precipitation prediction to flood risk modeling using advanced geospatial tools and satellite data.
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <div id="earth-container" class="mt-6 h-64 rounded-lg relative">
-                        <div class="earth-caption">
-                            <i class="fas fa-compass mr-2"></i>
-                            Explore our planet through interactive geospatial data visualization
-                        </div>
-                    </div>
+                    <div class="flex items-start mb-6"><div class="bg-[--accent-secondary] p-3 rounded-full mr-4 text-black"><i class="fas fa-globe-americas"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Research Focus</h3><p style="color: var(--text-secondary);">Currently pursuing my Master's in Geomatics Engineering at ETH Zurich, I'm driven by research that informs practical, tech-enabled climate solutions. My work spans from GNSS-based precipitation prediction to flood risk modeling using advanced geospatial tools and satellite data.</p></div></div>
+                    <div id="earth-container" class="mt-6 h-64 rounded-lg relative"><div class="earth-caption"><i class="fas fa-compass mr-2"></i>Explore our planet through interactive geospatial data visualization</div></div>
                 </div>
             </div>
         </div>
@@ -1004,109 +403,21 @@
     <section id="field-explanation" class="section-spacing px-4 bg-[--bg-secondary] bg-opacity-30">
         <div class="max-w-7xl mx-auto text-center">
             <div class="geospatial-explorer card p-8 max-w-2xl mx-auto cursor-pointer" id="geospatial-explorer-btn">
-                <div class="flex flex-col items-center">
-                    <i class="fas fa-question-circle text-4xl mb-4 text-[--accent-secondary]"></i>
-                    <h3 class="text-2xl font-bold mb-2" style="color: var(--text-primary);">Not familiar with Geospatial Engineering?</h3>
-                    <p style="color: var(--text-secondary);">Click here to explore what this exciting field is all about!</p>
-                    <div class="animate-bounce mt-4">
-                        <i class="fas fa-chevron-down text-xl text-[--accent-primary]"></i>
-                    </div>
-                </div>
+                <div class="flex flex-col items-center"><i class="fas fa-question-circle text-4xl mb-4 text-[--accent-secondary]"></i><h3 class="text-2xl font-bold mb-2" style="color: var(--text-primary);">Not familiar with Geospatial Engineering?</h3><p style="color: var(--text-secondary);">Click here to explore what this exciting field is all about!</p><div class="animate-bounce mt-4"><i class="fas fa-chevron-down text-xl text-[--accent-primary]"></i></div></div>
             </div>
-            
             <div class="hidden" id="field-explanation-content">
-                <h2 class="section-heading text-center text-[--accent-primary] mt-12">
-                    <i class="fas fa-satellite mr-2"></i>
-                    WHAT IS GEOSPATIAL ENGINEERING?
-                </h2>
-                
-                <div class="max-w-4xl mx-auto mb-12">
-                    <div class="visual-aid" style="background-image: url('https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcWJhZzV4Y3VwY2N2d2R2d3V0dWl1bHZ3d3R4dGJ5Z2R3eG5mY3B6eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7btPCcdNniyf0ArS/giphy.gif')"></div>
-                    <p class="text-center text-sm" style="color: var(--text-secondary);">
-                        Visualizing Earth's data from space to solve real-world challenges
-                    </p>
-                </div>
-                
+                <h2 class="section-heading text-center text-[--accent-primary] mt-12"><i class="fas fa-satellite mr-2"></i>WHAT IS GEOSPATIAL ENGINEERING?</h2>
+                <div class="max-w-4xl mx-auto mb-12"><div class="visual-aid" style="background-image: url('https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcWJhZzV4Y3VwY2N2d2R2d3V0dWl1bHZ3d3R4dGJ5Z2R3eG5mY3B6eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7btPCcdNniyf0ArS/giphy.gif')"></div><p class="text-center text-sm" style="color: var(--text-secondary);">Visualizing Earth's data from space to solve real-world challenges</p></div>
                 <div class="space-y-6 max-w-4xl mx-auto">
-                    <div class="card overflow-hidden">
-                        <div class="accordion-btn w-full flex justify-between items-center p-6 text-left active">
-                            <div class="flex items-center">
-                                <i class="fas fa-satellite text-2xl mr-4 text-[--accent-secondary]"></i>
-                                <h3 class="text-xl font-bold" style="color: var(--text-primary);">Satellite Data</h3>
-                            </div>
-                            <i class="fas fa-chevron-down transition-transform duration-300 text-[--accent-primary] rotate-180"></i>
-                        </div>
-                        <div class="accordion-content px-6 pb-6 open">
-                            <p style="color: var(--text-secondary);">
-                                Like a doctor uses X-rays to see inside the body, we use satellite images to see Earth's health from space. We process data from various satellite sensors (optical, radar, LiDAR) to monitor environmental changes, track deforestation, measure sea level rise, and detect urban expansion.
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <div class="card overflow-hidden">
-                        <div class="accordion-btn w-full flex justify-between items-center p-6 text-left active">
-                            <div class="flex items-center">
-                                <i class="fas fa-map-marked-alt text-2xl mr-4 text-[--accent-secondary]"></i>
-                                <h3 class="text-xl font-bold" style="color: var(--text-primary);">Mapping & Analysis</h3>
-                            </div>
-                            <i class="fas fa-chevron-down transition-transform duration-300 text-[--accent-primary] rotate-180"></i>
-                        </div>
-                        <div class="accordion-content px-6 pb-6 open">
-                            <p style="color: var(--text-secondary);">
-                                Think of Google Maps, but with superpowers to predict floods, track deforestation, and monitor climate change. We create intelligent maps that help understand complex environmental patterns, analyze spatial relationships, and make data-driven decisions for sustainable development.
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <div class="card overflow-hidden">
-                        <div class="accordion-btn w-full flex justify-between items-center p-6 text-left active">
-                            <div class="flex items-center">
-                                <i class="fas fa-robot text-2xl mr-4 text-[--accent-secondary]"></i>
-                                <h3 class="text-xl font-bold" style="color: var(--text-primary);">AI Solutions</h3>
-                            </div>
-                            <i class="fas fa-chevron-down transition-transform duration-300 text-[--accent-primary] rotate-180"></i>
-                        </div>
-                        <div class="accordion-content px-6 pb-6 open">
-                            <p style="color: var(--text-secondary);">
-                                Similar to facial recognition, but for Earth's features - identifying floods, droughts, and urban growth patterns. We train computers to automatically detect environmental changes from satellite data using deep learning models like CNNs and transformers, enabling real-time monitoring at global scales.
-                            </p>
-                        </div>
-                    </div>
+                    <div class="card overflow-hidden"><div class="accordion-btn w-full flex justify-between items-center p-6 text-left active"><div class="flex items-center"><i class="fas fa-satellite text-2xl mr-4 text-[--accent-secondary]"></i><h3 class="text-xl font-bold" style="color: var(--text-primary);">Satellite Data</h3></div><i class="fas fa-chevron-down transition-transform duration-300 text-[--accent-primary] rotate-180"></i></div><div class="accordion-content px-6 pb-6 open"><p style="color: var(--text-secondary);">Like a doctor uses X-rays to see inside the body, we use satellite images to see Earth's health from space. We process data from various satellite sensors (optical, radar, LiDAR) to monitor environmental changes, track deforestation, measure sea level rise, and detect urban expansion.</p></div></div>
+                    <div class="card overflow-hidden"><div class="accordion-btn w-full flex justify-between items-center p-6 text-left active"><div class="flex items-center"><i class="fas fa-map-marked-alt text-2xl mr-4 text-[--accent-secondary]"></i><h3 class="text-xl font-bold" style="color: var(--text-primary);">Mapping & Analysis</h3></div><i class="fas fa-chevron-down transition-transform duration-300 text-[--accent-primary] rotate-180"></i></div><div class="accordion-content px-6 pb-6 open"><p style="color: var(--text-secondary);">Think of Google Maps, but with superpowers to predict floods, track deforestation, and monitor climate change. We create intelligent maps that help understand complex environmental patterns, analyze spatial relationships, and make data-driven decisions for sustainable development.</p></div></div>
+                    <div class="card overflow-hidden"><div class="accordion-btn w-full flex justify-between items-center p-6 text-left active"><div class="flex items-center"><i class="fas fa-robot text-2xl mr-4 text-[--accent-secondary]"></i><h3 class="text-xl font-bold" style="color: var(--text-primary);">AI Solutions</h3></div><i class="fas fa-chevron-down transition-transform duration-300 text-[--accent-primary] rotate-180"></i></div><div class="accordion-content px-6 pb-6 open"><p style="color: var(--text-secondary);">Similar to facial recognition, but for Earth's features - identifying floods, droughts, and urban growth patterns. We train computers to automatically detect environmental changes from satellite data using deep learning models like CNNs and transformers, enabling real-time monitoring at global scales.</p></div></div>
                 </div>
-                
                 <div class="why-it-matters-container mt-12">
                     <div class="card p-8">
                         <div class="timeline-content">
-                            <div class="md:pr-6">
-                                <h3 class="text-2xl font-bold mb-4 text-[--accent-primary]">Why It Matters</h3>
-                                <p style="color: var(--text-secondary);">
-                                    Geospatial engineering helps solve some of the world's most pressing challenges:
-                                </p>
-                                <ul class="list-disc pl-5 space-y-2" style="color: var(--text-secondary);">
-                                    <li>Predicting natural disasters before they happen</li>
-                                    <li>Monitoring climate change impacts in real-time</li>
-                                    <li>Optimizing renewable energy deployment</li>
-                                    <li>Protecting endangered ecosystems</li>
-                                    <li>Improving urban planning for sustainable cities</li>
-                                </ul>
-                            </div>
-                            <div class="why-it-matters md:pl-6">
-                                <div class="bg-[--bg-secondary] rounded-lg p-4 border border-[--border-light] h-full">
-                                    <h4 class="text-lg font-semibold mb-3 text-[--accent-secondary]">
-                                        <i class="fas fa-lightbulb mr-2"></i>
-                                        <span>Real-World Example</span>
-                                    </h4>
-                                    <p style="color: var(--text-secondary);">
-                                        When a flood occurs, our systems can automatically detect the affected areas from satellite images within hours, helping emergency responders save lives and allocate resources efficiently.
-                                    </p>
-                                    <div class="mt-4 flex justify-center">
-                                        <div class="inline-flex items-center px-4 py-2 bg-[--accent-primary] bg-opacity-20 text-[--accent-primary] rounded-full border border-[--accent-primary]">
-                                            <i class="fas fa-satellite-dish mr-2"></i>
-                                            <span>That's what I work on!</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="md:pr-6"><h3 class="text-2xl font-bold mb-4 text-[--accent-primary]">Why It Matters</h3><p style="color: var(--text-secondary);">Geospatial engineering helps solve some of the world's most pressing challenges:</p><ul class="list-disc pl-5 space-y-2" style="color: var(--text-secondary);"><li>Predicting natural disasters before they happen</li><li>Monitoring climate change impacts in real-time</li><li>Optimizing renewable energy deployment</li><li>Protecting endangered ecosystems</li><li>Improving urban planning for sustainable cities</li></ul></div>
+                            <div class="why-it-matters md:pl-6"><div class="bg-[--bg-secondary] rounded-lg p-4 border border-[--border-light] h-full"><h4 class="text-lg font-semibold mb-3 text-[--accent-secondary]"><i class="fas fa-lightbulb mr-2"></i><span>Real-World Example</span></h4><p style="color: var(--text-secondary);">When a flood occurs, our systems can automatically detect the affected areas from satellite images within hours, helping emergency responders save lives and allocate resources efficiently.</p><div class="mt-4 flex justify-center"><div class="inline-flex items-center px-4 py-2 bg-[--accent-primary] bg-opacity-20 text-[--accent-primary] rounded-full border border-[--accent-primary]"><i class="fas fa-satellite-dish mr-2"></i><span>That's what I work on!</span></div></div></div></div>
                         </div>
                     </div>
                 </div>
@@ -1114,79 +425,46 @@
         </div>
     </section>
 
+    <!-- Interactive Timeline -->
+    <section id="timeline-viz" class="section-spacing px-4 bg-[--bg-secondary] bg-opacity-30">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-timeline mr-2"></i>CAREER TIMELINE</h2>
+            <p class="text-center text-sm mb-6" style="color: var(--text-muted);"><i class="fas fa-arrows-left-right mr-2"></i>Swipe to explore · Click cards for details</p>
+            <div class="timeline-horizontal" id="timeline-scroll">
+                <div class="timeline-node"><div class="timeline-card" onclick="document.getElementById('education').scrollIntoView({behavior:'smooth'})"><div class="timeline-year">2019-2023</div><div class="timeline-title">B.Tech Civil Eng.</div><div class="timeline-org">VIT Vellore · CGPA 9.33</div></div></div>
+                <div class="timeline-node"><div class="timeline-card" onclick="document.getElementById('experience').scrollIntoView({behavior:'smooth'})"><div class="timeline-year">2021-2023</div><div class="timeline-title">Teaching Assistant</div><div class="timeline-org">VIT Vellore</div></div></div>
+                <div class="timeline-node"><div class="timeline-card" onclick="document.getElementById('experience').scrollIntoView({behavior:'smooth'})"><div class="timeline-year">2022</div><div class="timeline-title">Research Intern</div><div class="timeline-org">Concordia University</div></div></div>
+                <div class="timeline-node"><div class="timeline-card" onclick="document.getElementById('experience').scrollIntoView({behavior:'smooth'})"><div class="timeline-year">2023</div><div class="timeline-title">Spatial Data Analyst</div><div class="timeline-org">IIRS, ISRO</div></div></div>
+                <div class="timeline-node"><div class="timeline-card" onclick="document.getElementById('education').scrollIntoView({behavior:'smooth'})"><div class="timeline-year">2024-Present</div><div class="timeline-title">MSc Geomatics</div><div class="timeline-org">ETH Zurich</div></div></div>
+            </div>
+        </div>
+    </section>
+
     <!-- Education Section -->
     <section id="education" class="section-spacing px-4 satellite-track">
         <div class="max-w-7xl mx-auto">
-            <h2 class="section-heading text-center text-[--accent-primary]">
-                <i class="fas fa-graduation-cap mr-2"></i>
-                EDUCATION
-            </h2>
-            
+            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-graduation-cap mr-2"></i>EDUCATION</h2>
             <div class="space-y-8">
                 <div class="timeline-item">
                     <div class="card p-8">
                         <div class="flex flex-col md:flex-row md:items-center mb-6">
-                            <div class="flex items-center mb-4 md:mb-0 md:w-1/3">
-                                <img src="https://raw.githubusercontent.com/devam29/Resume2/main/eth.png" 
-                                     alt="ETH Zurich Logo" 
-                                     class="h-12 mr-4">
-                                <div>
-                                    <h3 class="text-xl font-bold" style="color: var(--text-primary);">ETH Zurich</h3>
-                                    <p class="text-sm" style="color: var(--text-muted);">MSc in Geomatics Engineering</p>
-                                </div>
-                            </div>
+                            <div class="flex items-center mb-4 md:mb-0 md:w-1/3"><img src="https://raw.githubusercontent.com/devam29/Resume2/main/eth.png" alt="ETH Zurich Logo" class="h-12 mr-4"><div><h3 class="text-xl font-bold" style="color: var(--text-primary);">ETH Zurich</h3><p class="text-sm" style="color: var(--text-muted);">MSc in Geomatics Engineering</p></div></div>
                             <div class="md:w-2/3">
-                                <div class="flex items-center text-sm mb-4">
-                                    <i class="fas fa-map-marker-alt mr-2 text-[--accent-secondary]"></i>
-                                    <span>Zurich, Switzerland</span>
-                                    <i class="fas fa-calendar-alt ml-4 mr-2 text-[--accent-secondary]"></i>
-                                    <span>2024 – Present</span> <!-- Updated year -->
-                                </div>
-                                <ul class="list-disc pl-5 space-y-2" style="color: var(--text-secondary);">
-                                    <li>Specialization in Remote Sensing and Climate Science</li>
-                                    <li>Semester Project: "GNSS-ZWD based Precipitation Prediction using Machine Learning"</li>
-                                    <li>Semester Project: "Better maps of plant functional traits – towards planttraits.earth v2"</li> <!-- Added project -->
-                                    <li>Coursework: Space Geodesy, Cartography, Environment Monitoring, Photogrammetry</li>
-                                </ul>
-                                <div class="flex flex-wrap mt-4">
-                                    <span class="skill-badge">Remote Sensing</span>
-                                    <span class="skill-badge">Machine Learning</span>
-                                    <span class="skill-badge">Climate Science</span>
-                                </div>
+                                <div class="flex items-center text-sm mb-4"><i class="fas fa-map-marker-alt mr-2 text-[--accent-secondary]"></i><span>Zurich, Switzerland</span><i class="fas fa-calendar-alt ml-4 mr-2 text-[--accent-secondary]"></i><span>2024 – Present</span></div>
+                                <ul class="list-disc pl-5 space-y-2" style="color: var(--text-secondary);"><li>Specialization in Remote Sensing and Climate Science</li><li>Semester Project: "GNSS-ZWD based Precipitation Prediction using Machine Learning"</li><li>Semester Project: "Better maps of plant functional traits – towards planttraits.earth v2"</li><li>Coursework: Space Geodesy, Cartography, Environment Monitoring, Photogrammetry</li></ul>
+                                <div class="flex flex-wrap mt-4"><span class="skill-badge">Remote Sensing</span><span class="skill-badge">Machine Learning</span><span class="skill-badge">Climate Science</span></div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
                 <div class="timeline-item">
                     <div class="card p-8">
                         <div class="flex flex-col md:flex-row md:items-center mb-6">
-                            <div class="flex items-center mb-4 md:mb-0 md:w-1/3">
-                                <img src="https://raw.githubusercontent.com/devam29/Resume2/main/vit.png" 
-                                     alt="VIT Logo" 
-                                     class="h-12 mr-4">
-                                <div>
-                                    <h3 class="text-xl font-bold" style="color: var(--text-primary);">VIT University</h3>
-                                    <p class="text-sm" style="color: var(--text-muted);">BTech in Civil Engineering</p>
-                                </div>
-                            </div>
+                            <div class="flex items-center mb-4 md:mb-0 md:w-1/3"><img src="https://raw.githubusercontent.com/devam29/Resume2/main/vit.png" alt="VIT Logo" class="h-12 mr-4"><div><h3 class="text-xl font-bold" style="color: var(--text-primary);">VIT University</h3><p class="text-sm" style="color: var(--text-muted);">BTech in Civil Engineering</p></div></div>
                             <div class="md:w-2/3">
-                                <div class="flex items-center text-sm mb-4">
-                                    <i class="fas fa-map-marker-alt mr-2 text-[--accent-secondary]"></i>
-                                    <span>Vellore, India</span>
-                                    <i class="fas fa-calendar-alt ml-4 mr-2 text-[--accent-secondary]"></i>
-                                    <span>2019 – 2023</span>
-                                </div>
-                                <ul class="list-disc pl-5 space-y-2" style="color: var(--text-secondary);">
-                                    <li>Specialized in Geospatial Technology and Water Resources</li>
-                                    <li>Thesis: "Flood Risk Assessment using SWAT Model and Remote Sensing"</li>
-                                    <li>CGPA: 9.33/10.0, 2nd rank in department out of 150 students</li>
-                                </ul>
-                                <div class="flex flex-wrap mt-4">
-                                    <span class="skill-badge">GIS</span>
-                                    <span class="skill-badge">Hydrology</span>
-                                    <span class="skill-badge">Environmental Eng.</span>
-                                </div>
+                                <div class="flex items-center text-sm mb-4"><i class="fas fa-map-marker-alt mr-2 text-[--accent-secondary]"></i><span>Vellore, India</span><i class="fas fa-calendar-alt ml-4 mr-2 text-[--accent-secondary]"></i><span>2019 – 2023</span></div>
+                                <ul class="list-disc pl-5 space-y-2" style="color: var(--text-secondary);"><li>Specialized in Geospatial Technology and Water Resources</li><li>Thesis: "Flood Risk Assessment using SWAT Model and Remote Sensing"</li><li>CGPA: 9.33/10.0, 2nd rank in department out of 150 students</li></ul>
+                                <div class="flex flex-wrap mt-4"><span class="skill-badge">GIS</span><span class="skill-badge">Hydrology</span><span class="skill-badge">Environmental Eng.</span></div>
                             </div>
                         </div>
                     </div>
@@ -1198,110 +476,40 @@
     <!-- Experience Section -->
     <section id="experience" class="section-spacing px-4 bg-[--bg-secondary] bg-opacity-30 satellite-track">
         <div class="max-w-7xl mx-auto">
-            <h2 class="section-heading text-center text-[--accent-primary]">
-                <i class="fas fa-briefcase mr-2"></i>
-                PROFESSIONAL EXPERIENCE
-            </h2>
-            
+            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-briefcase mr-2"></i>PROFESSIONAL EXPERIENCE</h2>
             <div class="space-y-8">
                 <div class="timeline-item">
                     <div class="card p-8">
                         <div class="flex flex-col md:flex-row md:items-center mb-6">
-                            <div class="flex items-center mb-4 md:mb-0 md:w-1/3">
-                                <img src="https://raw.githubusercontent.com/devam29/Resume2/main/iirs.png" 
-                                     alt="ISRO Logo" 
-                                     class="h-12 mr-4">
-                                <div>
-                                    <h3 class="text-xl font-bold" style="color: var(--text-primary);">Spatial Data Analyst Intern</h3>
-                                    <p class="text-sm" style="color: var(--text-muted);">IIRS, ISRO</p>
-                                </div>
-                            </div>
+                            <div class="flex items-center mb-4 md:mb-0 md:w-1/3"><img src="https://raw.githubusercontent.com/devam29/Resume2/main/iirs.png" alt="ISRO Logo" class="h-12 mr-4"><div><h3 class="text-xl font-bold" style="color: var(--text-primary);">Spatial Data Analyst Intern</h3><p class="text-sm" style="color: var(--text-muted);">IIRS, ISRO</p></div></div>
                             <div class="md:w-2/3">
-                                <div class="flex items-center text-sm mb-4">
-                                    <i class="fas fa-map-marker-alt mr-2 text-[--accent-secondary]"></i>
-                                    <span>Dehradun, India</span>
-                                    <i class="fas fa-calendar-alt ml-4 mr-2 text-[--accent-secondary]"></i>
-                                    <span>Jan 2023 – Dec 2023</span>
-                                </div>
-                                <ul class="list-disc pl-5 space-y-2" style="color: var(--text-secondary);">
-                                    <li>Developed a U-Net model for flood detection using Sentinel-1 SAR data, achieving 92% accuracy</li>
-                                    <li>Processed and analyzed satellite imagery for disaster management applications</li>
-                                    <li>Implemented automated pipelines for large-scale geospatial data processing</li>
-                                </ul>
-                                <div class="flex flex-wrap mt-4">
-                                    <span class="skill-badge">Deep Learning</span>
-                                    <span class="skill-badge">SAR Data</span>
-                                    <span class="skill-badge">Python</span>
-                                    <span class="skill-badge">PyTorch</span>
-                                </div>
+                                <div class="flex items-center text-sm mb-4"><i class="fas fa-map-marker-alt mr-2 text-[--accent-secondary]"></i><span>Dehradun, India</span><i class="fas fa-calendar-alt ml-4 mr-2 text-[--accent-secondary]"></i><span>Jan 2023 – Dec 2023</span></div>
+                                <ul class="list-disc pl-5 space-y-2" style="color: var(--text-secondary);"><li>Developed a U-Net model for flood detection using Sentinel-1 SAR data, achieving 92% accuracy</li><li>Processed and analyzed satellite imagery for disaster management applications</li><li>Implemented automated pipelines for large-scale geospatial data processing</li></ul>
+                                <div class="flex flex-wrap mt-4"><span class="skill-badge">Deep Learning</span><span class="skill-badge">SAR Data</span><span class="skill-badge">Python</span><span class="skill-badge">PyTorch</span></div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
                 <div class="timeline-item">
                     <div class="card p-8">
                         <div class="flex flex-col md:flex-row md:items-center mb-6">
-                            <div class="flex items-center mb-4 md:mb-0 md:w-1/3">
-                                <img src="https://raw.githubusercontent.com/devam29/Resume2/main/concordia.jpg" 
-                                     alt="Concordia Logo" 
-                                     class="h-12 mr-4">
-                                <div>
-                                    <h3 class="text-xl font-bold" style="color: var(--text-primary);">Research Intern</h3>
-                                    <p class="text-sm" style="color: var(--text-muted);">Concordia University</p>
-                                </div>
-                            </div>
+                            <div class="flex items-center mb-4 md:mb-0 md:w-1/3"><img src="https://raw.githubusercontent.com/devam29/Resume2/main/concordia.jpg" alt="Concordia Logo" class="h-12 mr-4"><div><h3 class="text-xl font-bold" style="color: var(--text-primary);">Research Intern</h3><p class="text-sm" style="color: var(--text-muted);">Concordia University</p></div></div>
                             <div class="md:w-2/3">
-                                <div class="flex items-center text-sm mb-4">
-                                    <i class="fas fa-map-marker-alt mr-2 text-[--accent-secondary]"></i>
-                                    <span>Montreal, Canada</span>
-                                    <i class="fas fa-calendar-alt ml-4 mr-2 text-[--accent-secondary]"></i>
-                                    <span>June 2022 – Aug 2022</span>
-                                </div>
-                                <ul class="list-disc pl-5 space-y-2" style="color: var(--text-secondary);">
-                                    <li>Designed a geotextile filtration system, reducing lake water nutrients by 50%</li>
-                                    <li>Conducted water quality analysis using remote sensing data</li>
-                                    <li>Presented findings at international environmental engineering conference</li>
-                                </ul>
-                                <div class="flex flex-wrap mt-4">
-                                    <span class="skill-badge">Water Quality</span>
-                                    <span class="skill-badge">Remote Sensing</span>
-                                    <span class="skill-badge">Environmental Eng.</span>
-                                </div>
+                                <div class="flex items-center text-sm mb-4"><i class="fas fa-map-marker-alt mr-2 text-[--accent-secondary]"></i><span>Montreal, Canada</span><i class="fas fa-calendar-alt ml-4 mr-2 text-[--accent-secondary]"></i><span>June 2022 – Aug 2022</span></div>
+                                <ul class="list-disc pl-5 space-y-2" style="color: var(--text-secondary);"><li>Designed a geotextile filtration system, reducing lake water nutrients by 50%</li><li>Conducted water quality analysis using remote sensing data</li><li>Presented findings at international environmental engineering conference</li></ul>
+                                <div class="flex flex-wrap mt-4"><span class="skill-badge">Water Quality</span><span class="skill-badge">Remote Sensing</span><span class="skill-badge">Environmental Eng.</span></div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
                 <div class="timeline-item">
                     <div class="card p-8">
                         <div class="flex flex-col md:flex-row md:items-center mb-6">
-                            <div class="flex items-center mb-4 md:mb-0 md:w-1/3">
-                                <img src="https://raw.githubusercontent.com/devam29/Resume2/main/vit.png" 
-                                     alt="VIT Logo" 
-                                     class="h-12 mr-4">
-                                <div>
-                                    <h3 class="text-xl font-bold" style="color: var(--text-primary);">Teaching Assistant</h3>
-                                    <p class="text-sm" style="color: var(--text-muted);">VIT Vellore</p>
-                                </div>
-                            </div>
+                            <div class="flex items-center mb-4 md:mb-0 md:w-1/3"><img src="https://raw.githubusercontent.com/devam29/Resume2/main/vit.png" alt="VIT Logo" class="h-12 mr-4"><div><h3 class="text-xl font-bold" style="color: var(--text-primary);">Teaching Assistant</h3><p class="text-sm" style="color: var(--text-muted);">VIT Vellore</p></div></div>
                             <div class="md:w-2/3">
-                                <div class="flex items-center text-sm mb-4">
-                                    <i class="fas fa-map-marker-alt mr-2 text-[--accent-secondary]"></i>
-                                    <span>Vellore, India</span>
-                                    <i class="fas fa-calendar-alt ml-4 mr-2 text-[--accent-secondary]"></i>
-                                    <span>Sept 2021 – Jan 2023</span>
-                                </div>
-                                <ul class="list-disc pl-5 space-y-2" style="color: var(--text-secondary);">
-                                    <li>Mentored ~40 students in GIS tasks like LULC classification and flood mapping</li>
-                                    <li>Developed course materials for geospatial analysis using open-source tools</li>
-                                    <li>Conducted workshops on satellite data processing and applications</li>
-                                </ul>
-                                <div class="flex flex-wrap mt-4">
-                                    <span class="skill-badge">Teaching</span>
-                                    <span class="skill-badge">GIS</span>
-                                    <span class="skill-badge">Remote Sensing</span>
-                                </div>
+                                <div class="flex items-center text-sm mb-4"><i class="fas fa-map-marker-alt mr-2 text-[--accent-secondary]"></i><span>Vellore, India</span><i class="fas fa-calendar-alt ml-4 mr-2 text-[--accent-secondary]"></i><span>Sept 2021 – Jan 2023</span></div>
+                                <ul class="list-disc pl-5 space-y-2" style="color: var(--text-secondary);"><li>Mentored ~40 students in GIS tasks like LULC classification and flood mapping</li><li>Developed course materials for geospatial analysis using open-source tools</li><li>Conducted workshops on satellite data processing and applications</li></ul>
+                                <div class="flex flex-wrap mt-4"><span class="skill-badge">Teaching</span><span class="skill-badge">GIS</span><span class="skill-badge">Remote Sensing</span></div>
                             </div>
                         </div>
                     </div>
@@ -1310,134 +518,71 @@
         </div>
     </section>
 
-    <!-- Skills Section -->
+    <!-- Skills Constellation -->
     <section id="skills" class="section-spacing px-4 satellite-track">
         <div class="max-w-7xl mx-auto">
-            <h2 class="section-heading text-center text-[--accent-primary]">
-                <i class="fas fa-satellite-dish mr-2"></i>
-                TECHNICAL SKILLS
-            </h2>
-            
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
-                <div class="card p-6 flex flex-col items-center text-center">
-                    <i class="fas fa-code text-3xl mb-3 text-[--accent-primary]"></i>
-                    <h3 class="text-lg font-semibold" style="color: var(--text-primary);">Programming</h3>
-                    <p class="text-sm" style="color: var(--text-muted);">Python, MATLAB, R, JavaScript</p>
-                </div>
-                <div class="card p-6 flex flex-col items-center text-center">
-                    <i class="fas fa-satellite text-3xl mb-3 text-[--accent-primary]"></i>
-                    <h3 class="text-lg font-semibold" style="color: var(--text-primary);">Remote Sensing</h3>
-                    <p class="text-sm" style="color: var(--text-muted);">SAR, Lidar, Hyperspectral, Multispectral</p>
-                </div>
-                <div class="card p-6 flex flex-col items-center text-center">
-                    <i class="fas fa-map-marked-alt text-3xl mb-3 text-[--accent-primary]"></i>
-                    <h3 class="text-lg font-semibold" style="color: var(--text-primary);">GIS</h3>
-                    <p class="text-sm" style="color: var(--text-muted);">QGIS, ArcGIS, PostGIS, GeoServer</p>
-                </div>
-                <div class="card p-6 flex flex-col items-center text-center">
-                    <i class="fas fa-robot text-3xl mb-3 text-[--accent-primary]"></i>
-                    <h3 class="text-lg font-semibold" style="color: var(--text-primary);">Machine Learning</h3>
-                    <p class="text-sm" style="color: var(--text-muted);">PyTorch, TensorFlow, Scikit-learn</p>
-                </div>
-                <div class="card p-6 flex flex-col items-center text-center">
-                    <i class="fas fa-water text-3xl mb-3 text-[--accent-primary]"></i>
-                    <h3 class="text-lg font-semibold" style="color: var(--text-primary);">Hydrology</h3>
-                    <p class="text-sm" style="color: var(--text-muted);">HEC-RAS, SWAT, MODFLOW</p>
-                </div>
-                <div class="card p-6 flex flex-col items-center text-center">
-                    <i class="fas fa-chart-network text-3xl mb-3 text-[--accent-primary]"></i>
-                    <h3 class="text-lg font-semibold" style="color: var(--text-primary);">Data Analysis</h3>
-                    <p class="text-sm" style="color: var(--text-muted);">Pandas, GeoPandas, Rasterio</p>
-                </div>
-                <div class="card p-6 flex flex-col items-center text-center">
-                    <i class="fas fa-database text-3xl mb-3 text-[--accent-primary]"></i>
-                    <h3 class="text-lg font-semibold" style="color: var(--text-primary);">Spatial Databases</h3>
-                    <p class="text-sm" style="color: var(--text-muted);">PostgreSQL, MongoDB, Google Earth Engine</p>
-                </div>
-                <div class="card p-6 flex flex-col items-center text-center">
-                    <i class="fas fa-cloud text-3xl mb-3 text-[--accent-primary]"></i>
-                    <h3 class="text-lg font-semibold" style="color: var(--text-primary);">Cloud Computing</h3>
-                    <p class="text-sm" style="color: var(--text-muted);">AWS, Google Cloud, Docker</p>
+            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-satellite-dish mr-2"></i>TECHNICAL SKILLS</h2>
+            <div id="skills-constellation">
+                <canvas id="constellation-canvas" class="constellation-canvas"></canvas>
+                <div class="skills-grid-constellation" id="skills-grid">
+                    <div class="skill-node" data-skill="programming"><i class="fas fa-code"></i><h4>Programming</h4><p>Python, MATLAB, R, JavaScript</p></div>
+                    <div class="skill-node" data-skill="remote-sensing"><i class="fas fa-satellite"></i><h4>Remote Sensing</h4><p>SAR, Lidar, Hyperspectral, Multispectral</p></div>
+                    <div class="skill-node" data-skill="gis"><i class="fas fa-map-marked-alt"></i><h4>GIS</h4><p>QGIS, ArcGIS, PostGIS, GeoServer</p></div>
+                    <div class="skill-node" data-skill="ml"><i class="fas fa-robot"></i><h4>Machine Learning</h4><p>PyTorch, TensorFlow, Scikit-learn</p></div>
+                    <div class="skill-node" data-skill="hydrology"><i class="fas fa-water"></i><h4>Hydrology</h4><p>HEC-RAS, SWAT, MODFLOW</p></div>
+                    <div class="skill-node" data-skill="data"><i class="fas fa-chart-network"></i><h4>Data Analysis</h4><p>Pandas, GeoPandas, Rasterio</p></div>
+                    <div class="skill-node" data-skill="spatial-db"><i class="fas fa-database"></i><h4>Spatial Databases</h4><p>PostgreSQL, MongoDB, Google Earth Engine</p></div>
+                    <div class="skill-node" data-skill="cloud"><i class="fas fa-cloud"></i><h4>Cloud Computing</h4><p>AWS, Google Cloud, Docker</p></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Projects Section -->
+    <!-- Projects Section - COMPLETE ORIGINAL CONTENT -->
     <section id="projects" class="section-spacing px-4 bg-[--bg-secondary] bg-opacity-30 satellite-track">
         <div class="max-w-7xl mx-auto">
-            <h2 class="section-heading text-center text-[--accent-primary]">
-                <i class="fas fa-project-diagram mr-2"></i>
-                RESEARCH PROJECTS
-            </h2>
-            
+            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-project-diagram mr-2"></i>RESEARCH PROJECTS</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
                 <div class="card rounded-lg overflow-hidden group project-card" data-project="gnss">
                     <div class="relative overflow-hidden h-48">
-                        <img src="https://raw.githubusercontent.com/devam29/Resume2/main/1596.jpg" 
-                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
-                             alt="GNSS Project">
+                        <img src="https://raw.githubusercontent.com/devam29/Resume2/main/1596.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="GNSS Project">
                         <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
-                        <div class="absolute bottom-4 left-4">
-                            <span class="bg-[--accent-primary] text-white text-xs px-2 py-1 rounded">Machine Learning</span>
-                        </div>
+                        <div class="absolute bottom-4 left-4"><span class="bg-[--accent-primary] text-white text-xs px-2 py-1 rounded">Machine Learning</span></div>
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">GNSS Precipitation Prediction</h3>
                         <p class="text-sm" style="color: var(--text-muted);">ETH Zurich • 2024</p>
-                        <p style="color: var(--text-secondary);" class="mb-4">
-                            Machine learning model for rainfall prediction using GNSS signal delay and ERA5 datasets with satellite-derived atmospheric data.
-                        </p>
-                        <button class="view-project-btn inline-flex items-center font-semibold">
-                            <i class="fas fa-search mr-2"></i>
-                            <span>View Details</span>
-                        </button>
+                        <p style="color: var(--text-secondary);" class="mb-4">Machine learning model for rainfall prediction using GNSS signal delay and ERA5 datasets with satellite-derived atmospheric data.</p>
+                        <button class="view-project-btn inline-flex items-center font-semibold"><i class="fas fa-search mr-2"></i><span>View Details</span></button>
                     </div>
                 </div>
-                
+                <!-- Project 2 -->
                 <div class="card rounded-lg overflow-hidden group project-card" data-project="flood">
                     <div class="relative overflow-hidden h-48">
-                        <img src="https://raw.githubusercontent.com/devam29/Resume2/main/flood.jpg" 
-                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
-                             alt="Flood Project">
+                        <img src="https://raw.githubusercontent.com/devam29/Resume2/main/flood.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Flood Project">
                         <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
-                        <div class="absolute bottom-4 left-4">
-                            <span class="bg-[--accent-primary] text-white text-xs px-2 py-1 rounded">Hydrology</span>
-                        </div>
+                        <div class="absolute bottom-4 left-4"><span class="bg-[--accent-primary] text-white text-xs px-2 py-1 rounded">Hydrology</span></div>
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Flood Risk Assessment</h3>
                         <p class="text-sm" style="color: var(--text-muted);">Dhansiri River Basin, India</p>
-                        <p style="color: var(--text-secondary);" class="mb-4">
-                            SWAT model with NSE: 0.84 and R²: 0.90 for flood risk analysis using satellite imagery and hydrological modeling.
-                        </p>
-                        <button class="view-project-btn inline-flex items-center font-semibold">
-                            <i class="fas fa-search mr-2"></i>
-                            <span>View Details</span>
-                        </button>
+                        <p style="color: var(--text-secondary);" class="mb-4">SWAT model with NSE: 0.84 and R²: 0.90 for flood risk analysis using satellite imagery and hydrological modeling.</p>
+                        <button class="view-project-btn inline-flex items-center font-semibold"><i class="fas fa-search mr-2"></i><span>View Details</span></button>
                     </div>
                 </div>
-                
+                <!-- Project 3 -->
                 <div class="card rounded-lg overflow-hidden group project-card" data-project="groundwater">
                     <div class="relative overflow-hidden h-48">
-                        <img src="https://raw.githubusercontent.com/devam29/Resume2/main/groundwater.jpg" 
-                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
-                             alt="Groundwater Project">
+                        <img src="https://raw.githubusercontent.com/devam29/Resume2/main/groundwater.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Groundwater Project">
                         <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
-                        <div class="absolute bottom-4 left-4">
-                            <span class="bg-[--accent-primary] text-white text-xs px-2 py-1 rounded">GIS Analysis</span>
-                        </div>
+                        <div class="absolute bottom-4 left-4"><span class="bg-[--accent-primary] text-white text-xs px-2 py-1 rounded">GIS Analysis</span></div>
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Groundwater Sustainability</h3>
                         <p class="text-sm" style="color: var(--text-muted);">Ahmedabad, India</p>
-                        <p style="color: var(--text-secondary);" class="mb-4">
-                            AHP analysis using satellite data and GIS to identify 89% medium to high potential groundwater zones.
-                        </p>
-                        <button class="view-project-btn inline-flex items-center font-semibold">
-                            <i class="fas fa-search mr-2"></i>
-                            <span>View Details</span>
-                        </button>
+                        <p style="color: var(--text-secondary);" class="mb-4">AHP analysis using satellite data and GIS to identify 89% medium to high potential groundwater zones.</p>
+                        <button class="view-project-btn inline-flex items-center font-semibold"><i class="fas fa-search mr-2"></i><span>View Details</span></button>
                     </div>
                 </div>
             </div>
@@ -1445,404 +590,83 @@
     </section>
 
     <!-- Project Modals -->
-    <div id="project-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div id="modal-content"></div>
-        </div>
-    </div>
+    <div id="project-modal" class="modal"><div class="modal-content"><span class="close-modal">&times;</span><div id="modal-content"></div></div></div>
 
-    <!-- Publications Section -->
+    <!-- Publications Section - COMPLETE ORIGINAL CONTENT -->
     <section id="publications" class="section-spacing px-4 satellite-track">
         <div class="max-w-7xl mx-auto">
-            <h2 class="section-heading text-center text-[--accent-primary]">
-                <i class="fas fa-book mr-2"></i>
-                RESEARCH PUBLICATIONS
-            </h2>
-            
+            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-book mr-2"></i>RESEARCH PUBLICATIONS</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="card p-8">
-                    <div class="flex items-start mb-4">
-                        <div class="bg-[--accent-primary] p-3 rounded-full mr-4">
-                            <i class="fas fa-file-alt text-white"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Impact of Short-Duration Precipitation</h3>
-                            <p class="text-sm" style="color: var(--text-muted);">Scientific Reports, Nature • 2023</p>
-                            <p style="color: var(--text-secondary);" class="mb-4">
-                                Analyzed precipitation impacts on water resources in the Cauvery Basin using satellite data and hydrological models.
-                            </p>
-                            <a href="https://doi.org/10.1038/s41598-023-41417-6" target="_blank"
-                               class="read-paper-btn inline-flex items-center font-semibold">
-                                <i class="fas fa-external-link-alt mr-2"></i>
-                                <span>Read Paper</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card p-8">
-                    <div class="flex items-start mb-4">
-                        <div class="bg-[--accent-secondary] p-3 rounded-full mr-4 text-black">
-                            <i class="fas fa-file-alt"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">HEC-RAS with GIS</h3>
-                            <p class="text-sm" style="color: var(--text-muted);">Journal of the Geological Society of India • 2024</p>
-                            <p style="color: var(--text-secondary);" class="mb-4">
-                                Studied river cross-section width for flood detection using HEC-RAS and GIS with satellite-derived DEMs.
-                            </p>
-                            <a href="https://doi.org/10.17491/jgsi/2024/173843" target="_blank"
-                               class="read-paper-btn inline-flex items-center font-semibold">
-                                <i class="fas fa-external-link-alt mr-2"></i>
-                                <span>Read Paper</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card p-8">
-                    <div class="flex items-start mb-4">
-                        <div class="bg-[--accent-primary] p-3 rounded-full mr-4">
-                            <i class="fas fa-file-alt text-white"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Chilika Lake LULC Dynamics</h3>
-                            <p class="text-sm" style="color: var(--text-muted);">Estuaries and Coasts • 2025</p>
-                            <p style="color: var(--text-secondary);" class="mb-4">
-                                Investigated LULC impacts on Chilika Lake's ecosystem services using multi-temporal satellite imagery.
-                            </p>
-                            <a href="https://doi.org/10.1007/s12237-025-01509-0" target="_blank"
-                               class="read-paper-btn inline-flex items-center font-semibold">
-                                <i class="fas fa-external-link-alt mr-2"></i>
-                                <span>Read Paper</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card p-8">
-                    <div class="flex items-start mb-4">
-                        <div class="bg-[--accent-secondary] p-3 rounded-full mr-4 text-black">
-                            <i class="fas fa-file-alt"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Wetland Discharge Water Filtration</h3>
-                            <p class="text-sm" style="color: var(--text-muted);">Concordia University • 2022</p>
-                            <p style="color: var(--text-secondary);" class="mb-4">
-                                Presented research on filtration systems for mesotrophic lakes at environmental engineering conference.
-                            </p>
-                            <a href="https://doi.org/10.1007/978-3-031-61515-3_22" target="_blank"
-                               class="read-paper-btn inline-flex items-center font-semibold">
-                                <i class="fas fa-external-link-alt mr-2"></i>
-                                <span>Read Paper</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                <div class="card p-8"><div class="flex items-start mb-4"><div class="bg-[--accent-primary] p-3 rounded-full mr-4"><i class="fas fa-file-alt text-white"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Impact of Short-Duration Precipitation</h3><p class="text-sm" style="color: var(--text-muted);">Scientific Reports, Nature • 2023</p><p style="color: var(--text-secondary);" class="mb-4">Analyzed precipitation impacts on water resources in the Cauvery Basin using satellite data and hydrological models.</p><a href="https://doi.org/10.1038/s41598-023-41417-6" target="_blank" class="read-paper-btn inline-flex items-center font-semibold"><i class="fas fa-external-link-alt mr-2"></i><span>Read Paper</span></a></div></div></div>
+                <div class="card p-8"><div class="flex items-start mb-4"><div class="bg-[--accent-secondary] p-3 rounded-full mr-4 text-black"><i class="fas fa-file-alt"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">HEC-RAS with GIS</h3><p class="text-sm" style="color: var(--text-muted);">Journal of the Geological Society of India • 2024</p><p style="color: var(--text-secondary);" class="mb-4">Studied river cross-section width for flood detection using HEC-RAS and GIS with satellite-derived DEMs.</p><a href="https://doi.org/10.17491/jgsi/2024/173843" target="_blank" class="read-paper-btn inline-flex items-center font-semibold"><i class="fas fa-external-link-alt mr-2"></i><span>Read Paper</span></a></div></div></div>
+                <div class="card p-8"><div class="flex items-start mb-4"><div class="bg-[--accent-primary] p-3 rounded-full mr-4"><i class="fas fa-file-alt text-white"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Chilika Lake LULC Dynamics</h3><p class="text-sm" style="color: var(--text-muted);">Estuaries and Coasts • 2025</p><p style="color: var(--text-secondary);" class="mb-4">Investigated LULC impacts on Chilika Lake's ecosystem services using multi-temporal satellite imagery.</p><a href="https://doi.org/10.1007/s12237-025-01509-0" target="_blank" class="read-paper-btn inline-flex items-center font-semibold"><i class="fas fa-external-link-alt mr-2"></i><span>Read Paper</span></a></div></div></div>
+                <div class="card p-8"><div class="flex items-start mb-4"><div class="bg-[--accent-secondary] p-3 rounded-full mr-4 text-black"><i class="fas fa-file-alt"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Wetland Discharge Water Filtration</h3><p class="text-sm" style="color: var(--text-muted);">Concordia University • 2022</p><p style="color: var(--text-secondary);" class="mb-4">Presented research on filtration systems for mesotrophic lakes at environmental engineering conference.</p><a href="https://doi.org/10.1007/978-3-031-61515-3_22" target="_blank" class="read-paper-btn inline-flex items-center font-semibold"><i class="fas fa-external-link-alt mr-2"></i><span>Read Paper</span></a></div></div></div>
             </div>
         </div>
     </section>
 
-    <!-- Achievements Section -->
+    <!-- Achievements Section - COMPLETE ORIGINAL CONTENT -->
     <section id="achievements" class="section-spacing px-4 bg-[--bg-secondary] bg-opacity-30 satellite-track">
         <div class="max-w-7xl mx-auto">
-            <h2 class="section-heading text-center text-[--accent-primary]">
-                <i class="fas fa-trophy mr-2"></i>
-                ACHIEVEMENTS
-            </h2>
-            
+            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-trophy mr-2"></i>ACHIEVEMENTS</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="achievement-card card p-8">
-                    <div class="flex items-start">
-                        <div class="bg-[--accent-secondary] p-3 rounded-full mr-4 text-black">
-                            <i class="fas fa-medal"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">MITACS Globalink Research Scholar</h3>
-                            <p class="text-sm" style="color: var(--text-muted);">2022</p>
-                            <p style="color: var(--text-secondary);" class="mb-4">
-                                Awarded prestigious MITACS scholarship for international research internship at Concordia University, Canada, selected among top candidates nationwide.
-                            </p>
-                            <a href="https://drive.google.com/file/d/1QwDwROCIen6ByBGZaBxa2HMLi5a6QlAM/view" target="_blank"
-                               class="view-certificate-btn inline-flex items-center font-semibold">
-                                <i class="fas fa-external-link-alt mr-2"></i>
-                                <span>View Certificate</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="achievement-card card p-8">
-                    <div class="flex items-start">
-                        <div class="bg-[--accent-primary] p-3 rounded-full mr-4">
-                            <i class="fas fa-trophy text-white"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Road Safety Hackathon Winner</h3>
-                            <p class="text-sm" style="color: var(--text-muted);">2022</p>
-                            <p style="color: var(--text-secondary);" class="mb-4">
-                                1st place in national competition for "Implementable Local Action Plan for Road Safety". Proposal was considered for implementation by IIT Madras.
-                            </p>
-                            <a href="https://drive.google.com/file/d/1N3uccDLDTKydMsWo24E_q_mLWODFtH-Q/view" target="_blank"
-                               class="view-certificate-btn inline-flex items-center font-semibold">
-                                <i class="fas fa-external-link-alt mr-2"></i>
-                                <span>View Certificate</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="achievement-card card p-8">
-                    <div class="flex items-start">
-                        <div class="bg-[--accent-secondary] p-3 rounded-full mr-4 text-black">
-                            <i class="fas fa-award"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">University Rank Holder</h3>
-                            <p class="text-sm" style="color: var(--text-muted);">2023</p>
-                            <p style="color: var(--text-secondary);" class="mb-4">
-                                Secured 2nd rank in Civil Engineering department with CGPA of 9.33/10.0, recognized for academic excellence among 150 students.
-                            </p>
-                            <a href="https://drive.google.com/file/d/1D6tUMSp7qmryGr5cjzmbHxw8Wj45mLOB/view" target="_blank"
-                               class="view-certificate-btn inline-flex items-center font-semibold">
-                                <i class="fas fa-external-link-alt mr-2"></i>
-                                <span>View Certificate</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="achievement-card card p-8">
-                    <div class="flex items-start">
-                        <div class="bg-[--accent-primary] p-3 rounded-full mr-4">
-                            <i class="fas fa-star text-white"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Merit Scholarship (3 Years)</h3>
-                            <p class="text-sm" style="color: var(--text-muted);">2020-2023</p>
-                            <p style="color: var(--text-secondary);" class="mb-4">
-                                Awarded university merit scholarship for three consecutive years recognizing consistent academic performance in top 5% of class.
-                            </p>
-                            <a href="https://drive.google.com/file/d/1misYhC8elOwVaynWjZoDz-48amL2P_bz/view" target="_blank"
-                               class="view-certificate-btn inline-flex items-center font-semibold">
-                                <i class="fas fa-external-link-alt mr-2"></i>
-                                <span>View Certificates</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="achievement-card card p-8">
-                    <div class="flex items-start">
-                        <div class="bg-[--accent-secondary] p-3 rounded-full mr-4 text-black">
-                            <i class="fas fa-mountain"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">AICTE YUVAK Scholar</h3>
-                            <p class="text-sm" style="color: var(--text-muted);">2021</p>
-                            <p style="color: var(--text-secondary);" class="mb-4">
-                                Selected among 10 students nationwide for educational tour to ATAL Tunnel, sponsored by Government of India to study advanced construction techniques.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <div class="achievement-card card p-8"><div class="flex items-start"><div class="bg-[--accent-secondary] p-3 rounded-full mr-4 text-black"><i class="fas fa-medal"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">MITACS Globalink Research Scholar</h3><p class="text-sm" style="color: var(--text-muted);">2022</p><p style="color: var(--text-secondary);" class="mb-4">Awarded prestigious MITACS scholarship for international research internship at Concordia University, Canada, selected among top candidates nationwide.</p><a href="https://drive.google.com/file/d/1QwDwROCIen6ByBGZaBxa2HMLi5a6QlAM/view" target="_blank" class="view-certificate-btn inline-flex items-center font-semibold"><i class="fas fa-external-link-alt mr-2"></i><span>View Certificate</span></a></div></div></div>
+                <div class="achievement-card card p-8"><div class="flex items-start"><div class="bg-[--accent-primary] p-3 rounded-full mr-4"><i class="fas fa-trophy text-white"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Road Safety Hackathon Winner</h3><p class="text-sm" style="color: var(--text-muted);">2022</p><p style="color: var(--text-secondary);" class="mb-4">1st place in national competition for "Implementable Local Action Plan for Road Safety". Proposal was considered for implementation by IIT Madras.</p><a href="https://drive.google.com/file/d/1N3uccDLDTKydMsWo24E_q_mLWODFtH-Q/view" target="_blank" class="view-certificate-btn inline-flex items-center font-semibold"><i class="fas fa-external-link-alt mr-2"></i><span>View Certificate</span></a></div></div></div>
+                <div class="achievement-card card p-8"><div class="flex items-start"><div class="bg-[--accent-secondary] p-3 rounded-full mr-4 text-black"><i class="fas fa-award"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">University Rank Holder</h3><p class="text-sm" style="color: var(--text-muted);">2023</p><p style="color: var(--text-secondary);" class="mb-4">Secured 2nd rank in Civil Engineering department with CGPA of 9.33/10.0, recognized for academic excellence among 150 students.</p><a href="https://drive.google.com/file/d/1D6tUMSp7qmryGr5cjzmbHxw8Wj45mLOB/view" target="_blank" class="view-certificate-btn inline-flex items-center font-semibold"><i class="fas fa-external-link-alt mr-2"></i><span>View Certificate</span></a></div></div></div>
+                <div class="achievement-card card p-8"><div class="flex items-start"><div class="bg-[--accent-primary] p-3 rounded-full mr-4"><i class="fas fa-star text-white"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Merit Scholarship (3 Years)</h3><p class="text-sm" style="color: var(--text-muted);">2020-2023</p><p style="color: var(--text-secondary);" class="mb-4">Awarded university merit scholarship for three consecutive years recognizing consistent academic performance in top 5% of class.</p><a href="https://drive.google.com/file/d/1misYhC8elOwVaynWjZoDz-48amL2P_bz/view" target="_blank" class="view-certificate-btn inline-flex items-center font-semibold"><i class="fas fa-external-link-alt mr-2"></i><span>View Certificates</span></a></div></div></div>
+                <div class="achievement-card card p-8"><div class="flex items-start"><div class="bg-[--accent-secondary] p-3 rounded-full mr-4 text-black"><i class="fas fa-mountain"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">AICTE YUVAK Scholar</h3><p class="text-sm" style="color: var(--text-muted);">2021</p><p style="color: var(--text-secondary);" class="mb-4">Selected among 10 students nationwide for educational tour to ATAL Tunnel, sponsored by Government of India to study advanced construction techniques.</p></div></div></div>
             </div>
         </div>
     </section>
 
-    <!-- Hobbies & Interests Section -->
+    <!-- Hobbies & Interests - COMPLETE ORIGINAL CONTENT -->
     <section id="hobbies" class="section-spacing px-4">
         <div class="max-w-7xl mx-auto">
-            <h2 class="section-heading text-center text-[--accent-primary]">
-                <i class="fas fa-heart mr-2"></i>
-                BEYOND WORK
-            </h2>
-            
+            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-heart mr-2"></i>BEYOND WORK</h2>
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-                <div class="hobby-item card p-6 flex flex-col items-center text-center">
-                    <i class="fas fa-chess text-3xl mb-3 text-[--accent-secondary]"></i>
-                    <h3 class="text-lg font-semibold" style="color: var(--text-primary);">Chess</h3>
-                    <p class="text-sm" style="color: var(--text-muted);">FIDE Rating: 1600</p>
-                </div>
-                <div class="hobby-item card p-6 flex flex-col items-center text-center">
-                    <i class="fas fa-cricket text-3xl mb-3 text-[--accent-secondary]"></i>
-                    <h3 class="text-lg font-semibold" style="color: var(--text-primary);">Cricket</h3>
-                    <p class="text-sm" style="color: var(--text-muted);">Competitive player</p>
-                </div>
-                <div class="hobby-item card p-6 flex flex-col items-center text-center">
-                    <i class="fas fa-book-open text-3xl mb-3 text-[--accent-secondary]"></i>
-                    <h3 class="text-lg font-semibold" style="color: var(--text-primary);">Reading</h3>
-                    <p class="text-sm" style="color: var(--text-muted);">Sci-fi & Self-help books</p>
-                </div>
-                <div class="hobby-item card p-6 flex flex-col items-center text-center">
-                    <i class="fas fa-pen-fancy text-3xl mb-3 text-[--accent-secondary]"></i>
-                    <h3 class="text-lg font-semibold" style="color: var(--text-primary);">Hindi Poetry</h3>
-                    <p class="text-sm" style="color: var(--text-muted);">Bilingual writer</p>
-                    <a href="#" class="interactive-link text-xs mt-2 font-semibold">View Samples</a>
-                </div>
-                <div class="hobby-item card p-6 flex flex-col items-center text-center">
-                    <i class="fas fa-utensils text-3xl mb-3 text-[--accent-secondary]"></i>
-                    <h3 class="text-lg font-semibold" style="color: var(--text-primary);">Cooking</h3>
-                    <p class="text-sm" style="color: var(--text-muted);">Experimental Indian fusion</p>
-                </div>
-                <div class="hobby-item card p-6 flex flex-col items-center text-center">
-                    <i class="fas fa-headphones text-3xl mb-3 text-[--accent-secondary]"></i>
-                    <h3 class="text-lg font-semibold" style="color: var(--text-primary);">Music</h3>
-                    <p class="text-sm" style="color: var(--text-muted);">Classical & Jazz</p>
-                </div>
-                <div class="hobby-item card p-6 flex flex-col items-center text-center">
-                    <i class="fas fa-hiking text-3xl mb-3 text-[--accent-secondary]"></i>
-                    <h3 class="text-lg font-semibold" style="color: var(--text-primary);">Hiking</h3>
-                    <p class="text-sm" style="color: var(--text-muted);">Alpine trails</p>
-                </div>
-                <div class="hobby-item card p-6 flex flex-col items-center text-center">
-                    <i class="fas fa-camera text-3xl mb-3 text-[--accent-secondary]"></i>
-                    <h3 class="text-lg font-semibold" style="color: var(--text-primary);">Photography</h3>
-                    <p class="text-sm" style="color: var(--text-muted);">Landscape & Nature</p>
-                </div>
+                <div class="hobby-item card p-6 flex flex-col items-center text-center"><i class="fas fa-chess text-3xl mb-3 text-[--accent-secondary]"></i><h3 class="text-lg font-semibold" style="color: var(--text-primary);">Chess</h3><p class="text-sm" style="color: var(--text-muted);">FIDE Rating: 1600</p></div>
+                <div class="hobby-item card p-6 flex flex-col items-center text-center"><i class="fas fa-cricket text-3xl mb-3 text-[--accent-secondary]"></i><h3 class="text-lg font-semibold" style="color: var(--text-primary);">Cricket</h3><p class="text-sm" style="color: var(--text-muted);">Competitive player</p></div>
+                <div class="hobby-item card p-6 flex flex-col items-center text-center"><i class="fas fa-book-open text-3xl mb-3 text-[--accent-secondary]"></i><h3 class="text-lg font-semibold" style="color: var(--text-primary);">Reading</h3><p class="text-sm" style="color: var(--text-muted);">Sci-fi & Self-help books</p></div>
+                <div class="hobby-item card p-6 flex flex-col items-center text-center"><i class="fas fa-pen-fancy text-3xl mb-3 text-[--accent-secondary]"></i><h3 class="text-lg font-semibold" style="color: var(--text-primary);">Hindi Poetry</h3><p class="text-sm" style="color: var(--text-muted);">Bilingual writer</p><a href="#" class="interactive-link text-xs mt-2 font-semibold">View Samples</a></div>
+                <div class="hobby-item card p-6 flex flex-col items-center text-center"><i class="fas fa-utensils text-3xl mb-3 text-[--accent-secondary]"></i><h3 class="text-lg font-semibold" style="color: var(--text-primary);">Cooking</h3><p class="text-sm" style="color: var(--text-muted);">Experimental Indian fusion</p></div>
+                <div class="hobby-item card p-6 flex flex-col items-center text-center"><i class="fas fa-headphones text-3xl mb-3 text-[--accent-secondary]"></i><h3 class="text-lg font-semibold" style="color: var(--text-primary);">Music</h3><p class="text-sm" style="color: var(--text-muted);">Classical & Jazz</p></div>
+                <div class="hobby-item card p-6 flex flex-col items-center text-center"><i class="fas fa-hiking text-3xl mb-3 text-[--accent-secondary]"></i><h3 class="text-lg font-semibold" style="color: var(--text-primary);">Hiking</h3><p class="text-sm" style="color: var(--text-muted);">Alpine trails</p></div>
+                <div class="hobby-item card p-6 flex flex-col items-center text-center"><i class="fas fa-camera text-3xl mb-3 text-[--accent-secondary]"></i><h3 class="text-lg font-semibold" style="color: var(--text-primary);">Photography</h3><p class="text-sm" style="color: var(--text-muted);">Landscape & Nature</p></div>
             </div>
         </div>
     </section>
 
-    <!-- Blog Section -->
+    <!-- Blog Section - COMPLETE ORIGINAL CONTENT -->
     <section id="blog" class="section-spacing px-4 bg-[--bg-secondary] bg-opacity-30">
         <div class="max-w-7xl mx-auto">
-            <h2 class="section-heading text-center text-[--accent-primary]">
-                <i class="fas fa-blog mr-2"></i>
-                BLOG & WRITINGS
-            </h2>
-            
+            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-blog mr-2"></i>BLOG & WRITINGS</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="blog-card card p-8">
-                    <div class="flex items-start mb-4">
-                        <div class="bg-[--accent-secondary] p-3 rounded-full mr-4 text-black">
-                            <i class="fas fa-pen-nib"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Coming Soon: Geospatial Insights</h3>
-                            <p class="text-sm" style="color: var(--text-muted);">Launching May 2026</p> <!-- Updated date -->
-                            <p style="color: var(--text-secondary);" class="mb-4">
-                                I'm currently developing a blog to share insights on geospatial technologies, climate research, and the intersection of AI with Earth observation.
-                            </p>
-                            <div class="flex items-center text-sm text-[#38BDF8] font-semibold">
-                                <i class="fas fa-cog fa-spin mr-2"></i>
-                                <span>Work in Progress</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="blog-card card p-8">
-                    <div class="flex items-start">
-                        <div class="bg-[--accent-primary] p-3 rounded-full mr-4">
-                            <i class="fas fa-lightbulb text-white"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Technical Writing</h3>
-                            <p style="color: var(--text-secondary);" class="mb-4">
-                                I occasionally write technical articles about geospatial technologies, climate science, and engineering solutions.
-                            </p>
-                            <a href="#connect" class="interactive-link inline-flex items-center font-semibold">
-                                <i class="fas fa-paper-plane mr-2"></i>
-                                <span>Contact for collaborations</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                <div class="blog-card card p-8"><div class="flex items-start mb-4"><div class="bg-[--accent-secondary] p-3 rounded-full mr-4 text-black"><i class="fas fa-pen-nib"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Coming Soon: Geospatial Insights</h3><p class="text-sm" style="color: var(--text-muted);">Launching May 2026</p><p style="color: var(--text-secondary);" class="mb-4">I'm currently developing a blog to share insights on geospatial technologies, climate research, and the intersection of AI with Earth observation.</p><div class="flex items-center text-sm text-[#38BDF8] font-semibold"><i class="fas fa-cog fa-spin mr-2"></i><span>Work in Progress</span></div></div></div></div>
+                <div class="blog-card card p-8"><div class="flex items-start"><div class="bg-[--accent-primary] p-3 rounded-full mr-4"><i class="fas fa-lightbulb text-white"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Technical Writing</h3><p style="color: var(--text-secondary);" class="mb-4">I occasionally write technical articles about geospatial technologies, climate science, and engineering solutions.</p><a href="#connect" class="interactive-link inline-flex items-center font-semibold"><i class="fas fa-paper-plane mr-2"></i><span>Contact for collaborations</span></a></div></div></div>
             </div>
         </div>
     </section>
 
-    <!-- Languages Section -->
+    <!-- Languages Section - COMPLETE ORIGINAL CONTENT -->
     <section id="languages" class="section-spacing px-4">
         <div class="max-w-3xl mx-auto">
-            <h2 class="section-heading text-center text-[--accent-primary]">
-                <i class="fas fa-language mr-2"></i>
-                LANGUAGE PROFICIENCY
-            </h2>
-            
+            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-language mr-2"></i>LANGUAGE PROFICIENCY</h2>
             <div class="card p-8">
-                <div class="mb-6">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="font-medium" style="color: var(--text-primary);">Hindi (Native)</span>
-                    </div>
-                    <div class="language-meter">
-                        <div class="language-meter-fill" style="width: 100%"></div>
-                    </div>
-                </div>
-                
-                <div class="mb-6">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="font-medium" style="color: var(--text-primary);">English (Professional)</span>
-                        <span class="text-sm" style="color: var(--text-muted);">IELTS C1</span>
-                    </div>
-                    <div class="language-meter">
-                        <div class="language-meter-fill" style="width: 90%"></div>
-                    </div>
-                </div>
-                
-                <div class="mb-6">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="font-medium" style="color: var(--text-primary);">German (Learning)</span>
-                        <span class="text-sm" style="color: var(--text-muted);">A2 | 1+ year Duolingo streak</span>
-                    </div>
-                    <div class="language-meter">
-                        <div class="language-meter-fill" style="width: 45%"></div>
-                    </div>
-                </div>
-                
-                <div>
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="font-medium" style="color: var(--text-primary);">French (Basic)</span>
-                        <span class="text-sm" style="color: var(--text-muted);">1-year Duolingo streak</span>
-                    </div>
-                    <div class="language-meter">
-                        <div class="language-meter-fill" style="width: 20%"></div>
-                    </div>
-                </div>
+                <div class="mb-6"><div class="flex justify-between items-center mb-2"><span class="font-medium" style="color: var(--text-primary);">Hindi (Native)</span></div><div class="language-meter"><div class="language-meter-fill" style="width: 100%"></div></div></div>
+                <div class="mb-6"><div class="flex justify-between items-center mb-2"><span class="font-medium" style="color: var(--text-primary);">English (Professional)</span><span class="text-sm" style="color: var(--text-muted);">IELTS C1</span></div><div class="language-meter"><div class="language-meter-fill" style="width: 90%"></div></div></div>
+                <div class="mb-6"><div class="flex justify-between items-center mb-2"><span class="font-medium" style="color: var(--text-primary);">German (Learning)</span><span class="text-sm" style="color: var(--text-muted);">A2 | 1+ year Duolingo streak</span></div><div class="language-meter"><div class="language-meter-fill" style="width: 45%"></div></div></div>
+                <div><div class="flex justify-between items-center mb-2"><span class="font-medium" style="color: var(--text-primary);">French (Basic)</span><span class="text-sm" style="color: var(--text-muted);">1-year Duolingo streak</span></div><div class="language-meter"><div class="language-meter-fill" style="width: 20%"></div></div></div>
             </div>
         </div>
     </section>
 
-    <!-- Speaking Engagements Section -->
+    <!-- Speaking Engagements - COMPLETE ORIGINAL CONTENT -->
     <section id="speaking" class="section-spacing px-4 bg-[--bg-secondary] bg-opacity-30">
         <div class="max-w-7xl mx-auto">
-            <h2 class="section-heading text-center text-[--accent-primary]">
-                <i class="fas fa-microphone mr-2"></i>
-                SPEAKING ENGAGEMENTS
-            </h2>
-            
+            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-microphone mr-2"></i>SPEAKING ENGAGEMENTS</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="card p-8">
-                    <div class="flex items-start mb-4">
-                        <div class="bg-[--accent-secondary] p-3 rounded-full mr-4 text-black">
-                            <i class="fas fa-chalkboard-teacher"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Guest Speaker - Fresher Induction</h3>
-                            <p class="text-sm" style="color: var(--text-muted);">VIT Vellore • 2023</p>
-                            <p style="color: var(--text-secondary);">
-                                Invited to share my academic journey and research experiences with incoming civil engineering students during orientation program.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card p-8">
-                    <div class="flex items-start mb-4">
-                        <div class="bg-[--accent-primary] p-3 rounded-full mr-4">
-                            <i class="fas fa-presentation text-white"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Flood Risk Analysis Presentation</h3>
-                            <p class="text-sm" style="color: var(--text-muted);">National Conference • 2022</p>
-                            <p style="color: var(--text-secondary);">
-                                Presented research on flood-prone zone identification in Bihar using HEC-RAS modeling and satellite data analysis.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <div class="card p-8"><div class="flex items-start mb-4"><div class="bg-[--accent-secondary] p-3 rounded-full mr-4 text-black"><i class="fas fa-chalkboard-teacher"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Guest Speaker - Fresher Induction</h3><p class="text-sm" style="color: var(--text-muted);">VIT Vellore • 2023</p><p style="color: var(--text-secondary);">Invited to share my academic journey and research experiences with incoming civil engineering students during orientation program.</p></div></div></div>
+                <div class="card p-8"><div class="flex items-start mb-4"><div class="bg-[--accent-primary] p-3 rounded-full mr-4"><i class="fas fa-presentation text-white"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Flood Risk Analysis Presentation</h3><p class="text-sm" style="color: var(--text-muted);">National Conference • 2022</p><p style="color: var(--text-secondary);">Presented research on flood-prone zone identification in Bihar using HEC-RAS modeling and satellite data analysis.</p></div></div></div>
             </div>
         </div>
     </section>
@@ -1850,48 +674,26 @@
     <!-- Connect Section -->
     <section id="connect" class="section-spacing px-4 satellite-track">
         <div class="max-w-7xl mx-auto">
-            <h2 class="section-heading text-center text-[--accent-primary]">
-                <i class="fas fa-rocket mr-2"></i>
-                LET'S CONNECT
-            </h2>
-            
+            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-rocket mr-2"></i>LET'S CONNECT</h2>
             <div class="card p-8 max-w-3xl mx-auto">
-                <p class="text-lg text-center mb-8" style="color: var(--text-primary);">
-                    Passionate about geospatial technologies and climate solutions. Open to research collaborations and impactful projects.
-                </p>
-                
+                <p class="text-lg text-center mb-8" style="color: var(--text-primary);">Passionate about geospatial technologies and climate solutions. Open to research collaborations and impactful projects.</p>
                 <div class="contact-links">
-                    <a href="mailto:devamss29@gmail.com" class="contact-link">
-                        <i class="fas fa-envelope mr-2"></i>
-                        <span>Email Me</span>
-                    </a>
-                    <a href="https://www.linkedin.com/in/devshreesaini" target="_blank" class="contact-link">
-                        <i class="fab fa-linkedin-in mr-2"></i>
-                        <span>LinkedIn</span>
-                    </a>
-                    <a href="https://github.com/devam29" target="_blank" class="contact-link">
-                        <i class="fab fa-github mr-2"></i>
-                        <span>GitHub</span>
-                    </a>
-                    <a href="tel:+41767519687" class="contact-link">
-                        <i class="fas fa-phone mr-2"></i>
-                        <span>Call Me</span>
-                    </a>
+                    <a href="mailto:devamss29@gmail.com" class="contact-link"><i class="fas fa-envelope mr-2"></i><span>Email Me</span></a>
+                    <a href="https://www.linkedin.com/in/devshreesaini" target="_blank" class="contact-link"><i class="fab fa-linkedin-in mr-2"></i><span>LinkedIn</span></a>
+                    <a href="https://github.com/devam29" target="_blank" class="contact-link"><i class="fab fa-github mr-2"></i><span>GitHub</span></a>
+                    <a href="tel:+41767519687" class="contact-link"><i class="fas fa-phone mr-2"></i><span>Call Me</span></a>
                 </div>
+                <div class="mt-8 flex justify-center"><button class="share-btn" id="share-portfolio"><i class="fas fa-share-alt"></i><span>Share Portfolio</span></button></div>
             </div>
         </div>
     </section>
+    <div class="share-tooltip" id="share-tooltip">✅ Link copied to clipboard!</div>
 
-    <!-- Map Section -->
+    <!-- Research Radar Map -->
     <section id="work-locations" class="section-spacing px-4 bg-[--bg-secondary] bg-opacity-30">
         <div class="max-w-7xl mx-auto">
-            <h2 class="section-heading text-center text-[--accent-primary]">
-                <i class="fas fa-map-marked-alt mr-2"></i>
-                WORK LOCATIONS
-            </h2>
-            <div class="card p-0 overflow-hidden">
-                <div id="map"></div>
-            </div>
+            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-map-marked-alt mr-2"></i>RESEARCH RADAR</h2>
+            <div class="map-wrapper card p-0 overflow-hidden"><div id="map"></div><div class="radar-sweep"></div></div>
         </div>
     </section>
 
@@ -1899,289 +701,129 @@
     <footer class="py-8 bg-[--bg-secondary] text-center">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-center space-x-6 mb-6">
-                <a href="mailto:devamss29@gmail.com" class="text-[--accent-primary] hover:text-cyan-300 transition-colors">
-                    <i class="fas fa-envelope text-xl"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/devshreesaini" target="_blank" class="text-[--accent-primary] hover:text-cyan-300 transition-colors">
-                    <i class="fab fa-linkedin-in text-xl"></i>
-                </a>
-                <a href="https://github.com/devam29" target="_blank" class="text-[--accent-primary] hover:text-cyan-300 transition-colors">
-                    <i class="fab fa-github text-xl"></i>
-                </a>
-                <a href="https://raw.githubusercontent.com/devam29/Resume/main/CV_DevShreeSaini.pdf" class="text-[--accent-primary] hover:text-cyan-300 transition-colors">
-                    <i class="fas fa-file-pdf text-xl"></i>
-                </a>
+                <a href="mailto:devamss29@gmail.com" class="text-[--accent-primary] hover:text-cyan-300 transition-colors"><i class="fas fa-envelope text-xl"></i></a>
+                <a href="https://www.linkedin.com/in/devshreesaini" target="_blank" class="text-[--accent-primary] hover:text-cyan-300 transition-colors"><i class="fab fa-linkedin-in text-xl"></i></a>
+                <a href="https://github.com/devam29" target="_blank" class="text-[--accent-primary] hover:text-cyan-300 transition-colors"><i class="fab fa-github text-xl"></i></a>
+                <a href="https://raw.githubusercontent.com/devam29/Resume/main/CV_DevShreeSaini.pdf" class="text-[--accent-primary] hover:text-cyan-300 transition-colors"><i class="fas fa-file-pdf text-xl"></i></a>
             </div>
-            
-            <p class="text-sm mb-2" style="color: var(--footer-text);">
-                <i class="fas fa-satellite mr-1"></i> 
-                Dev Shree Saini | Geospatial Engineer & Climate Researcher
-            </p>
-            <p class="text-xs" style="color: var(--text-muted);">
-                Built with <i class="fas fa-heart text-[--accent-primary]"></i> and <i class="fas fa-code text-[--accent-secondary]"></i> | 
-                © 2025 | All systems operational <i class="fas fa-check-circle text-green-400"></i>
-            </p>
+            <p class="text-sm mb-2" style="color: var(--footer-text);"><i class="fas fa-satellite mr-1"></i>Dev Shree Saini | Geospatial Engineer & Climate Researcher</p>
+            <p class="text-xs" style="color: var(--text-muted);">Built with <i class="fas fa-heart text-[--accent-primary]"></i> and <i class="fas fa-code text-[--accent-secondary]"></i> | © 2025 | All systems operational <i class="fas fa-check-circle text-green-400"></i></p>
         </div>
     </footer>
 
-    <!-- Back to Top Button -->
-    <a href="#" id="back-to-top" class="fixed bottom-6 right-6 bg-[--accent-primary] text-white p-3 rounded-full shadow-lg hover:bg-cyan-700 transition-colors hidden">
-        <i class="fas fa-arrow-up"></i>
-    </a>
+    <a href="#" class="back-to-top" id="back-to-top"><i class="fas fa-arrow-up"></i></a>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // Theme Toggle Logic
+        // Theme
         const themeToggle = document.getElementById('theme-toggle');
         const body = document.body;
-        
-        // Check for saved theme preference
         const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'light') {
-            body.classList.add('light-theme');
-            themeToggle.innerHTML = '<i class="fas fa-moon"></i><span>Dark</span>';
-        } else {
-            body.classList.remove('light-theme');
-            themeToggle.innerHTML = '<i class="fas fa-sun"></i><span>Light</span>';
-        }
-
+        if (savedTheme === 'light') { body.classList.add('light-theme'); themeToggle.innerHTML = '<i class="fas fa-moon"></i><span>Dark</span>'; }
+        else { themeToggle.innerHTML = '<i class="fas fa-sun"></i><span>Light</span>'; }
         themeToggle.addEventListener('click', () => {
             body.classList.toggle('light-theme');
-            if (body.classList.contains('light-theme')) {
-                themeToggle.innerHTML = '<i class="fas fa-moon"></i><span>Dark</span>';
-                localStorage.setItem('theme', 'light');
-            } else {
-                themeToggle.innerHTML = '<i class="fas fa-sun"></i><span>Light</span>';
-                localStorage.setItem('theme', 'dark');
-            }
+            themeToggle.innerHTML = body.classList.contains('light-theme') ? '<i class="fas fa-moon"></i><span>Dark</span>' : '<i class="fas fa-sun"></i><span>Light</span>';
+            localStorage.setItem('theme', body.classList.contains('light-theme') ? 'light' : 'dark');
         });
 
-        // Create space background elements (stars)
-        function createSpaceElements() {
-            const container = document.getElementById('space-elements');
-            const heroContainer = document.getElementById('hero-space-elements');
-            
-            for (let i = 0; i < 100; i++) {
-                const star = document.createElement('div');
-                star.className = 'space-particle';
-                star.style.width = `${Math.random() * 2 + 1}px`;
-                star.style.height = star.style.width;
-                star.style.left = `${Math.random() * 100}%`;
-                star.style.top = `${Math.random() * 100}%`;
-                star.style.opacity = Math.random();
-                star.style.animation = `twinkle ${Math.random() * 5 + 3}s infinite alternate`;
-                
-                if (i % 3 === 0 && heroContainer) {
-                    const heroStar = star.cloneNode(true);
-                    heroStar.style.animationDelay = `${Math.random() * 2}s`;
-                    heroContainer.appendChild(heroStar);
-                } else {
-                    container.appendChild(star);
-                }
-            }
+        // Scroll Progress
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - window.innerHeight;
+            document.getElementById('scroll-progress').style.width = (winScroll / height) * 100 + '%';
+            document.querySelector('.back-to-top').classList.toggle('visible', winScroll > 300);
+        });
+
+        // Parallax
+        document.addEventListener('mousemove', (e) => {
+            document.querySelectorAll('.parallax-slow').forEach(el => {
+                const speed = parseFloat(el.dataset.speed || 0.05);
+                const x = (window.innerWidth/2 - e.clientX) * speed;
+                const y = (window.innerHeight/2 - e.clientY) * speed;
+                el.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        });
+
+        // Constellation
+        const canvas = document.getElementById('constellation-canvas');
+        const ctx = canvas.getContext('2d');
+        const nodes = document.querySelectorAll('.skill-node');
+        function drawConstellation() {
+            const container = document.getElementById('skills-constellation');
+            canvas.width = container.offsetWidth;
+            canvas.height = container.offsetHeight;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const points = [];
+            nodes.forEach(node => { const rect = node.getBoundingClientRect(); const crect = container.getBoundingClientRect(); points.push({x: rect.left + rect.width/2 - crect.left, y: rect.top + rect.height/2 - crect.top}); });
+            ctx.strokeStyle = getComputedStyle(document.body).getPropertyValue('--accent-primary') || '#00B4D8';
+            ctx.lineWidth = 1.5; ctx.globalAlpha = 0.3;
+            for(let i=0; i<points.length; i++) for(let j=i+1; j<points.length; j++) { const dx=points[i].x-points[j].x, dy=points[i].y-points[j].y; if(Math.sqrt(dx*dx+dy*dy)<180) { ctx.beginPath(); ctx.moveTo(points[i].x, points[i].y); ctx.lineTo(points[j].x, points[j].y); ctx.stroke(); } }
+            ctx.globalAlpha = 1;
         }
-        
+        window.addEventListener('resize', drawConstellation);
+        setTimeout(drawConstellation, 500); setTimeout(drawConstellation, 1500);
+
+        // Share
+        document.getElementById('share-portfolio').addEventListener('click', async () => {
+            try { await navigator.clipboard.writeText(window.location.href); } catch { const ta = document.createElement('textarea'); ta.value = window.location.href; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); }
+            const tt = document.getElementById('share-tooltip'); tt.classList.add('show'); setTimeout(() => tt.classList.remove('show'), 2000);
+        });
+
+        // Timeline drag
+        const timeline = document.getElementById('timeline-scroll');
+        let isDown=false, startX, scrollLeft;
+        timeline.addEventListener('mousedown', (e) => { isDown=true; startX=e.pageX-timeline.offsetLeft; scrollLeft=timeline.scrollLeft; });
+        timeline.addEventListener('mouseleave', () => isDown=false);
+        timeline.addEventListener('mouseup', () => isDown=false);
+        timeline.addEventListener('mousemove', (e) => { if(!isDown) return; e.preventDefault(); const x=e.pageX-timeline.offsetLeft; timeline.scrollLeft=scrollLeft-(x-startX); });
+
         // Loader
         window.addEventListener('load', () => {
-            let count = 3;
-            const countdownElement = document.getElementById('countdown');
-            const countdownInterval = setInterval(() => {
-                count--;
-                countdownElement.textContent = count;
-                if (count <= 0) clearInterval(countdownInterval);
-            }, 800);
-            
-            const progressBar = document.querySelector('.progress-bar-loading');
-            let width = 0;
-            const interval = setInterval(() => {
-                width += 5;
-                progressBar.style.width = `${width}%`;
-                if (width >= 100) {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        document.querySelector('.loader').style.opacity = '0';
-                        document.querySelector('.loader').style.pointerEvents = 'none';
-                    }, 300);
-                }
-            }, 100);
-            
-            createSpaceElements();
+            let c=3; const cd=document.getElementById('countdown'); const ci=setInterval(()=>{c--; cd.textContent=c; if(c<=0) clearInterval(ci);},800);
+            const bar=document.querySelector('.progress-bar-loading'); let w=0; const int=setInterval(()=>{w+=5; bar.style.width=w+'%'; if(w>=100){ clearInterval(int); setTimeout(()=>{ document.querySelector('.loader').style.opacity='0'; document.querySelector('.loader').style.pointerEvents='none'; },300); }},100);
+            drawConstellation();
+            const container=document.getElementById('space-elements'); const hero=document.getElementById('hero-space-elements');
+            for(let i=0;i<100;i++){ const s=document.createElement('div'); s.className='space-particle'; s.style.width=s.style.height=(Math.random()*2+1)+'px'; s.style.left=Math.random()*100+'%'; s.style.top=Math.random()*100+'%'; s.style.opacity=Math.random(); s.style.animation=`twinkle ${Math.random()*5+3}s infinite`; if(i%3===0&&hero) hero.appendChild(s.cloneNode()); else container.appendChild(s); }
         });
 
-        // Mobile Menu
-        const menuToggle = document.getElementById('menu-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
-        menuToggle.addEventListener('click', () => {
-            mobileMenu.classList.toggle('active');
-            menuToggle.innerHTML = mobileMenu.classList.contains('active') ? 
-                '<i class="fas fa-times text-xl"></i>' : '<i class="fas fa-bars text-xl"></i>';
-        });
-
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.remove('active');
-                menuToggle.innerHTML = '<i class="fas fa-bars text-xl"></i>';
-            });
-        });
-
-        // Scrollspy & Back to Top
-        const sections = document.querySelectorAll('section');
-        const navLinks = document.querySelectorAll('nav a');
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (scrollY >= sectionTop - 200) {
-                    current = section.getAttribute('id');
-                }
-            });
-            
-            navLinks.forEach(link => {
-                link.classList.remove('active-nav');
-                if (link.getAttribute('href')?.substring(1) === current) {
-                    link.classList.add('active-nav');
-                }
-            });
-            
-            document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 50);
-            document.getElementById('back-to-top').classList.toggle('hidden', window.scrollY <= 300);
-        });
-
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) target.scrollIntoView({ behavior: 'smooth' });
-            });
-        });
-
-        // ScrollReveal
-        ScrollReveal().reveal('.card', { duration: 1000, distance: '20px', origin: 'bottom', interval: 200 });
-        ScrollReveal().reveal('section', { duration: 1000, distance: '20px', origin: 'top', delay: 200 });
-
-        // Leaflet Map
-        const map = L.map('map').setView([20, 0], 2);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> & <a href="https://carto.com/attributions">CARTO</a>',
-            maxZoom: 18
-        }).addTo(map);
-
-        const satelliteIcon = L.divIcon({ className: 'satellite-marker', html: '<i class="fas fa-satellite text-[--accent-primary] text-2xl"></i>', iconSize: [30, 30] });
-        L.marker([47.3769, 8.5417], { icon: satelliteIcon }).addTo(map).bindPopup('<b>ETH Zurich</b><br>Master\'s in Geomatics Engineering');
-        L.marker([23.0225, 72.5714], { icon: satelliteIcon }).addTo(map).bindPopup('<b>Ahmedabad</b><br>Groundwater Sustainability Study');
-        L.marker([26.5, 93.5], { icon: satelliteIcon }).addTo(map).bindPopup('<b>Dhansiri River Basin</b><br>Flood Risk Assessment');
-        L.marker([30.3165, 78.0322], { icon: satelliteIcon }).addTo(map).bindPopup('<b>Dehradun</b><br>IIRS Internship');
-        L.marker([45.5017, -73.5673], { icon: satelliteIcon }).addTo(map).bindPopup('<b>Montreal</b><br>Concordia Research Internship');
-        L.marker([12.9716, 79.1593], { icon: satelliteIcon }).addTo(map).bindPopup('<b>VIT Vellore</b><br>Bachelor\'s in Civil Engineering');
-
-        // Project Modals
-        const modal = document.getElementById('project-modal');
-        const modalContent = document.getElementById('modal-content');
-        const closeModal = document.querySelector('.close-modal');
-        const projectCards = document.querySelectorAll('.project-card');
+        // Mobile menu
+        const menuToggle=document.getElementById('menu-toggle'), mobileMenu=document.getElementById('mobile-menu');
+        menuToggle.addEventListener('click',()=>{ mobileMenu.classList.toggle('active'); menuToggle.innerHTML=mobileMenu.classList.contains('active')?'<i class="fas fa-times"></i>':'<i class="fas fa-bars"></i>'; });
+        document.querySelectorAll('#mobile-menu a').forEach(l=>l.addEventListener('click',()=>{ mobileMenu.classList.remove('active'); menuToggle.innerHTML='<i class="fas fa-bars"></i>'; }));
         
-        const projects = {
-            gnss: {
-                title: "GNSS Precipitation Prediction", subtitle: "ETH Zurich • 2024", image: "https://raw.githubusercontent.com/devam29/Resume2/main/1596.jpg",
-                description: "Developed a machine learning model for rainfall prediction using GNSS signal delay and ERA5 datasets with satellite-derived atmospheric data. The model achieved 85% accuracy in predicting short-duration precipitation events, which is crucial for flood early warning systems.",
-                details: ["Processed and analyzed GNSS signal delay data from 50+ stations", "Integrated ERA5 reanalysis data for atmospheric variables", "Implemented Random Forest and LSTM models for prediction", "Achieved 85% accuracy in precipitation event detection"],
-                skills: ["Python", "Machine Learning", "GNSS", "ERA5", "PyTorch"],
-                links: [{ icon: "fa-file-pdf", text: "View Report", url: "https://www.research-collection.ethz.ch/handle/20.500.11850/740422" }]
-            },
-            flood: {
-                title: "Flood Risk Assessment", subtitle: "Dhansiri River Basin, India", image: "https://raw.githubusercontent.com/devam29/Resume2/main/flood.jpg",
-                description: "Conducted comprehensive flood risk analysis using SWAT hydrological model with NSE: 0.84 and R²: 0.90. The project integrated satellite imagery and hydrological modeling to identify high-risk zones and recommend mitigation strategies.",
-                details: ["Calibrated SWAT model with NSE: 0.84 and R²: 0.90", "Processed Sentinel-2 imagery for land use classification", "Developed flood risk maps for the Dhansiri River Basin", "Recommended mitigation strategies for high-risk areas"],
-                skills: ["SWAT", "QGIS", "Hydrology", "Remote Sensing", "Python"],
-                links: [{ icon: "fa-file-pdf", text: "View Report", url: "https://drive.google.com/file/d/1jcM9XI5UxNMKiRylLJl1HHvX11Jxitwx/view?usp=sharing" }]
-            },
-            groundwater: {
-                title: "Groundwater Sustainability", subtitle: "Ahmedabad, India", image: "https://raw.githubusercontent.com/devam29/Resume2/main/groundwater.jpg",
-                description: "AHP analysis using satellite data and GIS to identify 89% medium to high potential groundwater zones. The study helped local authorities in sustainable water resource management and planning.",
-                details: ["Analyzed satellite-derived groundwater indicators", "Applied Analytical Hierarchy Process (AHP) for zoning", "Identified 89% medium to high potential zones", "Validated results with field measurements"],
-                skills: ["GIS", "AHP", "Remote Sensing", "Water Resources", "Python"],
-                links: [{ icon: "fa-file-pdf", text: "View Report", url: "https://drive.google.com/file/d/1Hh1tKMtwem4-m5QyzUK0gCcLuf_go8UB/view?usp=drive_link" }]
-            }
+        // Map
+        const map=L.map('map').setView([20,0],2); L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{maxZoom:18}).addTo(map);
+        const icon=L.divIcon({html:'<i class="fas fa-satellite text-[--accent-primary] text-2xl"></i>',iconSize:[30,30]});
+        L.marker([47.3769,8.5417],{icon}).addTo(map).bindPopup('<b>ETH Zurich</b><br>Master\'s in Geomatics Engineering');
+        L.marker([23.0225,72.5714],{icon}).addTo(map).bindPopup('<b>Ahmedabad</b><br>Groundwater Sustainability Study');
+        L.marker([26.5,93.5],{icon}).addTo(map).bindPopup('<b>Dhansiri River Basin</b><br>Flood Risk Assessment');
+        L.marker([30.3165,78.0322],{icon}).addTo(map).bindPopup('<b>Dehradun</b><br>IIRS Internship');
+        L.marker([45.5017,-73.5673],{icon}).addTo(map).bindPopup('<b>Montreal</b><br>Concordia Research Internship');
+        L.marker([12.9716,79.1593],{icon}).addTo(map).bindPopup('<b>VIT Vellore</b><br>Bachelor\'s in Civil Engineering');
+
+        // Project modals - COMPLETE ORIGINAL DATA
+        const modal=document.getElementById('project-modal'), modalContent=document.getElementById('modal-content'), closeModal=document.querySelector('.close-modal');
+        const projects={
+            gnss:{title:"GNSS Precipitation Prediction",subtitle:"ETH Zurich • 2024",image:"https://raw.githubusercontent.com/devam29/Resume2/main/1596.jpg",description:"Developed a machine learning model for rainfall prediction using GNSS signal delay and ERA5 datasets with satellite-derived atmospheric data. The model achieved 85% accuracy in predicting short-duration precipitation events, which is crucial for flood early warning systems.",details:["Processed and analyzed GNSS signal delay data from 50+ stations","Integrated ERA5 reanalysis data for atmospheric variables","Implemented Random Forest and LSTM models for prediction","Achieved 85% accuracy in precipitation event detection"],skills:["Python","Machine Learning","GNSS","ERA5","PyTorch"],links:[{icon:"fa-file-pdf",text:"View Report",url:"https://www.research-collection.ethz.ch/handle/20.500.11850/740422"}]},
+            flood:{title:"Flood Risk Assessment",subtitle:"Dhansiri River Basin, India",image:"https://raw.githubusercontent.com/devam29/Resume2/main/flood.jpg",description:"Conducted comprehensive flood risk analysis using SWAT hydrological model with NSE: 0.84 and R²: 0.90. The project integrated satellite imagery and hydrological modeling to identify high-risk zones and recommend mitigation strategies.",details:["Calibrated SWAT model with NSE: 0.84 and R²: 0.90","Processed Sentinel-2 imagery for land use classification","Developed flood risk maps for the Dhansiri River Basin","Recommended mitigation strategies for high-risk areas"],skills:["SWAT","QGIS","Hydrology","Remote Sensing","Python"],links:[{icon:"fa-file-pdf",text:"View Report",url:"https://drive.google.com/file/d/1jcM9XI5UxNMKiRylLJl1HHvX11Jxitwx/view?usp=sharing"}]},
+            groundwater:{title:"Groundwater Sustainability",subtitle:"Ahmedabad, India",image:"https://raw.githubusercontent.com/devam29/Resume2/main/groundwater.jpg",description:"AHP analysis using satellite data and GIS to identify 89% medium to high potential groundwater zones. The study helped local authorities in sustainable water resource management and planning.",details:["Analyzed satellite-derived groundwater indicators","Applied Analytical Hierarchy Process (AHP) for zoning","Identified 89% medium to high potential zones","Validated results with field measurements"],skills:["GIS","AHP","Remote Sensing","Water Resources","Python"],links:[{icon:"fa-file-pdf",text:"View Report",url:"https://drive.google.com/file/d/1Hh1tKMtwem4-m5QyzUK0gCcLuf_go8UB/view?usp=drive_link"}]}
         };
-
-        projectCards.forEach(card => {
-            card.addEventListener('click', () => {
-                const project = projects[card.getAttribute('data-project')];
-                let content = `<div class="grid grid-cols-1 md:grid-cols-2 gap-8"><div><img src="${project.image}" alt="${project.title}" class="w-full h-auto rounded-lg mb-4"><div class="flex flex-wrap gap-2 mb-4">${project.skills.map(s => `<span class="skill-badge">${s}</span>`).join('')}</div><div class="space-y-2">${project.links.map(l => `<a href="${l.url}" target="_blank" class="inline-flex items-center px-4 py-2 bg-[--accent-primary] hover:bg-cyan-700 text-white rounded-full transition-colors mr-2 font-semibold"><i class="fas ${l.icon} mr-2"></i>${l.text}</a>`).join('')}</div></div><div><h3 class="text-2xl font-bold mb-2" style="color: var(--text-primary);">${project.title}</h3><p class="text-sm mb-4" style="color: var(--text-muted);">${project.subtitle}</p><p class="mb-6" style="color: var(--text-secondary);">${project.description}</p><h4 class="text-lg font-semibold mb-2 text-[--accent-primary]">Project Details</h4><ul class="list-disc pl-5 space-y-2 mb-6" style="color: var(--text-secondary);">${project.details.map(d => `<li>${d}</li>`).join('')}</ul></div></div>`;
-                modalContent.innerHTML = content;
-                modal.style.display = 'block';
-                document.body.style.overflow = 'hidden';
-                modal.scrollTo(0, 0);
-            });
-        });
-
-        closeModal.addEventListener('click', () => { modal.style.display = 'none'; document.body.style.overflow = 'auto'; });
-        window.addEventListener('click', (e) => { if (e.target === modal) { modal.style.display = 'none'; document.body.style.overflow = 'auto'; } });
+        document.querySelectorAll('.project-card').forEach(card=>{ card.addEventListener('click',()=>{ const p=projects[card.dataset.project]; modalContent.innerHTML=`<div class="grid grid-cols-1 md:grid-cols-2 gap-8"><div><img src="${p.image}" alt="${p.title}" class="w-full h-auto rounded-lg mb-4"><div class="flex flex-wrap gap-2 mb-4">${p.skills.map(s=>`<span class="skill-badge">${s}</span>`).join('')}</div><div class="space-y-2">${p.links.map(l=>`<a href="${l.url}" target="_blank" class="inline-flex items-center px-4 py-2 bg-[--accent-primary] hover:bg-cyan-700 text-white rounded-full transition-colors mr-2 font-semibold"><i class="fas ${l.icon} mr-2"></i>${l.text}</a>`).join('')}</div></div><div><h3 class="text-2xl font-bold mb-2" style="color: var(--text-primary);">${p.title}</h3><p class="text-sm mb-4" style="color: var(--text-muted);">${p.subtitle}</p><p class="mb-6" style="color: var(--text-secondary);">${p.description}</p><h4 class="text-lg font-semibold mb-2 text-[--accent-primary]">Project Details</h4><ul class="list-disc pl-5 space-y-2 mb-6" style="color: var(--text-secondary);">${p.details.map(d=>`<li>${d}</li>`).join('')}</ul></div></div>`; modal.style.display='block'; document.body.style.overflow='hidden'; }); });
+        closeModal.addEventListener('click',()=>{ modal.style.display='none'; document.body.style.overflow='auto'; });
+        window.addEventListener('click',(e)=>{ if(e.target===modal) { modal.style.display='none'; document.body.style.overflow='auto'; } });
 
         // Geospatial Explorer
-        document.getElementById('geospatial-explorer-btn').addEventListener('click', function() {
-            const content = document.getElementById('field-explanation-content');
-            content.classList.toggle('hidden');
-            this.querySelector('i.fa-chevron-down').classList.toggle('hidden', !content.classList.contains('hidden'));
-        });
+        document.getElementById('geospatial-explorer-btn').addEventListener('click',function(){ const c=document.getElementById('field-explanation-content'); c.classList.toggle('hidden'); this.querySelector('i.fa-chevron-down').classList.toggle('hidden',!c.classList.contains('hidden')); });
 
         // 3D Earth
-        const initEarth = () => {
-            const container = document.getElementById('earth-container');
-            const width = container.clientWidth, height = container.clientHeight;
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-            camera.position.z = 2.5;
-            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            renderer.setSize(width, height);
-            container.appendChild(renderer.domElement);
-            const controls = new THREE.OrbitControls(camera, renderer.domElement);
-            controls.enableDamping = true; controls.autoRotate = true; controls.autoRotateSpeed = 0.5;
-            
-            const geometry = new THREE.SphereGeometry(1, 64, 64);
-            const textureLoader = new THREE.TextureLoader();
-            const material = new THREE.MeshPhongMaterial({
-                map: textureLoader.load('https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg'),
-                bumpMap: textureLoader.load('https://threejs.org/examples/textures/planets/earth_normal_2048.jpg'),
-                bumpScale: 0.05,
-                specularMap: textureLoader.load('https://threejs.org/examples/textures/planets/earth_specular_2048.jpg'),
-                specular: new THREE.Color('grey'), shininess: 5
-            });
-            const earth = new THREE.Mesh(geometry, material);
-            scene.add(earth);
-            
-            const ambientLight = new THREE.AmbientLight(0x333333);
-            scene.add(ambientLight);
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-            directionalLight.position.set(5, 3, 5);
-            scene.add(directionalLight);
-            
-            const starsGeometry = new THREE.BufferGeometry();
-            const starsVertices = [];
-            for (let i = 0; i < 10000; i++) { starsVertices.push((Math.random() - 0.5) * 2000, (Math.random() - 0.5) * 2000, (Math.random() - 0.5) * 2000); }
-            starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starsVertices, 3));
-            const stars = new THREE.Points(starsGeometry, new THREE.PointsMaterial({ color: 0xffffff, size: 0.05, transparent: true }));
-            scene.add(stars);
-            
-            const cloudGeometry = new THREE.SphereGeometry(1.01, 64, 64);
-            const cloudMaterial = new THREE.MeshPhongMaterial({ map: textureLoader.load('https://threejs.org/examples/textures/planets/earth_clouds_1024.png'), transparent: true, opacity: 0.4 });
-            const clouds = new THREE.Mesh(cloudGeometry, cloudMaterial);
-            scene.add(clouds);
-            
-            const animate = () => {
-                requestAnimationFrame(animate);
-                earth.rotation.y += 0.0005;
-                clouds.rotation.y += 0.0007;
-                controls.update();
-                renderer.render(scene, camera);
-            };
-            animate();
-            window.addEventListener('resize', () => { camera.aspect = container.clientWidth / container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
-        };
-        
-        const earthObserver = new IntersectionObserver((entries) => { if (entries[0].isIntersecting) { initEarth(); earthObserver.disconnect(); } }, { threshold: 0.1 });
-        earthObserver.observe(document.getElementById('earth-container'));
+        const initEarth=()=>{ const container=document.getElementById('earth-container'); const w=container.clientWidth, h=container.clientHeight; const scene=new THREE.Scene(); const camera=new THREE.PerspectiveCamera(75,w/h,0.1,1000); camera.position.z=2.5; const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true}); renderer.setSize(w,h); container.appendChild(renderer.domElement); const controls=new THREE.OrbitControls(camera,renderer.domElement); controls.enableDamping=true; controls.autoRotate=true; controls.autoRotateSpeed=0.5; const geometry=new THREE.SphereGeometry(1,64,64); const tl=new THREE.TextureLoader(); const material=new THREE.MeshPhongMaterial({map:tl.load('https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg'),bumpMap:tl.load('https://threejs.org/examples/textures/planets/earth_normal_2048.jpg'),bumpScale:0.05,specularMap:tl.load('https://threejs.org/examples/textures/planets/earth_specular_2048.jpg'),specular:new THREE.Color('grey'),shininess:5}); const earth=new THREE.Mesh(geometry,material); scene.add(earth); scene.add(new THREE.AmbientLight(0x333333)); const dl=new THREE.DirectionalLight(0xffffff,1); dl.position.set(5,3,5); scene.add(dl); const sg=new THREE.BufferGeometry(); const sv=[]; for(let i=0;i<10000;i++) sv.push((Math.random()-0.5)*2000,(Math.random()-0.5)*2000,(Math.random()-0.5)*2000); sg.setAttribute('position',new THREE.Float32BufferAttribute(sv,3)); scene.add(new THREE.Points(sg,new THREE.PointsMaterial({color:0xffffff,size:0.05}))); const cg=new THREE.SphereGeometry(1.01,64,64); const cm=new THREE.MeshPhongMaterial({map:tl.load('https://threejs.org/examples/textures/planets/earth_clouds_1024.png'),transparent:true,opacity:0.4}); const clouds=new THREE.Mesh(cg,cm); scene.add(clouds); (function animate(){ requestAnimationFrame(animate); earth.rotation.y+=0.0005; clouds.rotation.y+=0.0007; controls.update(); renderer.render(scene,camera); })(); window.addEventListener('resize',()=>{ camera.aspect=container.clientWidth/container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth,container.clientHeight); }); };
+        new IntersectionObserver((e)=>{ if(e[0].isIntersecting){ initEarth(); e[0].target._observer.disconnect(); } },{threshold:0.1}).observe(document.getElementById('earth-container'));
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(a=>{ a.addEventListener('click',function(e){ e.preventDefault(); const t=document.querySelector(this.getAttribute('href')); if(t) t.scrollIntoView({behavior:'smooth'}); }); });
+        ScrollReveal().reveal('.card',{duration:1000,distance:'20px',origin:'bottom',interval:200});
+        ScrollReveal().reveal('section',{duration:1000,distance:'20px',origin:'top',delay:200});
     </script>
 </body>
 </html>
