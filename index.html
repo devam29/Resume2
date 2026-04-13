@@ -159,6 +159,17 @@
         .nav-container { max-width: 1280px; margin: 0 auto; padding: 0 1rem; display: flex; justify-content: space-between; align-items: center; }
         .nav-brand { display: flex; align-items: center; gap: 0.5rem; font-weight: 700; font-size: 1.25rem; color: var(--text-primary); }
         .nav-controls { display: flex; align-items: center; gap: 0.5rem; }
+        .mode-btn {
+            padding: 0.4rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            background: transparent;
+            border: 1px solid var(--border-light);
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
         .nav-links { display: none; }
         @media (min-width: 1024px) { .nav-links { display: flex; align-items: center; gap: 0.25rem; margin-right: 0.5rem; } }
         .nav-links a { color: var(--text-primary); padding: 0.5rem 0.6rem; font-size: 0.85rem; font-weight: 500; transition: color 0.2s; white-space: nowrap; }
@@ -322,6 +333,36 @@
         .space-particle { position: absolute; border-radius: 999px; background: rgba(255,255,255,0.9); box-shadow: 0 0 8px rgba(255,255,255,0.4); }
         @keyframes twinkle { 0%, 100% { opacity: 0.2; transform: scale(1); } 50% { opacity: 1; transform: scale(1.8); } }
         .interactive-link { color: var(--accent-primary); text-decoration: underline; text-underline-offset: 3px; }
+        .recruiter-snapshot {
+            border: 1px solid var(--border-light);
+            background: rgba(12, 28, 54, 0.55);
+            border-radius: 14px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .mode-picker {
+            position: fixed;
+            inset: 0;
+            background: rgba(4, 8, 18, 0.82);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 11000;
+            backdrop-filter: blur(8px);
+        }
+        .mode-picker.show { display: flex; }
+        .mode-picker-card {
+            width: min(560px, 92vw);
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 14px;
+            padding: 1.8rem;
+            text-align: center;
+        }
+        .mode-picker-actions { display: flex; gap: 0.75rem; justify-content: center; margin-top: 1rem; flex-wrap: wrap; }
+        .mode-choice { padding: 0.7rem 1.2rem; border-radius: 999px; border: 1px solid var(--border-light); color: var(--text-primary); }
+        .mode-choice.primary { background: var(--accent-primary); color: #041124; border-color: transparent; }
+        .professional-mode #field-explanation { display: none; }
         .visual-aid { width: 100%; height: 200px; background-size: cover; background-position: center; border-radius: 8px; margin-bottom: 1rem; border: 1px solid var(--border-light); }
         
         @media (max-width: 768px) {
@@ -338,6 +379,17 @@
 </head>
 <body>
     <div id="scroll-progress"></div>
+
+    <div id="mode-picker" class="mode-picker" aria-hidden="true">
+        <div class="mode-picker-card">
+            <h3 class="text-2xl font-bold mb-2" style="color: var(--text-primary);" data-translate="choose_mode_title">Choose Portfolio Mode</h3>
+            <p style="color: var(--text-secondary);" data-translate="choose_mode_text">Use Professional mode for recruiters, or Curious mode to include educational sections.</p>
+            <div class="mode-picker-actions">
+                <button id="choose-professional" class="mode-choice primary" data-translate="mode_professional">Professional</button>
+                <button id="choose-curious" class="mode-choice" data-translate="mode_curious">Curious</button>
+            </div>
+        </div>
+    </div>
 
     <a href="https://raw.githubusercontent.com/devam29/Resume/main/CV_DevShreeSaini.pdf" class="floating-cv" download>
         <i class="fas fa-file-pdf"></i><span>Download CV</span>
@@ -369,6 +421,7 @@
                     <a href="#about">About</a><a href="#education">Education</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#publications">Publications</a><a href="#achievements">Achievements</a><a href="#connect">Connect</a>
                 </div>
                 <button id="theme-toggle" class="theme-btn"><i class="fas fa-sun"></i><span>Light</span></button>
+                <button id="mode-toggle" class="mode-btn" data-translate="mode_professional">Professional</button>
                 <div style="display: flex; gap: 0.15rem;"><button class="lang-btn active" data-lang="en">EN</button><button class="lang-btn" data-lang="fr">FR</button><button class="lang-btn" data-lang="de">DE</button><button class="lang-btn" data-lang="hi">HI</button></div>
                 <a href="#connect" class="hire-me-btn"><i class="fas fa-handshake"></i><span>Hire Me</span></a>
                 <button class="md:hidden" id="menu-toggle" style="color: var(--text-primary);"><i class="fas fa-bars text-xl"></i></button>
@@ -395,6 +448,15 @@
                 <h2 class="text-2xl font-bold mb-6 text-center" style="color: var(--text-primary);">Geospatial Engineering Specialist</h2>
                 <p class="text-lead text-center mb-6">Master's candidate at ETH Zurich leveraging satellite data and machine learning to develop climate resilience solutions. 2+ years experience in flood detection, hydrological modeling, and environmental monitoring through remote sensing technologies.</p>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8"><div class="text-center"><div class="text-2xl font-bold text-[--accent-primary] mb-2">2+</div><div class="text-sm" style="color: var(--text-primary);">Years Experience</div></div><div class="text-center"><div class="text-2xl font-bold text-[--accent-secondary] mb-2">5+</div><div class="text-sm" style="color: var(--text-primary);">Projects Completed</div></div><div class="text-center"><div class="text-2xl font-bold text-[--accent-primary] mb-2">5</div><div class="text-sm" style="color: var(--text-primary);">Research Publications</div></div></div>
+            </div>
+            <div class="recruiter-snapshot">
+                <h3 class="text-lg font-semibold mb-4 text-[--accent-primary]" data-translate="recruiter_snapshot">Recruiter Snapshot</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm" style="color: var(--text-secondary);">
+                    <div><strong data-translate="target_roles">Target Roles:</strong> Geospatial Data Scientist, Remote Sensing ML Engineer</div>
+                    <div><strong data-translate="location_work">Location & Work:</strong> Zurich, open to relocation in EU</div>
+                    <div><strong data-translate="top_stack">Top Stack:</strong> Python, GNSS, ERA5, GIS, Time-Series ML</div>
+                    <div><strong data-translate="availability">Availability:</strong> Immediate for full-time roles</div>
+                </div>
             </div>
             <div class="mt-12 max-w-2xl mx-auto bg-[--bg-secondary] bg-opacity-50 p-6 rounded-lg border border-[--border-light]">
                 <h3 class="text-lg font-semibold text-[--accent-primary] mb-2" data-translate="professional_branding">Professional Branding Statement</h3>
@@ -458,6 +520,7 @@
                 <div class="timeline-node"><div class="timeline-card" onclick="document.getElementById('experience').scrollIntoView({behavior:'smooth'})"><div class="timeline-year">2021-2023</div><div class="timeline-title">Teaching Assistant</div><div class="timeline-org">VIT Vellore</div></div></div>
                 <div class="timeline-node"><div class="timeline-card" onclick="document.getElementById('experience').scrollIntoView({behavior:'smooth'})"><div class="timeline-year">2022</div><div class="timeline-title">Research Intern</div><div class="timeline-org">Concordia University</div></div></div>
                 <div class="timeline-node"><div class="timeline-card" onclick="document.getElementById('experience').scrollIntoView({behavior:'smooth'})"><div class="timeline-year">2023</div><div class="timeline-title">Spatial Data Analyst</div><div class="timeline-org">IIRS, ISRO</div></div></div>
+                <div class="timeline-node"><div class="timeline-card" onclick="document.getElementById('experience').scrollIntoView({behavior:'smooth'})"><div class="timeline-year">2025-2026</div><div class="timeline-title" data-translate="research_assistant">Research Assistant</div><div class="timeline-org">ETH Zurich</div></div></div>
                 <div class="timeline-node"><div class="timeline-card" onclick="document.getElementById('education').scrollIntoView({behavior:'smooth'})"><div class="timeline-year">2024-Present</div><div class="timeline-title">MSc Geomatics</div><div class="timeline-org">ETH Zurich</div></div></div>
             </div>
         </div>
@@ -468,6 +531,18 @@
         <div class="max-w-7xl mx-auto">
             <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-graduation-cap mr-2"></i><span data-translate="education">EDUCATION</span></h2>
             <div class="space-y-8">
+                <div class="timeline-item">
+                    <div class="card p-8">
+                        <div class="flex flex-col md:flex-row md:items-center mb-6">
+                            <div class="flex items-center mb-4 md:mb-0 md:w-1/3"><img src="https://raw.githubusercontent.com/devam29/Resume2/main/eth.png" alt="ETH Zurich Logo" class="h-12 mr-4"><div><h3 class="text-xl font-bold" style="color: var(--text-primary);" data-translate="research_assistant">Research Assistant</h3><p class="text-sm" style="color: var(--text-muted);">ETH Zurich</p></div></div>
+                            <div class="md:w-2/3">
+                                <div class="flex items-center text-sm mb-4"><i class="fas fa-map-marker-alt mr-2 text-[--accent-secondary]"></i><span>Zurich, Switzerland</span><i class="fas fa-calendar-alt ml-4 mr-2 text-[--accent-secondary]"></i><span data-translate="ra_duration">Sept 2025 – Mar 2026</span></div>
+                                <ul class="list-disc pl-5 space-y-2" style="color: var(--text-secondary);"><li data-translate="ra_task1">Designed data pipelines for large-scale experimental atmospheric modeling.</li><li data-translate="ra_task2">Built reusable Python workflows for large-scale geospatial time-series processing and spatial feature extraction.</li><li data-translate="ra_task3">Developed machine learning models for spatiotemporal prediction using GNSS and ERA5 meteorological datasets.</li><li data-translate="ra_task4">Presented these results at the Swiss Geoscience Meeting conference in Bern (Dec 2025).</li></ul>
+                                <div class="flex flex-wrap mt-4"><span class="skill-badge">GNSS Meteorology</span><span class="skill-badge">Time-Series Analysis</span><span class="skill-badge">Python</span><span class="skill-badge">Geospatial Data Processing</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="timeline-item">
                     <div class="card p-8">
                         <div class="flex flex-col md:flex-row md:items-center mb-6">
@@ -620,6 +695,7 @@
         <div class="max-w-7xl mx-auto">
             <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-book mr-2"></i><span data-translate="publications">RESEARCH PUBLICATIONS</span></h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card p-8"><div class="mb-4 rounded-lg overflow-hidden border border-[--border-light]"><img src="images/publication-map-placeholder.jpg" alt="Cartography paper visual" class="w-full h-40 object-cover"></div><div class="flex items-start mb-4"><div class="bg-[--accent-primary] p-3 rounded-full mr-4"><i class="fas fa-map text-white"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);" data-translate="cartography_paper">Cartography and Spatial Communication</h3><p class="text-sm" style="color: var(--text-muted);" data-translate="cartography_journal">Cartography Research • 2026</p><p style="color: var(--text-secondary);" class="mb-4" data-translate="cartography_abstract">Explores how cartographic design choices affect interpretation quality in geospatial decision-making workflows.</p><a href="#" target="_blank" class="read-paper-btn inline-flex items-center font-semibold"><i class="fas fa-external-link-alt mr-2"></i><span data-translate="read_paper">Read Paper</span></a></div></div></div>
                 <div class="card p-8"><div class="flex items-start mb-4"><div class="bg-[--accent-primary] p-3 rounded-full mr-4"><i class="fas fa-file-alt text-white"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);" data-translate="impact_precipitation">Impact of Short-Duration Precipitation</h3><p class="text-sm" style="color: var(--text-muted);" data-translate="scientific_reports">Scientific Reports, Nature • 2023</p><p style="color: var(--text-secondary);" class="mb-4" data-translate="precipitation_abstract">Analyzed precipitation impacts on water resources in the Cauvery Basin using satellite data and hydrological models.</p><a href="https://doi.org/10.1038/s41598-023-41417-6" target="_blank" class="read-paper-btn inline-flex items-center font-semibold"><i class="fas fa-external-link-alt mr-2"></i><span data-translate="read_paper">Read Paper</span></a></div></div></div>
                 <div class="card p-8"><div class="flex items-start mb-4"><div class="bg-[--accent-secondary] p-3 rounded-full mr-4 text-black"><i class="fas fa-file-alt"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">HEC-RAS with GIS</h3><p class="text-sm" style="color: var(--text-muted);">Journal of the Geological Society of India • 2024</p><p style="color: var(--text-secondary);" class="mb-4">Studied river cross-section width for flood detection using HEC-RAS and GIS with satellite-derived DEMs.</p><a href="https://doi.org/10.17491/jgsi/2024/173843" target="_blank" class="read-paper-btn inline-flex items-center font-semibold"><i class="fas fa-external-link-alt mr-2"></i><span>Read Paper</span></a></div></div></div>
                 <div class="card p-8"><div class="flex items-start mb-4"><div class="bg-[--accent-primary] p-3 rounded-full mr-4"><i class="fas fa-file-alt text-white"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Chilika Lake LULC Dynamics</h3><p class="text-sm" style="color: var(--text-muted);">Estuaries and Coasts • 2025</p><p style="color: var(--text-secondary);" class="mb-4">Investigated LULC impacts on Chilika Lake's ecosystem services using multi-temporal satellite imagery.</p><a href="https://doi.org/10.1007/s12237-025-01509-0" target="_blank" class="read-paper-btn inline-flex items-center font-semibold"><i class="fas fa-external-link-alt mr-2"></i><span>Read Paper</span></a></div></div></div>
@@ -646,15 +722,13 @@
     <section id="hobbies" class="section-spacing px-4">
         <div class="max-w-7xl mx-auto">
             <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-heart mr-2"></i>BEYOND WORK</h2>
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
                 <div class="hobby-item card p-6 flex flex-col items-center text-center"><i class="fas fa-chess text-3xl mb-3 text-[--accent-secondary]"></i><h3 class="text-lg font-semibold" style="color: var(--text-primary);">Chess</h3><p class="text-sm" style="color: var(--text-muted);">FIDE Rating: 1600</p></div>
                 <div class="hobby-item card p-6 flex flex-col items-center text-center"><i class="fas fa-baseball-bat-ball text-3xl mb-3 text-[--accent-secondary]"></i><h3 class="text-lg font-semibold" style="color: var(--text-primary);">Cricket</h3><p class="text-sm" style="color: var(--text-muted);">Competitive player</p></div>
                 <div class="hobby-item card p-6 flex flex-col items-center text-center"><i class="fas fa-book-open text-3xl mb-3 text-[--accent-secondary]"></i><h3 class="text-lg font-semibold" style="color: var(--text-primary);">Reading</h3><p class="text-sm" style="color: var(--text-muted);">Sci-fi & Self-help books</p></div>
-                <div class="hobby-item card p-6 flex flex-col items-center text-center"><i class="fas fa-pen-fancy text-3xl mb-3 text-[--accent-secondary]"></i><h3 class="text-lg font-semibold" style="color: var(--text-primary);">Hindi Poetry</h3><p class="text-sm" style="color: var(--text-muted);">Bilingual writer</p><a href="#connect" class="interactive-link text-xs mt-2 font-semibold" data-translate="view_samples">View Samples</a></div>
                 <div class="hobby-item card p-6 flex flex-col items-center text-center"><i class="fas fa-utensils text-3xl mb-3 text-[--accent-secondary]"></i><h3 class="text-lg font-semibold" style="color: var(--text-primary);">Cooking</h3><p class="text-sm" style="color: var(--text-muted);">Experimental Indian fusion</p></div>
                 <div class="hobby-item card p-6 flex flex-col items-center text-center"><i class="fas fa-headphones text-3xl mb-3 text-[--accent-secondary]"></i><h3 class="text-lg font-semibold" style="color: var(--text-primary);">Music</h3><p class="text-sm" style="color: var(--text-muted);">Classical & Jazz</p></div>
                 <div class="hobby-item card p-6 flex flex-col items-center text-center"><i class="fas fa-person-hiking text-3xl mb-3 text-[--accent-secondary]"></i><h3 class="text-lg font-semibold" style="color: var(--text-primary);">Hiking</h3><p class="text-sm" style="color: var(--text-muted);">Alpine trails</p></div>
-                <div class="hobby-item card p-6 flex flex-col items-center text-center"><i class="fas fa-camera text-3xl mb-3 text-[--accent-secondary]"></i><h3 class="text-lg font-semibold" style="color: var(--text-primary);">Photography</h3><p class="text-sm" style="color: var(--text-muted);">Landscape & Nature</p></div>
             </div>
         </div>
     </section>
@@ -677,8 +751,19 @@
             <div class="card p-8">
                 <div class="mb-6"><div class="flex justify-between items-center mb-2"><span class="font-medium" style="color: var(--text-primary);">Hindi (Native)</span></div><div class="language-meter"><div class="language-meter-fill" style="width: 100%"></div></div></div>
                 <div class="mb-6"><div class="flex justify-between items-center mb-2"><span class="font-medium" style="color: var(--text-primary);">English (Professional)</span><span class="text-sm" style="color: var(--text-muted);">IELTS C1</span></div><div class="language-meter"><div class="language-meter-fill" style="width: 90%"></div></div></div>
-                <div class="mb-6"><div class="flex justify-between items-center mb-2"><span class="font-medium" style="color: var(--text-primary);">German (Learning)</span><span class="text-sm" style="color: var(--text-muted);">A2 | 1+ year Duolingo streak</span></div><div class="language-meter"><div class="language-meter-fill" style="width: 45%"></div></div></div>
+                <div class="mb-6"><div class="flex justify-between items-center mb-2"><span class="font-medium" style="color: var(--text-primary);">German (Learning)</span><span class="text-sm" style="color: var(--text-muted);">A2 | 1+ year Duolingo streak</span></div><div class="language-meter"><div class="language-meter-fill" style="width: 60%"></div></div></div>
                 <div><div class="flex justify-between items-center mb-2"><span class="font-medium" style="color: var(--text-primary);">French (Basic)</span><span class="text-sm" style="color: var(--text-muted);">1-year Duolingo streak</span></div><div class="language-meter"><div class="language-meter-fill" style="width: 20%"></div></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="case-studies" class="section-spacing px-4 bg-[--bg-secondary] bg-opacity-30 satellite-track">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-folder-open mr-2"></i><span data-translate="case_studies">CASE STUDIES</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="card p-6"><h3 class="text-xl font-semibold mb-2" style="color: var(--text-primary);">Flood Early Warning</h3><p style="color: var(--text-secondary);">Problem-method-impact format prepared for recruiter review. Add project visuals and KPI metrics here.</p></div>
+                <div class="card p-6"><h3 class="text-xl font-semibold mb-2" style="color: var(--text-primary);">GNSS Precipitation ML</h3><p style="color: var(--text-secondary);">Document pipeline architecture, model benchmark table, and operational relevance for industry use.</p></div>
+                <div class="card p-6"><h3 class="text-xl font-semibold mb-2" style="color: var(--text-primary);">Groundwater Zonation</h3><p style="color: var(--text-secondary);">Include map snapshots, validation strategy, and adoption recommendations for stakeholders.</p></div>
             </div>
         </div>
     </section>
@@ -715,7 +800,7 @@
     <!-- Research Radar Map -->
     <section id="work-locations" class="section-spacing px-4 bg-[--bg-secondary] bg-opacity-30">
         <div class="max-w-7xl mx-auto">
-            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-map-marked-alt mr-2"></i>RESEARCH RADAR</h2>
+            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-map-marked-alt mr-2"></i><span data-translate="works_title">WORKS</span></h2>
             <div class="map-wrapper card p-0 overflow-hidden"><div id="map"></div><div class="radar-sweep"></div></div>
         </div>
     </section>
@@ -748,6 +833,39 @@
             body.classList.toggle('light-theme');
             themeToggle.innerHTML = body.classList.contains('light-theme') ? '<i class="fas fa-moon"></i><span>Dark</span>' : '<i class="fas fa-sun"></i><span>Light</span>';
             localStorage.setItem('theme', body.classList.contains('light-theme') ? 'light' : 'dark');
+        });
+
+        // Profile mode: professional hides exploratory section, curious shows all.
+        const modeToggle = document.getElementById('mode-toggle');
+        const savedMode = localStorage.getItem('profile-mode') || 'professional';
+        const modePicker = document.getElementById('mode-picker');
+        const chooseProfessional = document.getElementById('choose-professional');
+        const chooseCurious = document.getElementById('choose-curious');
+        body.classList.toggle('professional-mode', savedMode === 'professional');
+        modeToggle.textContent = savedMode === 'professional' ? 'Professional' : 'Curious';
+        modeToggle.setAttribute('data-translate', savedMode === 'professional' ? 'mode_professional' : 'mode_curious');
+
+        if (!localStorage.getItem('profile-mode')) {
+            modePicker.classList.add('show');
+        }
+
+        const setMode = (nextMode) => {
+            body.classList.toggle('professional-mode', nextMode === 'professional');
+            localStorage.setItem('profile-mode', nextMode);
+            modeToggle.textContent = nextMode === 'professional' ? 'Professional' : 'Curious';
+            modeToggle.setAttribute('data-translate', nextMode === 'professional' ? 'mode_professional' : 'mode_curious');
+            modePicker.classList.remove('show');
+            if (window.portfolioTranslator) {
+                window.portfolioTranslator.updateContent();
+            }
+        };
+
+        chooseProfessional.addEventListener('click', () => setMode('professional'));
+        chooseCurious.addEventListener('click', () => setMode('curious'));
+
+        modeToggle.addEventListener('click', () => {
+            const nextMode = body.classList.contains('professional-mode') ? 'curious' : 'professional';
+            setMode(nextMode);
         });
 
         // Scroll Progress
