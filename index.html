@@ -434,6 +434,7 @@
         }
 
         .journey-page #about,
+        .journey-page #hero,
         .journey-page #education,
         .journey-page #experience,
         .journey-page #skills,
@@ -445,6 +446,12 @@
         .journey-page #case-studies,
         .journey-page #speaking,
         .journey-page #work-locations {
+            display: none;
+        }
+
+        .profile-page #hero,
+        .research-page #hero,
+        .journey-page #hero {
             display: none;
         }
         
@@ -594,12 +601,12 @@
             <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-timeline mr-2"></i>CAREER TIMELINE</h2>
             <p class="text-center text-sm mb-6" style="color: var(--text-muted);"><i class="fas fa-arrows-left-right mr-2"></i>Swipe to explore · Click cards for details</p>
             <div class="timeline-horizontal" id="timeline-scroll">
-                <div class="timeline-node"><div class="timeline-card" onclick="document.getElementById('education').scrollIntoView({behavior:'smooth'})"><div class="timeline-year">2019-2023</div><div class="timeline-title">B.Tech Civil Eng.</div><div class="timeline-org">VIT Vellore · CGPA 9.33</div></div></div>
-                <div class="timeline-node"><div class="timeline-card" onclick="document.getElementById('experience').scrollIntoView({behavior:'smooth'})"><div class="timeline-year">2021-2023</div><div class="timeline-title">Teaching Assistant</div><div class="timeline-org">VIT Vellore</div></div></div>
-                <div class="timeline-node"><div class="timeline-card" onclick="document.getElementById('experience').scrollIntoView({behavior:'smooth'})"><div class="timeline-year">2022</div><div class="timeline-title">Research Intern</div><div class="timeline-org">Concordia University</div></div></div>
-                <div class="timeline-node"><div class="timeline-card" onclick="document.getElementById('experience').scrollIntoView({behavior:'smooth'})"><div class="timeline-year">2023</div><div class="timeline-title">Spatial Data Analyst</div><div class="timeline-org">IIRS, ISRO</div></div></div>
-                <div class="timeline-node"><div class="timeline-card" onclick="document.getElementById('experience').scrollIntoView({behavior:'smooth'})"><div class="timeline-year">2025-2026</div><div class="timeline-title" data-translate="research_assistant">Research Assistant</div><div class="timeline-org">ETH Zurich</div></div></div>
-                <div class="timeline-node"><div class="timeline-card" onclick="document.getElementById('education').scrollIntoView({behavior:'smooth'})"><div class="timeline-year">2024-Present</div><div class="timeline-title">MSc Geomatics</div><div class="timeline-org">ETH Zurich</div></div></div>
+                <div class="timeline-node"><div class="timeline-card" onclick="window.location.href='profile.html#education'"><div class="timeline-year">2019-2023</div><div class="timeline-title">B.Tech Civil Eng.</div><div class="timeline-org">VIT Vellore · CGPA 9.33</div></div></div>
+                <div class="timeline-node"><div class="timeline-card" onclick="window.location.href='index.html#experience'"><div class="timeline-year">2021-2023</div><div class="timeline-title">Teaching Assistant</div><div class="timeline-org">VIT Vellore</div></div></div>
+                <div class="timeline-node"><div class="timeline-card" onclick="window.location.href='index.html#experience'"><div class="timeline-year">2022</div><div class="timeline-title">Research Intern</div><div class="timeline-org">Concordia University</div></div></div>
+                <div class="timeline-node"><div class="timeline-card" onclick="window.location.href='index.html#experience'"><div class="timeline-year">2023</div><div class="timeline-title">Spatial Data Analyst</div><div class="timeline-org">IIRS, ISRO</div></div></div>
+                <div class="timeline-node"><div class="timeline-card" onclick="window.location.href='index.html#experience'"><div class="timeline-year">2025-2026</div><div class="timeline-title" data-translate="research_assistant">Research Assistant</div><div class="timeline-org">ETH Zurich</div></div></div>
+                <div class="timeline-node"><div class="timeline-card" onclick="window.location.href='profile.html#education'"><div class="timeline-year">2024-Present</div><div class="timeline-title">MSc Geomatics</div><div class="timeline-org">ETH Zurich</div></div></div>
             </div>
         </div>
     </section>
@@ -919,6 +926,7 @@
         // Theme
         const themeToggle = document.getElementById('theme-toggle');
         const body = document.body;
+        const isHomePage = body.classList.contains('home-page');
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'light') { body.classList.add('light-theme'); themeToggle.innerHTML = '<i class="fas fa-moon"></i><span>Dark</span>'; }
         else { themeToggle.innerHTML = '<i class="fas fa-sun"></i><span>Light</span>'; }
@@ -985,14 +993,16 @@
         });
 
         // Parallax
-        document.addEventListener('mousemove', (e) => {
-            document.querySelectorAll('.parallax-slow').forEach(el => {
-                const speed = parseFloat(el.dataset.speed || 0.05);
-                const x = (window.innerWidth/2 - e.clientX) * speed;
-                const y = (window.innerHeight/2 - e.clientY) * speed;
-                el.style.transform = `translate(${x}px, ${y}px)`;
+        if (isHomePage) {
+            document.addEventListener('mousemove', (e) => {
+                document.querySelectorAll('.parallax-slow').forEach(el => {
+                    const speed = parseFloat(el.dataset.speed || 0.05);
+                    const x = (window.innerWidth/2 - e.clientX) * speed;
+                    const y = (window.innerHeight/2 - e.clientY) * speed;
+                    el.style.transform = `translate(${x}px, ${y}px)`;
+                });
             });
-        });
+        }
 
         // Constellation
         const canvas = document.getElementById('constellation-canvas');
@@ -1000,6 +1010,9 @@
         const nodes = document.querySelectorAll('.skill-node');
         function drawConstellation() {
             const container = document.getElementById('skills-constellation');
+            if (!container || container.offsetParent === null) {
+                return;
+            }
             canvas.width = container.offsetWidth;
             canvas.height = container.offsetHeight;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -1022,18 +1035,31 @@
         // Timeline drag
         const timeline = document.getElementById('timeline-scroll');
         let isDown=false, startX, scrollLeft;
-        timeline.addEventListener('mousedown', (e) => { isDown=true; startX=e.pageX-timeline.offsetLeft; scrollLeft=timeline.scrollLeft; });
-        timeline.addEventListener('mouseleave', () => isDown=false);
-        timeline.addEventListener('mouseup', () => isDown=false);
-        timeline.addEventListener('mousemove', (e) => { if(!isDown) return; e.preventDefault(); const x=e.pageX-timeline.offsetLeft; timeline.scrollLeft=scrollLeft-(x-startX); });
+        if (timeline && timeline.offsetParent !== null) {
+            timeline.addEventListener('mousedown', (e) => { isDown=true; startX=e.pageX-timeline.offsetLeft; scrollLeft=timeline.scrollLeft; });
+            timeline.addEventListener('mouseleave', () => isDown=false);
+            timeline.addEventListener('mouseup', () => isDown=false);
+            timeline.addEventListener('mousemove', (e) => { if(!isDown) return; e.preventDefault(); const x=e.pageX-timeline.offsetLeft; timeline.scrollLeft=scrollLeft-(x-startX); });
+        }
+
+        if (!isHomePage) {
+            const loader = document.querySelector('.loader');
+            if (loader) {
+                loader.style.display = 'none';
+            }
+        }
 
         // Loader
         window.addEventListener('load', () => {
-            let c=3; const cd=document.getElementById('countdown'); const ci=setInterval(()=>{c--; cd.textContent=c; if(c<=0) clearInterval(ci);},800);
-            const bar=document.querySelector('.progress-bar-loading'); let w=0; const int=setInterval(()=>{w+=5; bar.style.width=w+'%'; if(w>=100){ clearInterval(int); setTimeout(()=>{ document.querySelector('.loader').style.opacity='0'; document.querySelector('.loader').style.pointerEvents='none'; },300); }},100);
+            if (isHomePage) {
+                let c=3; const cd=document.getElementById('countdown'); const ci=setInterval(()=>{c--; cd.textContent=c; if(c<=0) clearInterval(ci);},800);
+                const bar=document.querySelector('.progress-bar-loading'); let w=0; const int=setInterval(()=>{w+=5; bar.style.width=w+'%'; if(w>=100){ clearInterval(int); setTimeout(()=>{ document.querySelector('.loader').style.opacity='0'; document.querySelector('.loader').style.pointerEvents='none'; },300); }},100);
+            }
             drawConstellation();
             const container=document.getElementById('space-elements'); const hero=document.getElementById('hero-space-elements');
-            for(let i=0;i<100;i++){ const s=document.createElement('div'); s.className='space-particle'; s.style.width=s.style.height=(Math.random()*2+1)+'px'; s.style.left=Math.random()*100+'%'; s.style.top=Math.random()*100+'%'; s.style.opacity=Math.random(); s.style.animation=`twinkle ${Math.random()*5+3}s infinite`; if(i%3===0&&hero) hero.appendChild(s.cloneNode()); else container.appendChild(s); }
+            if (isHomePage) {
+                for(let i=0;i<40;i++){ const s=document.createElement('div'); s.className='space-particle'; s.style.width=s.style.height=(Math.random()*2+1)+'px'; s.style.left=Math.random()*100+'%'; s.style.top=Math.random()*100+'%'; s.style.opacity=Math.random(); s.style.animation=`twinkle ${Math.random()*5+3}s infinite`; if(i%3===0&&hero) hero.appendChild(s.cloneNode()); else container.appendChild(s); }
+            }
         });
 
         // Mobile menu
@@ -1042,9 +1068,12 @@
         document.querySelectorAll('#mobile-menu a').forEach(l=>l.addEventListener('click',()=>{ mobileMenu.classList.remove('active'); menuToggle.innerHTML='<i class="fas fa-bars"></i>'; }));
         
         // Map
-        const map=L.map('map').setView([20,0],2);
+        let map;
         let activeTileLayer;
         const updateMapTheme = () => {
+            if (!map) {
+                return;
+            }
             if (activeTileLayer) {
                 map.removeLayer(activeTileLayer);
             }
@@ -1054,14 +1083,18 @@
             activeTileLayer = L.tileLayer(tileUrl, { maxZoom: 18 });
             activeTileLayer.addTo(map);
         };
-        updateMapTheme();
-        const icon=L.divIcon({html:'<i class="fas fa-satellite" style="color:#39c6ff;font-size:1.25rem;"></i>',iconSize:[30,30]});
-        L.marker([47.3769,8.5417],{icon}).addTo(map).bindPopup('<b>ETH Zurich</b><br>Master\'s in Geomatics Engineering');
-        L.marker([23.0225,72.5714],{icon}).addTo(map).bindPopup('<b>Ahmedabad</b><br>Groundwater Sustainability Study');
-        L.marker([26.5,93.5],{icon}).addTo(map).bindPopup('<b>Dhansiri River Basin</b><br>Flood Risk Assessment');
-        L.marker([30.3165,78.0322],{icon}).addTo(map).bindPopup('<b>Dehradun</b><br>IIRS Internship');
-        L.marker([45.5017,-73.5673],{icon}).addTo(map).bindPopup('<b>Montreal</b><br>Concordia Research Internship');
-        L.marker([12.9716,79.1593],{icon}).addTo(map).bindPopup('<b>VIT Vellore</b><br>Bachelor\'s in Civil Engineering');
+        const mapSection = document.getElementById('work-locations');
+        if (mapSection && mapSection.offsetParent !== null) {
+            map=L.map('map').setView([20,0],2);
+            updateMapTheme();
+            const icon=L.divIcon({html:'<i class="fas fa-satellite" style="color:#39c6ff;font-size:1.25rem;"></i>',iconSize:[30,30]});
+            L.marker([47.3769,8.5417],{icon}).addTo(map).bindPopup('<b>ETH Zurich</b><br>Master\'s in Geomatics Engineering');
+            L.marker([23.0225,72.5714],{icon}).addTo(map).bindPopup('<b>Ahmedabad</b><br>Groundwater Sustainability Study');
+            L.marker([26.5,93.5],{icon}).addTo(map).bindPopup('<b>Dhansiri River Basin</b><br>Flood Risk Assessment');
+            L.marker([30.3165,78.0322],{icon}).addTo(map).bindPopup('<b>Dehradun</b><br>IIRS Internship');
+            L.marker([45.5017,-73.5673],{icon}).addTo(map).bindPopup('<b>Montreal</b><br>Concordia Research Internship');
+            L.marker([12.9716,79.1593],{icon}).addTo(map).bindPopup('<b>VIT Vellore</b><br>Bachelor\'s in Civil Engineering');
+        }
 
         // Project modals - COMPLETE ORIGINAL DATA
         const modal=document.getElementById('project-modal'), modalContent=document.getElementById('modal-content'), closeModal=document.querySelector('.close-modal');
@@ -1122,8 +1155,11 @@
 
         // 3D Earth
         const initEarth=()=>{ const container=document.getElementById('earth-container'); const w=container.clientWidth, h=container.clientHeight; const scene=new THREE.Scene(); const camera=new THREE.PerspectiveCamera(75,w/h,0.1,1000); camera.position.z=2.5; const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true}); renderer.setSize(w,h); container.appendChild(renderer.domElement); const controls=new THREE.OrbitControls(camera,renderer.domElement); controls.enableDamping=true; controls.autoRotate=true; controls.autoRotateSpeed=0.5; const geometry=new THREE.SphereGeometry(1,64,64); const tl=new THREE.TextureLoader(); const material=new THREE.MeshPhongMaterial({map:tl.load('https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg'),bumpMap:tl.load('https://threejs.org/examples/textures/planets/earth_normal_2048.jpg'),bumpScale:0.05,specularMap:tl.load('https://threejs.org/examples/textures/planets/earth_specular_2048.jpg'),specular:new THREE.Color('grey'),shininess:5}); const earth=new THREE.Mesh(geometry,material); scene.add(earth); scene.add(new THREE.AmbientLight(0x333333)); const dl=new THREE.DirectionalLight(0xffffff,1); dl.position.set(5,3,5); scene.add(dl); const sg=new THREE.BufferGeometry(); const sv=[]; for(let i=0;i<10000;i++) sv.push((Math.random()-0.5)*2000,(Math.random()-0.5)*2000,(Math.random()-0.5)*2000); sg.setAttribute('position',new THREE.Float32BufferAttribute(sv,3)); scene.add(new THREE.Points(sg,new THREE.PointsMaterial({color:0xffffff,size:0.05}))); const cg=new THREE.SphereGeometry(1.01,64,64); const cm=new THREE.MeshPhongMaterial({map:tl.load('https://threejs.org/examples/textures/planets/earth_clouds_1024.png'),transparent:true,opacity:0.4}); const clouds=new THREE.Mesh(cg,cm); scene.add(clouds); (function animate(){ requestAnimationFrame(animate); earth.rotation.y+=0.0005; clouds.rotation.y+=0.0007; controls.update(); renderer.render(scene,camera); })(); window.addEventListener('resize',()=>{ camera.aspect=container.clientWidth/container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth,container.clientHeight); }); };
-        const earthObserver = new IntersectionObserver((entries, observer)=>{ if(entries[0].isIntersecting){ initEarth(); observer.disconnect(); } },{threshold:0.1});
-        earthObserver.observe(document.getElementById('earth-container'));
+        const earthContainer = document.getElementById('earth-container');
+        if (earthContainer && earthContainer.offsetParent !== null) {
+            const earthObserver = new IntersectionObserver((entries, observer)=>{ if(entries[0].isIntersecting){ initEarth(); observer.disconnect(); } },{threshold:0.1});
+            earthObserver.observe(earthContainer);
+        }
 
         // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(a=>{ a.addEventListener('click',function(e){ e.preventDefault(); const t=document.querySelector(this.getAttribute('href')); if(t) t.scrollIntoView({behavior:'smooth'}); }); });
