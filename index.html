@@ -40,21 +40,21 @@
     <style>
         /* ===== THEME VARIABLES ===== */
         :root {
-            --bg-primary: #0A0E17;
-            --bg-secondary: #0F3460;
-            --bg-card: rgba(15, 52, 96, 0.3);
-            --text-primary: #E2E8F0;
-            --text-secondary: #CBD5E0;
-            --text-muted: #9CA3AF;
-            --accent-primary: #00B4D8;
-            --accent-secondary: #FFD700;
-            --border-light: rgba(0, 180, 216, 0.2);
-            --nav-bg: rgba(10, 14, 23, 0.95);
-            --card-hover-border: #00B4D8;
-            --heading-gradient: linear-gradient(135deg, #E2E8F0, #00B4D8);
-            --executive-bg: linear-gradient(135deg, #0F3460, #0A0E17);
-            --skill-badge-bg: rgba(0, 180, 216, 0.15);
-            --skill-badge-border: #00B4D8;
+            --bg-primary: #060b16;
+            --bg-secondary: #0b1630;
+            --bg-card: rgba(12, 25, 52, 0.58);
+            --text-primary: #e6edf8;
+            --text-secondary: #c7d3ea;
+            --text-muted: #8ea0bd;
+            --accent-primary: #39c6ff;
+            --accent-secondary: #f4b942;
+            --border-light: rgba(57, 198, 255, 0.26);
+            --nav-bg: rgba(6, 11, 22, 0.88);
+            --card-hover-border: #76d8ff;
+            --heading-gradient: linear-gradient(120deg, #f9fbff 10%, #74d5ff 50%, #f4b942 95%);
+            --executive-bg: radial-gradient(circle at 15% 15%, rgba(56, 123, 230, 0.35), rgba(8, 17, 35, 0.9));
+            --skill-badge-bg: rgba(57, 198, 255, 0.14);
+            --skill-badge-border: #39c6ff;
             --timeline-dot: #FFD700;
             --loader-bg: #0A0E17;
             --modal-bg: #0F3460;
@@ -91,13 +91,21 @@
             background-color: var(--bg-primary);
             color: var(--text-primary);
             background-image: 
-                radial-gradient(circle at 10% 20%, var(--accent-primary) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, var(--accent-secondary) 0%, transparent 20%),
+                radial-gradient(circle at 8% 16%, rgba(57, 198, 255, 0.2) 0%, transparent 22%),
+                radial-gradient(circle at 84% 82%, rgba(244, 185, 66, 0.16) 0%, transparent 24%),
                 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="20" cy="20" r="1" fill="white" opacity="var(--star-opacity)"/><circle cx="50" cy="50" r="1" fill="white" opacity="var(--star-opacity)"/><circle cx="80" cy="30" r="1" fill="white" opacity="var(--star-opacity)"/><circle cx="30" cy="70" r="1" fill="white" opacity="var(--star-opacity)"/><circle cx="70" cy="80" r="1" fill="white" opacity="var(--star-opacity)"/></svg>');
             scroll-behavior: smooth;
             line-height: 1.6;
             transition: background-color 0.3s ease, color 0.3s ease;
             margin: 0;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -2;
+            background: linear-gradient(160deg, rgba(5, 10, 22, 0.9), rgba(6, 24, 52, 0.5));
         }
         
         /* Scroll Progress */
@@ -249,8 +257,8 @@
         .share-tooltip.show { opacity: 1; }
 
         /* Existing styles */
-        .card { transition: transform 0.3s, box-shadow 0.3s, background 0.3s, border-color 0.3s; background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border-light); border-radius: 12px; }
-        .card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0, 180, 216, 0.15); border-color: var(--card-hover-border); }
+        .card { transition: transform 0.3s, box-shadow 0.3s, background 0.3s, border-color 0.3s; background: var(--bg-card); backdrop-filter: blur(14px); border: 1px solid var(--border-light); border-radius: 14px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 12px 30px rgba(0,0,0,0.28); }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 22px 42px rgba(28, 137, 185, 0.2); border-color: var(--card-hover-border); }
         .active-nav { color: var(--accent-primary); font-weight: 600; }
         .mobile-menu { display: none; background: var(--nav-bg); }
         .satellite-track { position: relative; overflow: hidden; }
@@ -278,6 +286,17 @@
         .executive-summary { background: var(--executive-bg); border-radius: 16px; padding: 3rem; margin: 2rem 0; }
         h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
         h1 { font-size: 3.5rem; background: var(--heading-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .hero-title { letter-spacing: 0.08em; text-transform: uppercase; }
+        .hero-orbit {
+            position: absolute;
+            border: 1px dashed rgba(57, 198, 255, 0.35);
+            border-radius: 999px;
+            animation: orbitPulse 9s linear infinite;
+            pointer-events: none;
+        }
+        .hero-orbit.one { width: 300px; height: 300px; top: -28px; left: 50%; transform: translateX(-50%); }
+        .hero-orbit.two { width: 380px; height: 380px; top: -68px; left: 50%; transform: translateX(-50%); animation-direction: reverse; animation-duration: 14s; }
+        @keyframes orbitPulse { 0% { transform: translateX(-50%) rotate(0deg); } 100% { transform: translateX(-50%) rotate(360deg); } }
         .section-spacing { padding-top: 6rem; padding-bottom: 6rem; }
         .contact-link { display: flex; align-items: center; padding: 1rem 2rem; background: var(--skill-badge-bg); border: 1px solid var(--skill-badge-border); border-radius: 50px; color: var(--text-primary); }
         .back-to-top { position: fixed; bottom: 24px; right: 24px; z-index: 998; background: var(--accent-primary); color: white; padding: 12px 16px; border-radius: 50%; opacity: 0; visibility: hidden; transition: all 0.3s; }
@@ -300,6 +319,9 @@
         .terminal-window::after { content: 'terminal'; position: absolute; top: 8px; left: 15px; color: var(--accent-primary); font-size: 0.8rem; font-weight: 600; }
         .terminal-cursor { display: inline-block; width: 10px; height: 20px; background: var(--accent-primary); animation: blink 1s step-end infinite; vertical-align: middle; margin-left: 2px; }
         @keyframes blink { from, to { opacity: 1; } 50% { opacity: 0; } }
+        .space-particle { position: absolute; border-radius: 999px; background: rgba(255,255,255,0.9); box-shadow: 0 0 8px rgba(255,255,255,0.4); }
+        @keyframes twinkle { 0%, 100% { opacity: 0.2; transform: scale(1); } 50% { opacity: 1; transform: scale(1.8); } }
+        .interactive-link { color: var(--accent-primary); text-decoration: underline; text-underline-offset: 3px; }
         .visual-aid { width: 100%; height: 200px; background-size: cover; background-position: center; border-radius: 8px; margin-bottom: 1rem; border: 1px solid var(--border-light); }
         
         @media (max-width: 768px) {
@@ -361,12 +383,13 @@
     <section id="hero" class="min-h-screen flex items-center justify-center text-center pt-32 px-4 relative section-spacing">
         <div class="max-w-4xl mx-auto relative z-10">
             <div class="relative inline-block mb-12"><img src="https://raw.githubusercontent.com/devam29/Resume2/main/dsaini.jpg" class="w-48 h-48 rounded-full border-4 border-[--accent-primary] earth-glow object-cover mx-auto" alt="Dev Shree Saini"><div class="absolute -bottom-2 -right-2 bg-[--bg-secondary] rounded-full p-2 border border-[--text-primary]"><i class="fas fa-satellite text-[--accent-secondary]"></i></div></div>
-            <h1 class="hero-title">DEV SHREE SAINI</h1>
-            <p class="text-xl mb-8 font-mono" style="color: var(--text-secondary);">Geospatial Engineer | Climate Researcher | ETH Zurich</p>
-            <div class="inline-flex items-center space-x-2 bg-[--bg-secondary] bg-opacity-50 px-4 py-2 rounded-full mb-8 border border-[--border-light]"><i class="fas fa-map-marker-alt text-[--accent-secondary]"></i><span>Zurich, Switzerland</span></div>
+            <div class="hero-orbit one"></div><div class="hero-orbit two"></div>
+            <h1 class="hero-title" data-translate="hero_title">DEV SHREE SAINI</h1>
+            <p class="text-xl mb-8 font-mono" style="color: var(--text-secondary);" data-translate="hero_subtitle">Geospatial Engineer | Climate Researcher | ETH Zurich</p>
+            <div class="inline-flex items-center space-x-2 bg-[--bg-secondary] bg-opacity-50 px-4 py-2 rounded-full mb-8 border border-[--border-light]"><i class="fas fa-map-marker-alt text-[--accent-secondary]"></i><span data-translate="hero_location">Zurich, Switzerland</span></div>
             <div class="flex flex-wrap justify-center gap-4 mt-8">
-                <a href="https://raw.githubusercontent.com/devam29/Resume/main/CV_DevShreeSaini.pdf" class="inline-flex items-center px-6 py-3 bg-[--accent-primary] hover:bg-cyan-700 text-white rounded-full shadow-lg font-semibold"><i class="fas fa-file-download mr-2"></i>Download Resume</a>
-                <a href="#connect" class="inline-flex items-center px-6 py-3 bg-transparent border border-[--accent-primary] hover:bg-[--accent-primary] hover:bg-opacity-10 text-[--accent-primary] rounded-full font-semibold"><i class="fas fa-paper-plane mr-2"></i>Contact Me</a>
+                <a href="https://raw.githubusercontent.com/devam29/Resume/main/CV_DevShreeSaini.pdf" class="inline-flex items-center px-6 py-3 bg-[--accent-primary] hover:bg-cyan-700 text-white rounded-full shadow-lg font-semibold"><i class="fas fa-file-download mr-2"></i><span data-translate="download_resume">Download Resume</span></a>
+                <a href="#connect" class="inline-flex items-center px-6 py-3 bg-transparent border border-[--accent-primary] hover:bg-[--accent-primary] hover:bg-opacity-10 text-[--accent-primary] rounded-full font-semibold"><i class="fas fa-paper-plane mr-2"></i><span data-translate="contact_me">Contact Me</span></a>
             </div>
             <div class="executive-summary mt-16">
                 <h2 class="text-2xl font-bold mb-6 text-center" style="color: var(--text-primary);">Geospatial Engineering Specialist</h2>
@@ -374,9 +397,9 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8"><div class="text-center"><div class="text-2xl font-bold text-[--accent-primary] mb-2">2+</div><div class="text-sm" style="color: var(--text-primary);">Years Experience</div></div><div class="text-center"><div class="text-2xl font-bold text-[--accent-secondary] mb-2">5+</div><div class="text-sm" style="color: var(--text-primary);">Projects Completed</div></div><div class="text-center"><div class="text-2xl font-bold text-[--accent-primary] mb-2">5</div><div class="text-sm" style="color: var(--text-primary);">Research Publications</div></div></div>
             </div>
             <div class="mt-12 max-w-2xl mx-auto bg-[--bg-secondary] bg-opacity-50 p-6 rounded-lg border border-[--border-light]">
-                <h3 class="text-lg font-semibold text-[--accent-primary] mb-2">Professional Branding Statement</h3>
-                <p style="color: var(--text-primary);"><i class="fas fa-quote-left text-[--accent-secondary] mr-1"></i>Combining environmental science with tech to build real-world climate solutions through geospatial AI and Earth observation.<i class="fas fa-quote-right text-[--accent-secondary] ml-1"></i></p>
-                <div class="audience-tagline text-sm mt-4 text-left"><i class="fas fa-info-circle text-[--accent-secondary] mr-2"></i>This portfolio is crafted for researchers, recruiters, and curious minds who want to explore how space tech meets climate challenges.</div>
+                <h3 class="text-lg font-semibold text-[--accent-primary] mb-2" data-translate="professional_branding">Professional Branding Statement</h3>
+                <p style="color: var(--text-primary);"><i class="fas fa-quote-left text-[--accent-secondary] mr-1"></i><span data-translate="branding_text">Combining environmental science with tech to build real-world climate solutions through geospatial AI and Earth observation.</span><i class="fas fa-quote-right text-[--accent-secondary] ml-1"></i></p>
+                <div class="audience-tagline text-sm mt-4 text-left"><i class="fas fa-info-circle text-[--accent-secondary] mr-2"></i><span data-translate="audience_note">This portfolio is crafted for researchers, recruiters, and curious minds who want to explore how space tech meets climate challenges.</span></div>
             </div>
         </div>
         <div id="hero-space-elements"></div>
@@ -385,14 +408,14 @@
     <!-- About Section -->
     <section id="about" class="section-spacing px-4 satellite-track">
         <div class="max-w-7xl mx-auto">
-            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-user-astronaut mr-2"></i>ABOUT ME</h2>
+            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-user-astronaut mr-2"></i><span data-translate="about_me">ABOUT ME</span></h2>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div class="card p-8">
-                    <div class="flex items-start mb-6"><div class="bg-[--accent-primary] p-3 rounded-full mr-4"><i class="fas fa-satellite-dish text-white"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Geospatial Vision</h3><p style="color: var(--text-secondary);">Passionate graduate student specializing in climate science and environmental data analysis, with hands-on experience in satellite-based flood detection and land use dynamics. Skilled in leveraging machine learning and geospatial technologies to address climate resilience and sustainability.</p></div></div>
-                    <div class="flex items-start"><div class="bg-[--accent-secondary] p-3 rounded-full mr-4 text-black"><i class="fas fa-bullseye"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Career Objective</h3><p style="color: var(--text-secondary);">To apply my expertise in geospatial analysis and remote sensing to develop innovative solutions for climate change adaptation and disaster risk reduction, while contributing to interdisciplinary research at the intersection of technology and environmental science.</p></div></div>
+                    <div class="flex items-start mb-6"><div class="bg-[--accent-primary] p-3 rounded-full mr-4"><i class="fas fa-satellite-dish text-white"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);" data-translate="geospatial_vision">Geospatial Vision</h3><p style="color: var(--text-secondary);" data-translate="geospatial_vision_text">Passionate graduate student specializing in climate science and environmental data analysis, with hands-on experience in satellite-based flood detection and land use dynamics. Skilled in leveraging machine learning and geospatial technologies to address climate resilience and sustainability.</p></div></div>
+                    <div class="flex items-start"><div class="bg-[--accent-secondary] p-3 rounded-full mr-4 text-black"><i class="fas fa-bullseye"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);" data-translate="career_objective">Career Objective</h3><p style="color: var(--text-secondary);" data-translate="career_objective_text">To apply my expertise in geospatial analysis and remote sensing to develop innovative solutions for climate change adaptation and disaster risk reduction, while contributing to interdisciplinary research at the intersection of technology and environmental science.</p></div></div>
                 </div>
                 <div class="card p-8">
-                    <div class="flex items-start mb-6"><div class="bg-[--accent-secondary] p-3 rounded-full mr-4 text-black"><i class="fas fa-globe-americas"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Research Focus</h3><p style="color: var(--text-secondary);">Currently pursuing my Master's in Geomatics Engineering at ETH Zurich, I'm driven by research that informs practical, tech-enabled climate solutions. My work spans from GNSS-based precipitation prediction to flood risk modeling using advanced geospatial tools and satellite data.</p></div></div>
+                    <div class="flex items-start mb-6"><div class="bg-[--accent-secondary] p-3 rounded-full mr-4 text-black"><i class="fas fa-globe-americas"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);" data-translate="research_focus">Research Focus</h3><p style="color: var(--text-secondary);" data-translate="research_focus_text">Currently pursuing my Master's in Geomatics Engineering at ETH Zurich, I'm driven by research that informs practical, tech-enabled climate solutions. My work spans from GNSS-based precipitation prediction to flood risk modeling using advanced geospatial tools and satellite data.</p></div></div>
                     <div id="earth-container" class="mt-6 h-64 rounded-lg relative"><div class="earth-caption"><i class="fas fa-compass mr-2"></i>Explore our planet through interactive geospatial data visualization</div></div>
                 </div>
             </div>
@@ -403,15 +426,15 @@
     <section id="field-explanation" class="section-spacing px-4 bg-[--bg-secondary] bg-opacity-30">
         <div class="max-w-7xl mx-auto text-center">
             <div class="geospatial-explorer card p-8 max-w-2xl mx-auto cursor-pointer" id="geospatial-explorer-btn">
-                <div class="flex flex-col items-center"><i class="fas fa-question-circle text-4xl mb-4 text-[--accent-secondary]"></i><h3 class="text-2xl font-bold mb-2" style="color: var(--text-primary);">Not familiar with Geospatial Engineering?</h3><p style="color: var(--text-secondary);">Click here to explore what this exciting field is all about!</p><div class="animate-bounce mt-4"><i class="fas fa-chevron-down text-xl text-[--accent-primary]"></i></div></div>
+                <div class="flex flex-col items-center"><i class="fas fa-question-circle text-4xl mb-4 text-[--accent-secondary]"></i><h3 class="text-2xl font-bold mb-2" style="color: var(--text-primary);" data-translate="geospatial_explorer_title">Not familiar with Geospatial Engineering?</h3><p style="color: var(--text-secondary);" data-translate="geospatial_explorer_subtitle">Click here to explore what this exciting field is all about!</p><div class="animate-bounce mt-4"><i class="fas fa-chevron-down text-xl text-[--accent-primary]"></i></div></div>
             </div>
             <div class="hidden" id="field-explanation-content">
-                <h2 class="section-heading text-center text-[--accent-primary] mt-12"><i class="fas fa-satellite mr-2"></i>WHAT IS GEOSPATIAL ENGINEERING?</h2>
+                <h2 class="section-heading text-center text-[--accent-primary] mt-12"><i class="fas fa-satellite mr-2"></i><span data-translate="what_is_geospatial">WHAT IS GEOSPATIAL ENGINEERING?</span></h2>
                 <div class="max-w-4xl mx-auto mb-12"><div class="visual-aid" style="background-image: url('https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcWJhZzV4Y3VwY2N2d2R2d3V0dWl1bHZ3d3R4dGJ5Z2R3eG5mY3B6eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7btPCcdNniyf0ArS/giphy.gif')"></div><p class="text-center text-sm" style="color: var(--text-secondary);">Visualizing Earth's data from space to solve real-world challenges</p></div>
                 <div class="space-y-6 max-w-4xl mx-auto">
-                    <div class="card overflow-hidden"><div class="accordion-btn w-full flex justify-between items-center p-6 text-left active"><div class="flex items-center"><i class="fas fa-satellite text-2xl mr-4 text-[--accent-secondary]"></i><h3 class="text-xl font-bold" style="color: var(--text-primary);">Satellite Data</h3></div><i class="fas fa-chevron-down transition-transform duration-300 text-[--accent-primary] rotate-180"></i></div><div class="accordion-content px-6 pb-6 open"><p style="color: var(--text-secondary);">Like a doctor uses X-rays to see inside the body, we use satellite images to see Earth's health from space. We process data from various satellite sensors (optical, radar, LiDAR) to monitor environmental changes, track deforestation, measure sea level rise, and detect urban expansion.</p></div></div>
-                    <div class="card overflow-hidden"><div class="accordion-btn w-full flex justify-between items-center p-6 text-left active"><div class="flex items-center"><i class="fas fa-map-marked-alt text-2xl mr-4 text-[--accent-secondary]"></i><h3 class="text-xl font-bold" style="color: var(--text-primary);">Mapping & Analysis</h3></div><i class="fas fa-chevron-down transition-transform duration-300 text-[--accent-primary] rotate-180"></i></div><div class="accordion-content px-6 pb-6 open"><p style="color: var(--text-secondary);">Think of Google Maps, but with superpowers to predict floods, track deforestation, and monitor climate change. We create intelligent maps that help understand complex environmental patterns, analyze spatial relationships, and make data-driven decisions for sustainable development.</p></div></div>
-                    <div class="card overflow-hidden"><div class="accordion-btn w-full flex justify-between items-center p-6 text-left active"><div class="flex items-center"><i class="fas fa-robot text-2xl mr-4 text-[--accent-secondary]"></i><h3 class="text-xl font-bold" style="color: var(--text-primary);">AI Solutions</h3></div><i class="fas fa-chevron-down transition-transform duration-300 text-[--accent-primary] rotate-180"></i></div><div class="accordion-content px-6 pb-6 open"><p style="color: var(--text-secondary);">Similar to facial recognition, but for Earth's features - identifying floods, droughts, and urban growth patterns. We train computers to automatically detect environmental changes from satellite data using deep learning models like CNNs and transformers, enabling real-time monitoring at global scales.</p></div></div>
+                    <div class="card overflow-hidden"><div class="accordion-btn w-full flex justify-between items-center p-6 text-left active"><div class="flex items-center"><i class="fas fa-satellite text-2xl mr-4 text-[--accent-secondary]"></i><h3 class="text-xl font-bold" style="color: var(--text-primary);" data-translate="satellite_data">Satellite Data</h3></div><i class="fas fa-chevron-down transition-transform duration-300 text-[--accent-primary] rotate-180"></i></div><div class="accordion-content px-6 pb-6 open"><p style="color: var(--text-secondary);" data-translate="satellite_data_text">Like a doctor uses X-rays to see inside the body, we use satellite images to see Earth's health from space. We process data from various satellite sensors (optical, radar, LiDAR) to monitor environmental changes, track deforestation, measure sea level rise, and detect urban expansion.</p></div></div>
+                    <div class="card overflow-hidden"><div class="accordion-btn w-full flex justify-between items-center p-6 text-left active"><div class="flex items-center"><i class="fas fa-map-marked-alt text-2xl mr-4 text-[--accent-secondary]"></i><h3 class="text-xl font-bold" style="color: var(--text-primary);" data-translate="mapping_analysis">Mapping & Analysis</h3></div><i class="fas fa-chevron-down transition-transform duration-300 text-[--accent-primary] rotate-180"></i></div><div class="accordion-content px-6 pb-6 open"><p style="color: var(--text-secondary);" data-translate="mapping_analysis_text">Think of Google Maps, but with superpowers to predict floods, track deforestation, and monitor climate change. We create intelligent maps that help understand complex environmental patterns, analyze spatial relationships, and make data-driven decisions for sustainable development.</p></div></div>
+                    <div class="card overflow-hidden"><div class="accordion-btn w-full flex justify-between items-center p-6 text-left active"><div class="flex items-center"><i class="fas fa-robot text-2xl mr-4 text-[--accent-secondary]"></i><h3 class="text-xl font-bold" style="color: var(--text-primary);" data-translate="ai_solutions">AI Solutions</h3></div><i class="fas fa-chevron-down transition-transform duration-300 text-[--accent-primary] rotate-180"></i></div><div class="accordion-content px-6 pb-6 open"><p style="color: var(--text-secondary);" data-translate="ai_solutions_text">Similar to facial recognition, but for Earth's features - identifying floods, droughts, and urban growth patterns. We train computers to automatically detect environmental changes from satellite data using deep learning models like CNNs and transformers, enabling real-time monitoring at global scales.</p></div></div>
                 </div>
                 <div class="why-it-matters-container mt-12">
                     <div class="card p-8">
@@ -443,7 +466,7 @@
     <!-- Education Section -->
     <section id="education" class="section-spacing px-4 satellite-track">
         <div class="max-w-7xl mx-auto">
-            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-graduation-cap mr-2"></i>EDUCATION</h2>
+            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-graduation-cap mr-2"></i><span data-translate="education">EDUCATION</span></h2>
             <div class="space-y-8">
                 <div class="timeline-item">
                     <div class="card p-8">
@@ -476,7 +499,7 @@
     <!-- Experience Section -->
     <section id="experience" class="section-spacing px-4 bg-[--bg-secondary] bg-opacity-30 satellite-track">
         <div class="max-w-7xl mx-auto">
-            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-briefcase mr-2"></i>PROFESSIONAL EXPERIENCE</h2>
+            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-briefcase mr-2"></i><span data-translate="experience">PROFESSIONAL EXPERIENCE</span></h2>
             <div class="space-y-8">
                 <div class="timeline-item">
                     <div class="card p-8">
@@ -521,18 +544,18 @@
     <!-- Skills Constellation -->
     <section id="skills" class="section-spacing px-4 satellite-track">
         <div class="max-w-7xl mx-auto">
-            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-satellite-dish mr-2"></i>TECHNICAL SKILLS</h2>
+            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-satellite-dish mr-2"></i><span data-translate="skills">TECHNICAL SKILLS</span></h2>
             <div id="skills-constellation">
                 <canvas id="constellation-canvas" class="constellation-canvas"></canvas>
                 <div class="skills-grid-constellation" id="skills-grid">
-                    <div class="skill-node" data-skill="programming"><i class="fas fa-code"></i><h4>Programming</h4><p>Python, MATLAB, R, JavaScript</p></div>
-                    <div class="skill-node" data-skill="remote-sensing"><i class="fas fa-satellite"></i><h4>Remote Sensing</h4><p>SAR, Lidar, Hyperspectral, Multispectral</p></div>
-                    <div class="skill-node" data-skill="gis"><i class="fas fa-map-marked-alt"></i><h4>GIS</h4><p>QGIS, ArcGIS, PostGIS, GeoServer</p></div>
-                    <div class="skill-node" data-skill="ml"><i class="fas fa-robot"></i><h4>Machine Learning</h4><p>PyTorch, TensorFlow, Scikit-learn</p></div>
-                    <div class="skill-node" data-skill="hydrology"><i class="fas fa-water"></i><h4>Hydrology</h4><p>HEC-RAS, SWAT, MODFLOW</p></div>
-                    <div class="skill-node" data-skill="data"><i class="fas fa-chart-network"></i><h4>Data Analysis</h4><p>Pandas, GeoPandas, Rasterio</p></div>
-                    <div class="skill-node" data-skill="spatial-db"><i class="fas fa-database"></i><h4>Spatial Databases</h4><p>PostgreSQL, MongoDB, Google Earth Engine</p></div>
-                    <div class="skill-node" data-skill="cloud"><i class="fas fa-cloud"></i><h4>Cloud Computing</h4><p>AWS, Google Cloud, Docker</p></div>
+                    <div class="skill-node" data-skill="programming"><i class="fas fa-code"></i><h4 data-translate="programming">Programming</h4><p data-translate="programming_skills">Python, MATLAB, R, JavaScript</p></div>
+                    <div class="skill-node" data-skill="remote-sensing"><i class="fas fa-satellite"></i><h4 data-translate="remote_sensing">Remote Sensing</h4><p data-translate="remote_sensing_skills">SAR, Lidar, Hyperspectral, Multispectral</p></div>
+                    <div class="skill-node" data-skill="gis"><i class="fas fa-map-marked-alt"></i><h4 data-translate="gis">GIS</h4><p data-translate="gis_skills">QGIS, ArcGIS, PostGIS, GeoServer</p></div>
+                    <div class="skill-node" data-skill="ml"><i class="fas fa-robot"></i><h4 data-translate="machine_learning">Machine Learning</h4><p data-translate="ml_skills">PyTorch, TensorFlow, Scikit-learn</p></div>
+                    <div class="skill-node" data-skill="hydrology"><i class="fas fa-water"></i><h4 data-translate="hydrology">Hydrology</h4><p data-translate="hydrology_skills">HEC-RAS, SWAT, MODFLOW</p></div>
+                    <div class="skill-node" data-skill="data"><i class="fas fa-chart-line"></i><h4 data-translate="data_analysis">Data Analysis</h4><p data-translate="data_analysis_skills">Pandas, GeoPandas, Rasterio</p></div>
+                    <div class="skill-node" data-skill="spatial-db"><i class="fas fa-database"></i><h4 data-translate="spatial_databases">Spatial Databases</h4><p data-translate="database_skills">PostgreSQL, MongoDB, Google Earth Engine</p></div>
+                    <div class="skill-node" data-skill="cloud"><i class="fas fa-cloud"></i><h4 data-translate="cloud_computing">Cloud Computing</h4><p data-translate="cloud_skills">AWS, Google Cloud, Docker</p></div>
                 </div>
             </div>
         </div>
@@ -541,7 +564,7 @@
     <!-- Projects Section - COMPLETE ORIGINAL CONTENT -->
     <section id="projects" class="section-spacing px-4 bg-[--bg-secondary] bg-opacity-30 satellite-track">
         <div class="max-w-7xl mx-auto">
-            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-project-diagram mr-2"></i>RESEARCH PROJECTS</h2>
+            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-diagram-project mr-2"></i><span data-translate="projects">RESEARCH PROJECTS</span></h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Project 1 -->
                 <div class="card rounded-lg overflow-hidden group project-card" data-project="gnss">
@@ -551,10 +574,10 @@
                         <div class="absolute bottom-4 left-4"><span class="bg-[--accent-primary] text-white text-xs px-2 py-1 rounded">Machine Learning</span></div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">GNSS Precipitation Prediction</h3>
-                        <p class="text-sm" style="color: var(--text-muted);">ETH Zurich • 2024</p>
-                        <p style="color: var(--text-secondary);" class="mb-4">Machine learning model for rainfall prediction using GNSS signal delay and ERA5 datasets with satellite-derived atmospheric data.</p>
-                        <button class="view-project-btn inline-flex items-center font-semibold"><i class="fas fa-search mr-2"></i><span>View Details</span></button>
+                        <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);" data-translate="gnss_project">GNSS Precipitation Prediction</h3>
+                        <p class="text-sm" style="color: var(--text-muted);" data-translate="gnss_subtitle">ETH Zurich • 2024</p>
+                        <p style="color: var(--text-secondary);" class="mb-4" data-translate="gnss_description">Machine learning model for rainfall prediction using GNSS signal delay and ERA5 datasets with satellite-derived atmospheric data.</p>
+                        <button class="view-project-btn inline-flex items-center font-semibold"><i class="fas fa-search mr-2"></i><span data-translate="view_details">View Details</span></button>
                     </div>
                 </div>
                 <!-- Project 2 -->
@@ -565,10 +588,10 @@
                         <div class="absolute bottom-4 left-4"><span class="bg-[--accent-primary] text-white text-xs px-2 py-1 rounded">Hydrology</span></div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Flood Risk Assessment</h3>
-                        <p class="text-sm" style="color: var(--text-muted);">Dhansiri River Basin, India</p>
-                        <p style="color: var(--text-secondary);" class="mb-4">SWAT model with NSE: 0.84 and R²: 0.90 for flood risk analysis using satellite imagery and hydrological modeling.</p>
-                        <button class="view-project-btn inline-flex items-center font-semibold"><i class="fas fa-search mr-2"></i><span>View Details</span></button>
+                        <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);" data-translate="flood_project">Flood Risk Assessment</h3>
+                        <p class="text-sm" style="color: var(--text-muted);" data-translate="flood_subtitle">Dhansiri River Basin, India</p>
+                        <p style="color: var(--text-secondary);" class="mb-4" data-translate="flood_description">SWAT model with NSE: 0.84 and R²: 0.90 for flood risk analysis using satellite imagery and hydrological modeling.</p>
+                        <button class="view-project-btn inline-flex items-center font-semibold"><i class="fas fa-search mr-2"></i><span data-translate="view_details">View Details</span></button>
                     </div>
                 </div>
                 <!-- Project 3 -->
@@ -579,10 +602,10 @@
                         <div class="absolute bottom-4 left-4"><span class="bg-[--accent-primary] text-white text-xs px-2 py-1 rounded">GIS Analysis</span></div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Groundwater Sustainability</h3>
-                        <p class="text-sm" style="color: var(--text-muted);">Ahmedabad, India</p>
-                        <p style="color: var(--text-secondary);" class="mb-4">AHP analysis using satellite data and GIS to identify 89% medium to high potential groundwater zones.</p>
-                        <button class="view-project-btn inline-flex items-center font-semibold"><i class="fas fa-search mr-2"></i><span>View Details</span></button>
+                        <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);" data-translate="groundwater_project">Groundwater Sustainability</h3>
+                        <p class="text-sm" style="color: var(--text-muted);" data-translate="groundwater_subtitle">Ahmedabad, India</p>
+                        <p style="color: var(--text-secondary);" class="mb-4" data-translate="groundwater_description">AHP analysis using satellite data and GIS to identify 89% medium to high potential groundwater zones.</p>
+                        <button class="view-project-btn inline-flex items-center font-semibold"><i class="fas fa-search mr-2"></i><span data-translate="view_details">View Details</span></button>
                     </div>
                 </div>
             </div>
@@ -595,9 +618,9 @@
     <!-- Publications Section - COMPLETE ORIGINAL CONTENT -->
     <section id="publications" class="section-spacing px-4 satellite-track">
         <div class="max-w-7xl mx-auto">
-            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-book mr-2"></i>RESEARCH PUBLICATIONS</h2>
+            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-book mr-2"></i><span data-translate="publications">RESEARCH PUBLICATIONS</span></h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="card p-8"><div class="flex items-start mb-4"><div class="bg-[--accent-primary] p-3 rounded-full mr-4"><i class="fas fa-file-alt text-white"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Impact of Short-Duration Precipitation</h3><p class="text-sm" style="color: var(--text-muted);">Scientific Reports, Nature • 2023</p><p style="color: var(--text-secondary);" class="mb-4">Analyzed precipitation impacts on water resources in the Cauvery Basin using satellite data and hydrological models.</p><a href="https://doi.org/10.1038/s41598-023-41417-6" target="_blank" class="read-paper-btn inline-flex items-center font-semibold"><i class="fas fa-external-link-alt mr-2"></i><span>Read Paper</span></a></div></div></div>
+                <div class="card p-8"><div class="flex items-start mb-4"><div class="bg-[--accent-primary] p-3 rounded-full mr-4"><i class="fas fa-file-alt text-white"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);" data-translate="impact_precipitation">Impact of Short-Duration Precipitation</h3><p class="text-sm" style="color: var(--text-muted);" data-translate="scientific_reports">Scientific Reports, Nature • 2023</p><p style="color: var(--text-secondary);" class="mb-4" data-translate="precipitation_abstract">Analyzed precipitation impacts on water resources in the Cauvery Basin using satellite data and hydrological models.</p><a href="https://doi.org/10.1038/s41598-023-41417-6" target="_blank" class="read-paper-btn inline-flex items-center font-semibold"><i class="fas fa-external-link-alt mr-2"></i><span data-translate="read_paper">Read Paper</span></a></div></div></div>
                 <div class="card p-8"><div class="flex items-start mb-4"><div class="bg-[--accent-secondary] p-3 rounded-full mr-4 text-black"><i class="fas fa-file-alt"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">HEC-RAS with GIS</h3><p class="text-sm" style="color: var(--text-muted);">Journal of the Geological Society of India • 2024</p><p style="color: var(--text-secondary);" class="mb-4">Studied river cross-section width for flood detection using HEC-RAS and GIS with satellite-derived DEMs.</p><a href="https://doi.org/10.17491/jgsi/2024/173843" target="_blank" class="read-paper-btn inline-flex items-center font-semibold"><i class="fas fa-external-link-alt mr-2"></i><span>Read Paper</span></a></div></div></div>
                 <div class="card p-8"><div class="flex items-start mb-4"><div class="bg-[--accent-primary] p-3 rounded-full mr-4"><i class="fas fa-file-alt text-white"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Chilika Lake LULC Dynamics</h3><p class="text-sm" style="color: var(--text-muted);">Estuaries and Coasts • 2025</p><p style="color: var(--text-secondary);" class="mb-4">Investigated LULC impacts on Chilika Lake's ecosystem services using multi-temporal satellite imagery.</p><a href="https://doi.org/10.1007/s12237-025-01509-0" target="_blank" class="read-paper-btn inline-flex items-center font-semibold"><i class="fas fa-external-link-alt mr-2"></i><span>Read Paper</span></a></div></div></div>
                 <div class="card p-8"><div class="flex items-start mb-4"><div class="bg-[--accent-secondary] p-3 rounded-full mr-4 text-black"><i class="fas fa-file-alt"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Wetland Discharge Water Filtration</h3><p class="text-sm" style="color: var(--text-muted);">Concordia University • 2022</p><p style="color: var(--text-secondary);" class="mb-4">Presented research on filtration systems for mesotrophic lakes at environmental engineering conference.</p><a href="https://doi.org/10.1007/978-3-031-61515-3_22" target="_blank" class="read-paper-btn inline-flex items-center font-semibold"><i class="fas fa-external-link-alt mr-2"></i><span>Read Paper</span></a></div></div></div>
@@ -625,12 +648,12 @@
             <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-heart mr-2"></i>BEYOND WORK</h2>
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
                 <div class="hobby-item card p-6 flex flex-col items-center text-center"><i class="fas fa-chess text-3xl mb-3 text-[--accent-secondary]"></i><h3 class="text-lg font-semibold" style="color: var(--text-primary);">Chess</h3><p class="text-sm" style="color: var(--text-muted);">FIDE Rating: 1600</p></div>
-                <div class="hobby-item card p-6 flex flex-col items-center text-center"><i class="fas fa-cricket text-3xl mb-3 text-[--accent-secondary]"></i><h3 class="text-lg font-semibold" style="color: var(--text-primary);">Cricket</h3><p class="text-sm" style="color: var(--text-muted);">Competitive player</p></div>
+                <div class="hobby-item card p-6 flex flex-col items-center text-center"><i class="fas fa-baseball-bat-ball text-3xl mb-3 text-[--accent-secondary]"></i><h3 class="text-lg font-semibold" style="color: var(--text-primary);">Cricket</h3><p class="text-sm" style="color: var(--text-muted);">Competitive player</p></div>
                 <div class="hobby-item card p-6 flex flex-col items-center text-center"><i class="fas fa-book-open text-3xl mb-3 text-[--accent-secondary]"></i><h3 class="text-lg font-semibold" style="color: var(--text-primary);">Reading</h3><p class="text-sm" style="color: var(--text-muted);">Sci-fi & Self-help books</p></div>
-                <div class="hobby-item card p-6 flex flex-col items-center text-center"><i class="fas fa-pen-fancy text-3xl mb-3 text-[--accent-secondary]"></i><h3 class="text-lg font-semibold" style="color: var(--text-primary);">Hindi Poetry</h3><p class="text-sm" style="color: var(--text-muted);">Bilingual writer</p><a href="#" class="interactive-link text-xs mt-2 font-semibold">View Samples</a></div>
+                <div class="hobby-item card p-6 flex flex-col items-center text-center"><i class="fas fa-pen-fancy text-3xl mb-3 text-[--accent-secondary]"></i><h3 class="text-lg font-semibold" style="color: var(--text-primary);">Hindi Poetry</h3><p class="text-sm" style="color: var(--text-muted);">Bilingual writer</p><a href="#connect" class="interactive-link text-xs mt-2 font-semibold" data-translate="view_samples">View Samples</a></div>
                 <div class="hobby-item card p-6 flex flex-col items-center text-center"><i class="fas fa-utensils text-3xl mb-3 text-[--accent-secondary]"></i><h3 class="text-lg font-semibold" style="color: var(--text-primary);">Cooking</h3><p class="text-sm" style="color: var(--text-muted);">Experimental Indian fusion</p></div>
                 <div class="hobby-item card p-6 flex flex-col items-center text-center"><i class="fas fa-headphones text-3xl mb-3 text-[--accent-secondary]"></i><h3 class="text-lg font-semibold" style="color: var(--text-primary);">Music</h3><p class="text-sm" style="color: var(--text-muted);">Classical & Jazz</p></div>
-                <div class="hobby-item card p-6 flex flex-col items-center text-center"><i class="fas fa-hiking text-3xl mb-3 text-[--accent-secondary]"></i><h3 class="text-lg font-semibold" style="color: var(--text-primary);">Hiking</h3><p class="text-sm" style="color: var(--text-muted);">Alpine trails</p></div>
+                <div class="hobby-item card p-6 flex flex-col items-center text-center"><i class="fas fa-person-hiking text-3xl mb-3 text-[--accent-secondary]"></i><h3 class="text-lg font-semibold" style="color: var(--text-primary);">Hiking</h3><p class="text-sm" style="color: var(--text-muted);">Alpine trails</p></div>
                 <div class="hobby-item card p-6 flex flex-col items-center text-center"><i class="fas fa-camera text-3xl mb-3 text-[--accent-secondary]"></i><h3 class="text-lg font-semibold" style="color: var(--text-primary);">Photography</h3><p class="text-sm" style="color: var(--text-muted);">Landscape & Nature</p></div>
             </div>
         </div>
@@ -666,7 +689,7 @@
             <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-microphone mr-2"></i>SPEAKING ENGAGEMENTS</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="card p-8"><div class="flex items-start mb-4"><div class="bg-[--accent-secondary] p-3 rounded-full mr-4 text-black"><i class="fas fa-chalkboard-teacher"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Guest Speaker - Fresher Induction</h3><p class="text-sm" style="color: var(--text-muted);">VIT Vellore • 2023</p><p style="color: var(--text-secondary);">Invited to share my academic journey and research experiences with incoming civil engineering students during orientation program.</p></div></div></div>
-                <div class="card p-8"><div class="flex items-start mb-4"><div class="bg-[--accent-primary] p-3 rounded-full mr-4"><i class="fas fa-presentation text-white"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Flood Risk Analysis Presentation</h3><p class="text-sm" style="color: var(--text-muted);">National Conference • 2022</p><p style="color: var(--text-secondary);">Presented research on flood-prone zone identification in Bihar using HEC-RAS modeling and satellite data analysis.</p></div></div></div>
+                <div class="card p-8"><div class="flex items-start mb-4"><div class="bg-[--accent-primary] p-3 rounded-full mr-4"><i class="fas fa-person-chalkboard text-white"></i></div><div><h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Flood Risk Analysis Presentation</h3><p class="text-sm" style="color: var(--text-muted);">National Conference • 2022</p><p style="color: var(--text-secondary);">Presented research on flood-prone zone identification in Bihar using HEC-RAS modeling and satellite data analysis.</p></div></div></div>
             </div>
         </div>
     </section>
@@ -794,7 +817,7 @@
         
         // Map
         const map=L.map('map').setView([20,0],2); L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{maxZoom:18}).addTo(map);
-        const icon=L.divIcon({html:'<i class="fas fa-satellite text-[--accent-primary] text-2xl"></i>',iconSize:[30,30]});
+        const icon=L.divIcon({html:'<i class="fas fa-satellite" style="color:#39c6ff;font-size:1.25rem;"></i>',iconSize:[30,30]});
         L.marker([47.3769,8.5417],{icon}).addTo(map).bindPopup('<b>ETH Zurich</b><br>Master\'s in Geomatics Engineering');
         L.marker([23.0225,72.5714],{icon}).addTo(map).bindPopup('<b>Ahmedabad</b><br>Groundwater Sustainability Study');
         L.marker([26.5,93.5],{icon}).addTo(map).bindPopup('<b>Dhansiri River Basin</b><br>Flood Risk Assessment');
@@ -818,12 +841,14 @@
 
         // 3D Earth
         const initEarth=()=>{ const container=document.getElementById('earth-container'); const w=container.clientWidth, h=container.clientHeight; const scene=new THREE.Scene(); const camera=new THREE.PerspectiveCamera(75,w/h,0.1,1000); camera.position.z=2.5; const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true}); renderer.setSize(w,h); container.appendChild(renderer.domElement); const controls=new THREE.OrbitControls(camera,renderer.domElement); controls.enableDamping=true; controls.autoRotate=true; controls.autoRotateSpeed=0.5; const geometry=new THREE.SphereGeometry(1,64,64); const tl=new THREE.TextureLoader(); const material=new THREE.MeshPhongMaterial({map:tl.load('https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg'),bumpMap:tl.load('https://threejs.org/examples/textures/planets/earth_normal_2048.jpg'),bumpScale:0.05,specularMap:tl.load('https://threejs.org/examples/textures/planets/earth_specular_2048.jpg'),specular:new THREE.Color('grey'),shininess:5}); const earth=new THREE.Mesh(geometry,material); scene.add(earth); scene.add(new THREE.AmbientLight(0x333333)); const dl=new THREE.DirectionalLight(0xffffff,1); dl.position.set(5,3,5); scene.add(dl); const sg=new THREE.BufferGeometry(); const sv=[]; for(let i=0;i<10000;i++) sv.push((Math.random()-0.5)*2000,(Math.random()-0.5)*2000,(Math.random()-0.5)*2000); sg.setAttribute('position',new THREE.Float32BufferAttribute(sv,3)); scene.add(new THREE.Points(sg,new THREE.PointsMaterial({color:0xffffff,size:0.05}))); const cg=new THREE.SphereGeometry(1.01,64,64); const cm=new THREE.MeshPhongMaterial({map:tl.load('https://threejs.org/examples/textures/planets/earth_clouds_1024.png'),transparent:true,opacity:0.4}); const clouds=new THREE.Mesh(cg,cm); scene.add(clouds); (function animate(){ requestAnimationFrame(animate); earth.rotation.y+=0.0005; clouds.rotation.y+=0.0007; controls.update(); renderer.render(scene,camera); })(); window.addEventListener('resize',()=>{ camera.aspect=container.clientWidth/container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth,container.clientHeight); }); };
-        new IntersectionObserver((e)=>{ if(e[0].isIntersecting){ initEarth(); e[0].target._observer.disconnect(); } },{threshold:0.1}).observe(document.getElementById('earth-container'));
+        const earthObserver = new IntersectionObserver((entries, observer)=>{ if(entries[0].isIntersecting){ initEarth(); observer.disconnect(); } },{threshold:0.1});
+        earthObserver.observe(document.getElementById('earth-container'));
 
         // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(a=>{ a.addEventListener('click',function(e){ e.preventDefault(); const t=document.querySelector(this.getAttribute('href')); if(t) t.scrollIntoView({behavior:'smooth'}); }); });
         ScrollReveal().reveal('.card',{duration:1000,distance:'20px',origin:'bottom',interval:200});
         ScrollReveal().reveal('section',{duration:1000,distance:'20px',origin:'top',delay:200});
     </script>
+    <script src="js/translator.js"></script>
 </body>
 </html>

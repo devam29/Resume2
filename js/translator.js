@@ -2,6 +2,7 @@ class SimpleTranslator {
     constructor() {
         this.currentLang = 'en';
         this.translations = {};
+        this.defaultLang = 'en';
         this.init();
     }
 
@@ -32,6 +33,7 @@ class SimpleTranslator {
             this.currentLang = lang;
             this.updateContent();
             this.updateActiveButton(lang);
+            document.documentElement.lang = lang;
             
             // Save preference
             localStorage.setItem('portfolio-lang', lang);
@@ -47,11 +49,25 @@ class SimpleTranslator {
     }
 
     updateContent() {
-        // Update all elements with data-translate attribute
-        document.querySelectorAll('[data-translate]').forEach(element => {
+        const current = this.translations[this.currentLang] || {};
+        const fallback = this.translations[this.defaultLang] || {};
+
+        // Update text nodes
+        document.querySelectorAll('[data-translate]').forEach((element) => {
             const key = element.getAttribute('data-translate');
-            if (this.translations[this.currentLang] && this.translations[this.currentLang][key]) {
-                element.textContent = this.translations[this.currentLang][key];
+            const value = current[key] || fallback[key];
+            if (value) {
+                element.textContent = value;
+            }
+        });
+
+        // Optional attribute translations, e.g. aria-label/title placeholders.
+        document.querySelectorAll('[data-translate-attr]').forEach((element) => {
+            const key = element.getAttribute('data-translate-attr');
+            const attr = element.getAttribute('data-translate-attr-name') || 'title';
+            const value = current[key] || fallback[key];
+            if (value) {
+                element.setAttribute(attr, value);
             }
         });
     }
