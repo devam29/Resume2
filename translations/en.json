@@ -105,6 +105,10 @@
   "groundwater_project": "Groundwater Sustainability",
   "groundwater_subtitle": "Ahmedabad, India",
   "groundwater_description": "AHP analysis using satellite data and GIS to identify 89% medium to high potential groundwater zones.",
+  "planttraits_project": "Better Maps of Plant Functional Traits",
+  "planttraits_subtitle": "ETH Zurich • Ongoing Semester Project",
+  "planttraits_description": "Deep learning framework for global 1 km² plant trait mapping using a shared backbone, task-specific heads, and multi-source Earth observation data.",
+  "project_visual_pending": "Project visual to add",
   "view_details": "View Details",
   
   "publications": "RESEARCH PUBLICATIONS",
@@ -120,6 +124,9 @@
   "wetland_discharge": "Wetland Discharge Water Filtration",
   "concordia_conf": "Concordia University • 2022",
   "wetland_abstract": "Presented research on filtration systems for mesotrophic lakes at environmental engineering conference.",
+  "mapsam2_paper": "MapSAM2: Adapting SAM2 for Automatic Segmentation of Historical Map Images and Time Series",
+  "mapsam2_journal": "IEEE Transactions on Geoscience and Remote Sensing • 2026",
+  "mapsam2_abstract": "Adapts SAM2 for automatic segmentation of historical map images and time series, enabling scalable extraction of cartographic information.",
   "read_paper": "Read Paper",
   
   "achievements": "ACHIEVEMENTS",
@@ -195,6 +202,7 @@
   
   "work_locations": "WORK LOCATIONS",
   "works_title": "WORKS",
+  "choose_mode_button": "Choose Mode",
   "mode_professional": "Professional",
   "mode_curious": "Curious",
   "choose_mode_title": "Choose Portfolio Mode",

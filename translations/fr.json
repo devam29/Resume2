@@ -105,6 +105,10 @@
   "groundwater_project": "Durabilité des Eaux Souterraines",
   "groundwater_subtitle": "Ahmedabad, Inde",
   "groundwater_description": "Analyse AHP utilisant des données satellitaires et SIG pour identifier 89% de zones potentielles d'eaux souterraines moyennes à élevées.",
+  "planttraits_project": "Meilleures cartes des traits fonctionnels des plantes",
+  "planttraits_subtitle": "ETH Zurich • Projet de semestre en cours",
+  "planttraits_description": "Cadre d'apprentissage profond pour la cartographie mondiale des traits végétaux à 1 km² avec un backbone partagé, des têtes spécifiques par tâche et des données d'observation de la Terre multi-sources.",
+  "project_visual_pending": "Visuel du projet à ajouter",
   "view_details": "Voir Détails",
   
   "publications": "PUBLICATIONS DE RECHERCHE",
@@ -120,6 +124,9 @@
   "wetland_discharge": "Filtration des Eaux de Décharge des Zones Humides",
   "concordia_conf": "Université Concordia • 2022",
   "wetland_abstract": "Présenté la recherche sur les systèmes de filtration pour les lacs mésotrophes à la conférence d'ingénierie environnementale.",
+  "mapsam2_paper": "MapSAM2 : adaptation de SAM2 pour la segmentation automatique d'images et de séries temporelles de cartes historiques",
+  "mapsam2_journal": "IEEE Transactions on Geoscience and Remote Sensing • 2026",
+  "mapsam2_abstract": "Adapte SAM2 à la segmentation automatique de cartes historiques et de séries temporelles pour extraire l'information cartographique à grande échelle.",
   "read_paper": "Lire l'Article",
   
   "achievements": "RÉALISATIONS",
@@ -195,6 +202,7 @@
   
   "work_locations": "LIEUX DE TRAVAIL",
   "works_title": "TRAVAUX",
+  "choose_mode_button": "Choisir le mode",
   "mode_professional": "Professionnel",
   "mode_curious": "Curieux",
   "choose_mode_title": "Choisir le mode du portfolio",

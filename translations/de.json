@@ -105,6 +105,10 @@
   "groundwater_project": "Grundwasser-Nachhaltigkeit",
   "groundwater_subtitle": "Ahmedabad, Indien",
   "groundwater_description": "AHP-Analyse mit Satellitendaten und GIS zur Identifizierung von 89% mittleren bis hohen potenziellen Grundwasserzonen.",
+  "planttraits_project": "Bessere Karten funktioneller Pflanzeneigenschaften",
+  "planttraits_subtitle": "ETH Zürich • Laufendes Semesterprojekt",
+  "planttraits_description": "Deep-Learning-Framework für globale Pflanzeneigenschaftskartierung auf 1 km² mit gemeinsamem Backbone, aufgabenspezifischen Heads und multisource Erdbeobachtungsdaten.",
+  "project_visual_pending": "Projektvisual noch hinzuzufügen",
   "view_details": "Details Anzeigen",
   
   "publications": "FORSCHUNGSPUBLIKATIONEN",
@@ -120,6 +124,9 @@
   "wetland_discharge": "Feuchtgebiets-Abwasserfiltration",
   "concordia_conf": "Concordia Universität • 2022",
   "wetland_abstract": "Präsentierte Forschung zu Filtersystemen für mesotrophe Seen auf Umwelttechnikkonferenz.",
+  "mapsam2_paper": "MapSAM2: Anpassung von SAM2 für die automatische Segmentierung historischer Kartenbilder und Zeitreihen",
+  "mapsam2_journal": "IEEE Transactions on Geoscience and Remote Sensing • 2026",
+  "mapsam2_abstract": "Passt SAM2 für die automatische Segmentierung historischer Karten und Zeitreihen an und ermöglicht die skalierbare Extraktion kartographischer Informationen.",
   "read_paper": "Artikel Lesen",
   
   "achievements": "ERFOLGE",
@@ -195,6 +202,7 @@
   
   "work_locations": "ARBEITSORTE",
   "works_title": "ARBEITEN",
+  "choose_mode_button": "Modus wählen",
   "mode_professional": "Professionell",
   "mode_curious": "Neugierig",
   "choose_mode_title": "Portfolio-Modus wählen",
