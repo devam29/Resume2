@@ -171,9 +171,9 @@
             white-space: nowrap;
         }
         .nav-links { display: none; }
-        @media (min-width: 1024px) { .nav-links { display: flex; align-items: center; gap: 0.25rem; margin-right: 0.5rem; } }
-        .nav-links a { color: var(--text-primary); padding: 0.5rem 0.6rem; font-size: 0.85rem; font-weight: 500; transition: color 0.2s; white-space: nowrap; }
-        .nav-links a:hover { color: var(--accent-primary); }
+        @media (min-width: 768px) { .nav-links { display: flex; align-items: center; gap: 0.25rem; margin-right: 0.5rem; } }
+        .nav-links a { color: var(--text-primary); padding: 0.5rem 0.75rem; font-size: 0.85rem; font-weight: 600; transition: all 0.2s; white-space: nowrap; border-radius: 999px; }
+        .nav-links a:hover { color: var(--accent-primary); background: rgba(47, 145, 200, 0.1); }
         .theme-btn, .lang-btn {
             padding: 0.4rem 0.7rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;
             cursor: pointer; background: transparent; border: 1px solid var(--border-light);
@@ -186,6 +186,30 @@
             padding: 0.45rem 1rem !important; transition: all 0.3s ease; white-space: nowrap;
         }
         .hire-me-btn:hover { background: linear-gradient(135deg, #FFD700, #FF8C00); transform: translateY(-2px); }
+        .page-explorer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .page-link-card {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            padding: 1rem 1.1rem;
+            border-radius: 18px;
+            border: 1px solid var(--border-light);
+            background: var(--bg-card);
+            text-decoration: none;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .page-link-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 10px 25px rgba(37, 107, 151, 0.18);
+        }
+        .page-link-card strong { color: var(--text-primary); }
+        .page-link-card span { color: var(--text-secondary); font-size: 0.9rem; }
 
         /* Interactive Timeline */
         .timeline-horizontal {
@@ -451,7 +475,10 @@
 
         .profile-page #hero,
         .research-page #hero,
-        .journey-page #hero {
+        .journey-page #hero,
+        .profile-page #page-explorer,
+        .research-page #page-explorer,
+        .journey-page #page-explorer {
             display: none;
         }
         
@@ -550,6 +577,33 @@
             </div>
         </div>
         <div id="hero-space-elements"></div>
+    </section>
+
+    <section id="page-explorer" class="section-spacing px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="card p-8">
+                <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-compass mr-2"></i>EXPLORE PORTFOLIO PAGES</h2>
+                <p class="text-center mb-6" style="color: var(--text-secondary);">Use these quick links to open the dedicated pages.</p>
+                <div class="page-explorer-grid">
+                    <a class="page-link-card" href="index.html">
+                        <strong><i class="fas fa-house mr-2 text-[--accent-primary]"></i>Home</strong>
+                        <span>Overview, about, experience, and contact.</span>
+                    </a>
+                    <a class="page-link-card" href="profile.html">
+                        <strong><i class="fas fa-id-badge mr-2 text-[--accent-primary]"></i>Profile</strong>
+                        <span>Education, skills, languages, and interests.</span>
+                    </a>
+                    <a class="page-link-card" href="research.html">
+                        <strong><i class="fas fa-flask mr-2 text-[--accent-primary]"></i>Research</strong>
+                        <span>Projects, publications, case studies, and works.</span>
+                    </a>
+                    <a class="page-link-card" href="journey.html">
+                        <strong><i class="fas fa-route mr-2 text-[--accent-primary]"></i>Journey</strong>
+                        <span>Career timeline, milestones, and achievements.</span>
+                    </a>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- About Section -->
