@@ -1,0 +1,16 @@
+# Local backups made while editing the site — not part of the site
+.backup-pre-update/
+
+# Images the site no longer uses (kept on disk, not published)
+images/
+dsaini
+gnss.png
+new.jpg
+1596.jpg
+flood.jpg
+groundwater.jpg
+
+# OS / editor clutter
+Thumbs.db
+.DS_Store
+desktop.ini

@@ -1,0 +1,200 @@
+/* Static utility layer — replaces the Tailwind Play CDN.
+   Contains a preflight equivalent plus only the utilities this page uses.
+   To revert: delete this <link> and restore
+   <script src="https://cdn.tailwindcss.com"></script> in index.html. */
+
+/* ============================== PREFLIGHT ============================== */
+*, ::before, ::after { box-sizing: border-box; border-width: 0; border-style: solid; border-color: currentColor; }
+html { -webkit-text-size-adjust: 100%; tab-size: 4; }
+body { margin: 0; line-height: inherit; }
+hr { height: 0; color: inherit; border-top-width: 1px; }
+h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; margin: 0; }
+p, figure, blockquote, dl, dd, pre { margin: 0; }
+ol, ul, menu { list-style: none; margin: 0; padding: 0; }
+a { color: inherit; text-decoration: inherit; }
+b, strong { font-weight: bolder; }
+code, kbd, samp, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 1em; }
+small { font-size: 80%; }
+table { text-indent: 0; border-color: inherit; border-collapse: collapse; }
+button, input, optgroup, select, textarea { font-family: inherit; font-size: 100%; font-weight: inherit; line-height: inherit; color: inherit; margin: 0; padding: 0; }
+button, select { text-transform: none; }
+button, [type='button'], [type='submit'] { -webkit-appearance: button; background-color: transparent; background-image: none; }
+:-moz-focusring { outline: auto; }
+summary { display: list-item; }
+img, svg, video, canvas, audio, iframe, embed, object { display: block; vertical-align: middle; }
+img, video { max-width: 100%; height: auto; }
+[hidden] { display: none; }
+
+/* ============================== LAYOUT ============================== */
+.relative { position: relative; }
+.absolute { position: absolute; }
+.fixed { position: fixed; }
+.inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+.top-0 { top: 0; }
+.bottom-4 { bottom: 1rem; }
+.left-4 { left: 1rem; }
+.-bottom-2 { bottom: -0.5rem; }
+.-right-2 { right: -0.5rem; }
+.z-10 { z-index: 10; }
+.z-50 { z-index: 50; }
+
+.block { display: block; }
+.inline-block { display: inline-block; }
+.flex { display: flex; }
+.inline-flex { display: inline-flex; }
+.grid { display: grid; }
+.hidden { display: none; }
+
+.flex-col { flex-direction: column; }
+.flex-wrap { flex-wrap: wrap; }
+.items-start { align-items: flex-start; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+
+.grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+.grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+.overflow-hidden { overflow: hidden; }
+.object-cover { object-fit: cover; }
+.cursor-pointer { cursor: pointer; }
+
+/* ============================== SIZING ============================== */
+.w-full { width: 100%; }
+.w-48 { width: 12rem; }
+.h-full { height: 100%; }
+.h-12 { height: 3rem; }
+.h-48 { height: 12rem; }
+.h-64 { height: 16rem; }
+.min-h-screen { min-height: 100vh; }
+.max-w-2xl { max-width: 42rem; }
+.max-w-3xl { max-width: 48rem; }
+.max-w-4xl { max-width: 56rem; }
+.max-w-7xl { max-width: 80rem; }
+.max-w-md { max-width: 28rem; }
+
+/* ============================== SPACING ============================== */
+.mx-auto { margin-left: auto; margin-right: auto; }
+.mb-1 { margin-bottom: 0.25rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-3 { margin-bottom: 0.75rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.mb-8 { margin-bottom: 2rem; }
+.mb-12 { margin-bottom: 3rem; }
+.mt-1 { margin-top: 0.25rem; }
+.mt-4 { margin-top: 1rem; }
+.mt-6 { margin-top: 1.5rem; }
+.mt-8 { margin-top: 2rem; }
+.mt-10 { margin-top: 2.5rem; }
+.mt-12 { margin-top: 3rem; }
+.mt-16 { margin-top: 4rem; }
+.ml-4 { margin-left: 1rem; }
+.mr-1 { margin-right: 0.25rem; }
+.mr-2 { margin-right: 0.5rem; }
+.mr-4 { margin-right: 1rem; }
+
+.p-0 { padding: 0; }
+.p-2 { padding: 0.5rem; }
+.p-3 { padding: 0.75rem; }
+.p-4 { padding: 1rem; }
+.p-6 { padding: 1.5rem; }
+.p-7 { padding: 1.75rem; }
+.p-8 { padding: 2rem; }
+.pb-6 { padding-bottom: 1.5rem; }
+.pl-5 { padding-left: 1.25rem; }
+.pt-32 { padding-top: 8rem; }
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+.py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+.py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+.py-8 { padding-top: 2rem; padding-bottom: 2rem; }
+
+.gap-3 { gap: 0.75rem; }
+.gap-4 { gap: 1rem; }
+.gap-6 { gap: 1.5rem; }
+.gap-8 { gap: 2rem; }
+
+.space-x-2 > * + * { margin-left: 0.5rem; }
+.space-x-6 > * + * { margin-left: 1.5rem; }
+.space-y-2 > * + * { margin-top: 0.5rem; }
+.space-y-6 > * + * { margin-top: 1.5rem; }
+.space-y-8 > * + * { margin-top: 2rem; }
+
+/* ============================== TYPOGRAPHY ============================== */
+.text-xs { font-size: 0.75rem; line-height: 1rem; }
+.text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+.text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+.text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+.text-2xl { font-size: 1.5rem; line-height: 2rem; }
+.text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+.font-medium { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
+.font-mono { font-family: 'Space Mono', ui-monospace, SFMono-Regular, Menlo, monospace; }
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.list-disc { list-style-type: disc; }
+
+/* ============================== COLOUR ============================== */
+.text-white { color: #fff; }
+.text-black { color: #000; }
+.text-\[--accent-primary\] { color: var(--accent-primary); }
+.text-\[--accent-secondary\] { color: var(--accent-secondary); }
+.bg-transparent { background-color: transparent; }
+.bg-\[--accent-primary\] { background-color: var(--accent-primary); }
+.bg-\[--accent-secondary\] { background-color: var(--accent-secondary); }
+.bg-\[--bg-secondary\] { background-color: var(--bg-secondary); }
+.border-\[--accent-primary\] { border-color: var(--accent-primary); }
+.border-\[--border-light\] { border-color: var(--border-light); }
+.border-\[--text-primary\] { border-color: var(--text-primary); }
+.hover\:bg-\[--accent-primary\]:hover { background-color: var(--accent-primary); }
+
+/* bg-opacity-* is inert against an arbitrary CSS-variable background, exactly as
+   it was under the Tailwind CDN. Declared so the classes resolve to something. */
+.bg-opacity-20, .bg-opacity-30, .bg-opacity-50, .hover\:bg-opacity-10:hover { --tw-bg-opacity: 1; }
+.opacity-70 { opacity: 0.7; }
+
+/* ============================== BORDER / EFFECTS ============================== */
+.border { border-width: 1px; }
+.border-4 { border-width: 4px; }
+.rounded-lg { border-radius: 0.5rem; }
+.rounded-full { border-radius: 9999px; }
+.shadow-lg { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1); }
+
+.bg-gradient-to-t { background-image: linear-gradient(to top, var(--tw-gradient-from, transparent), var(--tw-gradient-to, transparent)); }
+.from-black { --tw-gradient-from: #000; }
+.to-transparent { --tw-gradient-to: transparent; }
+
+.transition-transform { transition-property: transform; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+.duration-300 { transition-duration: 300ms; }
+.duration-500 { transition-duration: 500ms; }
+.rotate-180 { transform: rotate(180deg); }
+.group:hover .group-hover\:scale-110 { transform: scale(1.1); }
+
+.animate-bounce { animation: tw-bounce 1s infinite; }
+@keyframes tw-bounce {
+  0%, 100% { transform: translateY(-25%); animation-timing-function: cubic-bezier(0.8, 0, 1, 1); }
+  50% { transform: none; animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+}
+
+/* ============================== RESPONSIVE ============================== */
+@media (min-width: 768px) {
+  .md\:flex-row { flex-direction: row; }
+  .md\:items-center { align-items: center; }
+  .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .md\:hidden { display: none; }
+  .md\:mb-0 { margin-bottom: 0; }
+  .md\:pl-6 { padding-left: 1.5rem; }
+  .md\:pr-6 { padding-right: 1.5rem; }
+  .md\:w-1\/3 { width: 33.333333%; }
+  .md\:w-2\/3 { width: 66.666667%; }
+}
+@media (min-width: 1024px) {
+  .lg\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (min-width: 1280px) {
+  .xl\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}

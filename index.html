@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dev Shree Saini — Geomatics MSc at ETH Zurich and research intern at the Remote Sensing Laboratories, University of Zurich. Earth observation, geospatial machine learning and environmental monitoring.">
+    <meta name="author" content="Dev Shree Saini">
+    <meta property="og:type" content="profile">
+    <meta property="og:title" content="Dev Shree Saini | Earth Observation & Geospatial Machine Learning">
+    <meta property="og:description" content="Geomatics MSc at ETH Zurich. Building Python pipelines that turn satellite, airborne and GNSS data into models — heavy-rainfall prediction, SAR flood detection, global plant-trait mapping.">
+    <meta property="og:image" content="https://devam29.github.io/Resume2/dsaini.jpg">
+    <meta property="og:image:alt" content="Dev Shree Saini">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Dev Shree Saini | Earth Observation & Geospatial Machine Learning">
+    <meta name="twitter:description" content="Geomatics MSc at ETH Zurich. Earth observation, geospatial machine learning and environmental monitoring.">
+    <meta name="twitter:image" content="https://devam29.github.io/Resume2/dsaini.jpg">
+    <meta name="keywords" content="Earth Observation, Geospatial Machine Learning, ETH Zurich Geomatics, Remote Sensing, GNSS Meteorology, ERA5, Sentinel-1 SAR, Hyperspectral, Flood Detection, Plant Functional Traits, PyTorch, Python">
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Dev Shree Saini",
+      "jobTitle": "Research Intern, Remote Sensing Laboratories",
+      "description": "Geomatics Master's student at ETH Zurich working on Earth observation, geospatial machine learning and environmental monitoring.",
+      "email": "mailto:devamss29@gmail.com",
+      "url": "https://devam29.github.io/Resume2/",
+      "image": "https://devam29.github.io/Resume2/dsaini.jpg",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Zurich",
+        "addressCountry": "CH"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/devshreesaini",
+        "https://github.com/devam29",
+        "https://scholar.google.com/citations?user=WFhp_GkAAAAJ"
+      ],
+      "knowsAbout": [
+        "Earth Observation",
+        "Geospatial Machine Learning",
+        "Remote Sensing",
+        "GNSS Meteorology",
+        "Hyperspectral Imaging",
+        "Hydrological Modelling",
+        "Deep Learning"
+      ],
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Remote Sensing Laboratories, University of Zurich",
+        "url": "https://www.geo.uzh.ch/en/units/rsl"
+      },
+      "affiliation": {
+        "@type": "CollegeOrUniversity",
+        "name": "ETH Zurich",
+        "url": "https://ethz.ch"
+      },
+      "alumniOf": [
+        {
+          "@type": "CollegeOrUniversity",
+          "name": "ETH Zurich",
+          "url": "https://ethz.ch"
+        },
+        {
+          "@type": "CollegeOrUniversity",
+          "name": "Vellore Institute of Technology",
+          "url": "https://vit.ac.in"
+        }
+      ]
+    }
+    </script>
+    
+    <title>Dev Shree Saini | Geospatial Portfolio</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><text x='0' y='20' font-size='20'>🛰️</text></svg>">
+    <script src="https://unpkg.com/scrollreveal" defer></script>
+    <!-- three.js is loaded on demand, only when the globe scrolls into view (see js/main.js) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700&family=Space+Mono&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/utilities.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <a data-i18n href="#main" class="skip-link">Skip to content</a>
+    <div id="scroll-progress"></div>
+
+    <div id="space-elements"></div>
+    
+    <div class="loader">
+        <div class="loader-content">
+            <div class="loader-satellite"><i class="fas fa-satellite"></i></div>
+            <p data-i18n class="loader-text text-xl mb-4">Dev Shree Saini &mdash; Portfolio</p>
+            <p data-i18n class="loader-sub">Earth Observation &middot; Geospatial Machine Learning</p>
+            <div class="loader-track"><div class="loader-fill"></div></div>
+        </div>
+    </div>
+
+    <nav class="navbar fixed top-0 w-full z-50">
+        <div class="nav-container">
+            <div class="nav-brand"><i class="fas fa-satellite text-[--accent-primary]"></i><span>DEV SHREE SAINI</span></div>
+            <div class="nav-controls">
+                <div class="nav-links">
+                    <a data-i18n href="#about">About</a><a data-i18n href="#skills">Skills</a><a data-i18n href="#experience">Experience</a><a data-i18n href="#projects">Work</a><a data-i18n href="#publications">Research</a><a data-i18n href="#education">Background</a><a data-i18n href="#connect">Contact</a>
+                </div>
+                <button id="theme-toggle" class="theme-btn"><i class="fas fa-sun"></i><span>Light</span></button>
+                <div class="lang-switch"><button class="lang-btn active" data-lang="en">EN</button><button class="lang-btn" data-lang="fr">FR</button><button class="lang-btn" data-lang="de">DE</button></div>
+                <button class="md:hidden" id="menu-toggle" style="color: var(--text-primary);"><i class="fas fa-bars text-xl"></i></button>
+            </div>
+        </div>
+        <ul class="mobile-menu hidden" id="mobile-menu">
+            <li><a data-i18n href="#about">About</a></li><li><a data-i18n href="#skills">Skills</a></li><li><a data-i18n href="#experience">Experience</a></li><li><a data-i18n href="#projects">Work</a></li><li><a data-i18n href="#publications">Research</a></li><li><a data-i18n href="#education">Background</a></li><li><a data-i18n href="#connect">Contact</a></li>
+            <li class="mobile-lang"><button class="lang-btn" data-lang="en">EN</button><button class="lang-btn" data-lang="fr">FR</button><button class="lang-btn" data-lang="de">DE</button></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <main id="main">
+    <section id="hero" class="hero-section px-4 relative">
+        <div class="hero-wrap relative z-10">
+            <div class="hero-top">
+                <div class="hero-photo relative"><img src="dsaini.jpg" class="w-48 h-48 rounded-full border-4 border-[--accent-primary] earth-glow object-cover mx-auto" alt="Dev Shree Saini"><div class="absolute -bottom-2 -right-2 bg-[--bg-secondary] rounded-full p-2 border border-[--text-primary]"><i class="fas fa-satellite text-[--accent-secondary]"></i></div></div>
+                <div class="hero-intro">
+                    <h1 class="hero-title">DEV SHREE SAINI</h1>
+                    <p data-i18n class="hero-sub font-mono">Earth Observation &middot; Geospatial Machine Learning &middot; ETH Zurich</p>
+                    <p data-i18n class="text-lead hero-lead">Geomatics Master's student at ETH Zurich, working on Earth observation, geospatial machine learning, and environmental monitoring. Experienced in satellite data processing, deep learning for remote sensing, and building Python-based spatial modelling pipelines. Interested in applying Earth observation and machine learning to real-world environmental problems, from flood monitoring to ecosystem mapping.</p>
+                    <div class="hero-actions">
+                <a href="CV_DevShreeSaini.pdf" class="btn-primary inline-flex items-center px-6 py-3 rounded-full shadow-lg font-semibold"><i class="fas fa-file-download mr-2"></i><span data-i18n>Download Resume</span></a>
+                <a href="#connect" class="inline-flex items-center px-6 py-3 bg-transparent border border-[--accent-primary] hover:bg-[--accent-primary] hover:bg-opacity-10 text-[--accent-primary] rounded-full font-semibold"><i class="fas fa-paper-plane mr-2"></i><span data-i18n>Contact Me</span></a>
+            </div>
+                </div>
+            </div>
+            <div class="status-block status-row">
+                <div class="status-item"><i class="fas fa-graduation-cap"></i><div><strong data-i18n>MSc Geomatics, ETH Zurich</strong><span data-i18n>Graduating March 2027</span></div></div>
+                <div class="status-item"><i class="fas fa-flask"></i><div><strong data-i18n>Research Intern, RSL &mdash; UZH</strong><span data-i18n>ESA-funded hyperspectral project</span></div></div>
+                <div class="status-item"><i class="fas fa-location-dot"></i><div><strong data-i18n>Based in Zurich, Switzerland</strong><span data-i18n>Open to relocation within Europe</span></div></div>
+                <div class="status-item"><i class="fas fa-envelope-open-text"></i><div><strong data-i18n>Open to</strong><span data-i18n>EO / geospatial ML roles, research collaborations, thesis partnerships</span></div></div>
+            </div>
+            <!-- EDIT ME: if you want to state work authorisation, add another .status-item above.
+                 European employers will ask, and answering up front removes a barrier. -->
+            <div class="stat-grid stat-grid-3 hero-stats">
+                    <div class="stat-tile"><span class="stat-num">4</span><span data-i18n class="stat-label">Journal Papers</span></div>
+                    <div class="stat-tile"><span class="stat-num">2</span><span data-i18n class="stat-label">First-Author Papers</span></div>
+                    <div class="stat-tile"><span class="stat-num">3</span><span data-i18n class="stat-label">Conference Presentations</span></div>
+                </div>
+        </div>
+        <div id="hero-space-elements"></div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section-spacing px-4 bg-[--bg-secondary] bg-opacity-30 satellite-track">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-user-astronaut mr-2"></i><span data-i18n>ABOUT ME</span></h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="card p-8">
+                    <div class="flex items-start"><div class="bg-[--accent-primary] p-3 rounded-full mr-4"><i class="fas fa-satellite-dish text-white"></i></div><div><h3 data-i18n class="text-xl font-bold mb-2" style="color: var(--text-primary);">Geospatial Vision</h3><p data-i18n style="color: var(--text-secondary);">Satellite data already holds a lot of the answers we need on climate change, but most of it stays locked in formats and pipelines only specialists can use. I want to help close that gap, so this information is easier to reach and use by more people, not just researchers.</p></div></div>
+                </div>
+                <div class="card p-8">
+                    <div class="flex items-start"><div class="bg-[--accent-secondary] p-3 rounded-full mr-4 text-black"><i class="fas fa-globe-americas"></i></div><div><h3 data-i18n class="text-xl font-bold mb-2" style="color: var(--text-primary);">Research Focus</h3><p data-i18n style="color: var(--text-secondary);">I work on machine learning for geospatial data, with a particular interest in Earth observation and natural hazards. My work combines satellite and airborne data with physical models to understand how the ground, ice, and ecosystems around us change. A lot of it sits between physics-based simulation and machine learning, using one to make the other faster and more usable at scale.</p></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News -->
+    <section id="news" class="section-spacing px-4">
+        <div class="max-w-4xl mx-auto">
+            <h2 data-i18n class="section-heading section-heading-sm text-center text-[--accent-primary]"><i class="fas fa-bolt mr-2"></i>NEWS</h2>
+            <!-- ADD NEW ENTRIES AT THE TOP. The box shows about six; older ones scroll.
+                 Pattern:
+                 <li class="news-item"><span class="news-date">Mon YYYY</span><span class="news-text">What happened.</span></li> -->
+            <div class="news-box" tabindex="0" role="region" aria-label="News, scroll for older entries">
+                <ul class="news-list">
+                    <li class="news-item"><span data-i18n class="news-date">Jul 2026</span><span data-i18n class="news-text">Started as a Research Intern at the <strong>Remote Sensing Laboratories, University of Zurich</strong>, on an ESA-funded hyperspectral environmental monitoring project.</span></li>
+                    <li class="news-item"><span data-i18n class="news-date">Mar 2026</span><span data-i18n class="news-text"><strong>MapSAM2</strong> published in <em>IEEE Transactions on Geoscience and Remote Sensing</em>: adapting the SAM2 foundation model to historical map segmentation. <a href="https://doi.org/10.1109/TGRS.2026.3678420" target="_blank" rel="noopener" class="news-link">DOI</a></span></li>
+                    <li class="news-item"><span data-i18n class="news-date">Dec 2025</span><span data-i18n class="news-text">Presented heavy-precipitation detection from GNSS Zenith Wet Delay at the <strong>Swiss Geoscience Meeting</strong>, Bern.</span></li>
+                    <li class="news-item"><span data-i18n class="news-date">Sep 2025</span><span data-i18n class="news-text">Joined the <strong>Space Geodesy group at ETH Zurich</strong> as a Research Assistant.</span></li>
+                    <li class="news-item"><span data-i18n class="news-date">Mar 2025</span><span data-i18n class="news-text">First-author paper on land use/cover dynamics and ecosystem service values published in <em>Estuaries and Coasts</em>. <a href="https://doi.org/10.1007/s12237-025-01509-0" target="_blank" rel="noopener" class="news-link">DOI</a></span></li>
+                    <li class="news-item"><span data-i18n class="news-date">Sep 2024</span><span data-i18n class="news-text">Began the <strong>MSc in Geomatics Engineering at ETH Zurich</strong>.</span></li>
+                    <li class="news-item"><span data-i18n class="news-date">Mar 2024</span><span data-i18n class="news-text">First-author paper on HEC-RAS flood modelling published in the <em>Journal of the Geological Society of India</em>. <a href="https://doi.org/10.17491/jgsi/2024/173843" target="_blank" rel="noopener" class="news-link">DOI</a></span></li>
+                    <li class="news-item"><span data-i18n class="news-date">Aug 2023</span><span data-i18n class="news-text">Co-authored paper on short-duration precipitation in the Cauvery Basin published in <em>Scientific Reports</em>. <a href="https://doi.org/10.1038/s41598-023-41417-6" target="_blank" rel="noopener" class="news-link">DOI</a></span></li>
+                    <li class="news-item"><span data-i18n class="news-date">May 2023</span><span data-i18n class="news-text">Graduated with a <strong>BTech in Civil Engineering from VIT Vellore</strong>: ranked 2nd in the department and named Best Outgoing Student.</span></li>
+                    <li class="news-item"><span data-i18n class="news-date">May 2023</span><span data-i18n class="news-text">Presented wetland discharge filtration research at the <strong>CSCE Annual Conference 2023</strong>, Moncton, Canada.</span></li>
+                    <li class="news-item"><span data-i18n class="news-date">Jan 2023</span><span data-i18n class="news-text">Began a Spatial Data Analyst internship at <strong>IIRS, ISRO</strong>, Dehradun.</span></li>
+                    <li class="news-item"><span data-i18n class="news-date">Jun 2022</span><span data-i18n class="news-text">Began a <strong>MITACS Globalink Research Internship</strong> at Concordia University, Montreal.</span></li>
+                    <li class="news-item"><span data-i18n class="news-date">Mar 2022</span><span data-i18n class="news-text">Presented flood-prone zone mapping with HEC-RAS at the <strong>Roorkee Water Conclave 2022</strong>.</span></li>
+                    <li class="news-item"><span data-i18n class="news-date">Sep 2021</span><span data-i18n class="news-text">Began as a Teaching Assistant at VIT Vellore, supporting three PhD research projects.</span></li>
+                    <li class="news-item"><span data-i18n class="news-date">Jul 2019</span><span data-i18n class="news-text">Began the <strong>BTech in Civil Engineering at VIT Vellore</strong>.</span></li>
+                </ul>
+            </div>
+            <p data-i18n class="news-hint"><i class="fas fa-angle-down mr-1"></i>Scroll for older news</p>
+        </div>
+    </section>
+
+
+    <!-- Skills Constellation -->
+    <section id="skills" class="section-spacing px-4 bg-[--bg-secondary] bg-opacity-30 satellite-track">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-satellite-dish mr-2"></i><span data-i18n>TECHNICAL SKILLS</span></h2>
+            <div id="skills-constellation">
+                <canvas id="constellation-canvas" class="constellation-canvas"></canvas>
+                <div class="skills-grid-constellation" id="skills-grid">
+                    <div class="skill-node" data-skill="programming"><i class="fas fa-code"></i><h4 data-i18n>Programming</h4><p data-i18n>Python, NumPy, Pandas, Git</p></div>
+                    <div class="skill-node" data-skill="ml"><i class="fas fa-robot"></i><h4 data-i18n>Machine Learning</h4><p data-i18n>PyTorch, XGBoost, CNNs, LSTMs</p></div>
+                    <div class="skill-node" data-skill="remote-sensing"><i class="fas fa-satellite"></i><h4 data-i18n>Earth Observation</h4><p data-i18n>Sentinel-1/2, EnMAP, SAR, Hyperspectral</p></div>
+                    <div class="skill-node" data-skill="weather"><i class="fas fa-cloud-sun-rain"></i><h4 data-i18n>Weather &amp; Reanalysis</h4><p data-i18n>ERA5, NetCDF, GRIB, GNSS</p></div>
+                    <div class="skill-node" data-skill="gis"><i class="fas fa-map-marked-alt"></i><h4 data-i18n>GIS &amp; Geospatial</h4><p data-i18n>QGIS, ArcGIS, GeoPandas, Rasterio</p></div>
+                    <div class="skill-node" data-skill="data"><i class="fas fa-chart-line"></i><h4 data-i18n>Data Analysis</h4><p data-i18n>xarray, Time-Series Forecasting, Benchmarking</p></div>
+                    <div class="skill-node" data-skill="hydrology"><i class="fas fa-water"></i><h4 data-i18n>Hydrological Modelling</h4><p data-i18n>HEC-RAS, Arc-SWAT, Flood Risk</p></div>
+                    <div class="skill-node" data-skill="pipelines"><i class="fas fa-diagram-project"></i><h4 data-i18n>Scientific Computing</h4><p data-i18n>Large-Scale Pipelines, Multi-sensor Processing, Scientific Writing</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="section-spacing px-4 satellite-track">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-briefcase mr-2"></i><span data-i18n>PROFESSIONAL EXPERIENCE</span></h2>
+            <div class="space-y-8">
+                <div class="timeline-item">
+                    <div class="card p-8">
+                        <div class="flex flex-col md:flex-row md:items-center mb-6">
+                            <div class="flex items-center mb-4 md:mb-0 md:w-1/3"><img src="uzh.svg" alt="University of Zurich logo" class="org-logo h-12 mr-4"><div><h3 data-i18n class="text-xl font-bold" style="color: var(--text-primary);">Research Intern</h3><p data-i18n class="text-sm" style="color: var(--text-muted);">Remote Sensing Laboratories, University of Zurich</p><span data-i18n class="current-role-pill"><i class="fas fa-circle"></i>Current role</span><div class="exp-meta"><span class="meta-pair"><i class="fas fa-map-marker-alt mr-2 text-[--accent-secondary]"></i><span data-i18n>Zurich, Switzerland</span></span><span class="meta-pair"><i class="fas fa-calendar-alt ml-4 mr-2 text-[--accent-secondary]"></i><span data-i18n>July 2026 – Present</span></span></div></div></div>
+                            <div class="md:w-2/3">
+                                <p data-i18n class="text-sm mb-3" style="color: var(--text-muted);">ESA-funded project on hyperspectral environmental monitoring.</p>
+                                <ul class="list-disc pl-5 space-y-2" style="color: var(--text-secondary);"><li data-i18n>Built an end-to-end processing pipeline for airborne hyperspectral and satellite imagery.</li><li data-i18n>Validated cross-sensor and multi-resolution scaling methods against real satellite data.</li><li data-i18n>Analysed how resolution and observing conditions affect vegetation trait retrieval for a mission study.</li></ul>
+                                <div class="flex flex-wrap mt-4"><span data-i18n class="skill-badge">Python</span><span data-i18n class="skill-badge">ML Regression</span><span data-i18n class="skill-badge">Hyperspectral</span><span data-i18n class="skill-badge">Multi-sensor Processing</span><span data-i18n class="skill-badge">Scientific Writing</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="card p-8">
+                        <div class="flex flex-col md:flex-row md:items-center mb-6">
+                            <div class="flex items-center mb-4 md:mb-0 md:w-1/3"><img src="eth.png" alt="ETH Zurich Logo" class="org-logo h-12 mr-4"><div><h3 data-i18n class="text-xl font-bold" style="color: var(--text-primary);">Research Assistant</h3><p data-i18n class="text-sm" style="color: var(--text-muted);">ETH Zurich</p><div class="exp-meta"><span class="meta-pair"><i class="fas fa-map-marker-alt mr-2 text-[--accent-secondary]"></i><span data-i18n>Zurich, Switzerland</span></span><span class="meta-pair"><i class="fas fa-calendar-alt ml-4 mr-2 text-[--accent-secondary]"></i><span data-i18n>Sept 2025 – Mar 2026</span></span></div></div></div>
+                            <div class="md:w-2/3">
+                                <p data-i18n class="text-sm mb-3" style="color: var(--text-muted);">Within the space geodesy research team.</p>
+                                <ul class="list-disc pl-5 space-y-2" style="color: var(--text-secondary);"><li data-i18n>Built Python pipelines to process multi-year GNSS and ERA5 reanalysis data (NetCDF/GRIB) for atmospheric analysis.</li><li data-i18n>Developed deep learning and gradient-boosting models to predict heavy rainfall from atmospheric water vapour.</li><li data-i18n>Scaled the analysis from 1 to 12 years of data, including quality control and outlier detection.</li><li data-i18n>Presented the results at the Swiss Geoscience Meeting, Bern (Dec 2025).</li></ul>
+                                <div class="flex flex-wrap mt-4"><span data-i18n class="skill-badge">GNSS Meteorology</span><span data-i18n class="skill-badge">ERA5 Reanalysis</span><span data-i18n class="skill-badge">Time-Series Forecasting</span><span data-i18n class="skill-badge">Python</span><span data-i18n class="skill-badge">PyTorch</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="card p-8">
+                        <div class="flex flex-col md:flex-row md:items-center mb-6">
+                            <div class="flex items-center mb-4 md:mb-0 md:w-1/3"><img src="iirs.png" alt="ISRO Logo" class="org-logo h-12 mr-4"><div><h3 data-i18n class="text-xl font-bold" style="color: var(--text-primary);">Spatial Data Analyst Intern</h3><p data-i18n class="text-sm" style="color: var(--text-muted);">IIRS, ISRO</p><div class="exp-meta"><span class="meta-pair"><i class="fas fa-map-marker-alt mr-2 text-[--accent-secondary]"></i><span data-i18n>Dehradun, India</span></span><span class="meta-pair"><i class="fas fa-calendar-alt ml-4 mr-2 text-[--accent-secondary]"></i><span data-i18n>Jan 2023 – Dec 2023</span></span></div></div></div>
+                            <div class="md:w-2/3">
+                                <p data-i18n class="text-sm mb-3" style="color: var(--text-muted);">As part of the research group.</p>
+                                <ul class="list-disc pl-5 space-y-2" style="color: var(--text-secondary);"><li data-i18n>Developed a U-Net model in PyTorch on Sentinel-1 data for flood detection in monsoon-affected regions.</li><li data-i18n>Integrated four years of gridded rainfall data as additional model input channels.</li><li data-i18n>Tuned training pipelines and hyperparameters, reaching <strong>92% accuracy and 0.70 F1</strong> on held-out data.</li></ul>
+                                <div class="flex flex-wrap mt-4"><span data-i18n class="skill-badge">Deep Learning</span><span data-i18n class="skill-badge">PyTorch</span><span data-i18n class="skill-badge">Sentinel-1 SAR</span><span data-i18n class="skill-badge">Model Evaluation</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="card p-8">
+                        <div class="flex flex-col md:flex-row md:items-center mb-6">
+                            <div class="flex items-center mb-4 md:mb-0 md:w-1/3"><img src="concordia.jpg" alt="Concordia Logo" class="org-logo h-12 mr-4"><div><h3 data-i18n class="text-xl font-bold" style="color: var(--text-primary);">Research Intern</h3><p data-i18n class="text-sm" style="color: var(--text-muted);">Concordia University</p><div class="exp-meta"><span class="meta-pair"><i class="fas fa-map-marker-alt mr-2 text-[--accent-secondary]"></i><span data-i18n>Montreal, Canada</span></span><span class="meta-pair"><i class="fas fa-calendar-alt ml-4 mr-2 text-[--accent-secondary]"></i><span data-i18n>June 2022 – Aug 2022</span></span></div></div></div>
+                            <div class="md:w-2/3">
+                                <p data-i18n class="text-sm mb-3" style="color: var(--text-muted);">MITACS Globalink Research Internship.</p>
+                                <ul class="list-disc pl-5 space-y-2" style="color: var(--text-secondary);"><li data-i18n>Designed a geotextile filtration system for wetland discharge water, reducing lake nutrients by 50%.</li><li data-i18n>Conducted water quality analysis supported by remote sensing data.</li><li data-i18n>Co-authored and presented the work at the <strong>CSCE Annual Conference 2023</strong>, Moncton, Canada.</li></ul>
+                                <div class="flex flex-wrap mt-4"><span data-i18n class="skill-badge">Water Quality</span><span data-i18n class="skill-badge">Remote Sensing</span><span data-i18n class="skill-badge">Environmental Eng.</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="card p-8">
+                        <div class="flex flex-col md:flex-row md:items-center mb-6">
+                            <div class="flex items-center mb-4 md:mb-0 md:w-1/3"><img src="vit.png" alt="VIT Logo" class="org-logo h-12 mr-4"><div><h3 data-i18n class="text-xl font-bold" style="color: var(--text-primary);">Teaching Assistant</h3><p data-i18n class="text-sm" style="color: var(--text-muted);">VIT Vellore</p><div class="exp-meta"><span class="meta-pair"><i class="fas fa-map-marker-alt mr-2 text-[--accent-secondary]"></i><span data-i18n>Vellore, India</span></span><span class="meta-pair"><i class="fas fa-calendar-alt ml-4 mr-2 text-[--accent-secondary]"></i><span data-i18n>Sept 2021 – Jan 2023</span></span></div></div></div>
+                            <div class="md:w-2/3">
+                                <p data-i18n class="text-sm mb-3" style="color: var(--text-muted);">Involved in research projects and coursework during the final year of my bachelor's.</p>
+                                <ul class="list-disc pl-5 space-y-2" style="color: var(--text-secondary);"><li data-i18n>Assisted in <strong>3 PhD research projects</strong> involving geospatial and hydrological modelling.</li><li data-i18n>Mentored ~40 students in QGIS and ArcGIS, covering LULC classification and flood mapping.</li><li data-i18n>Developed course materials and ran workshops on satellite data processing.</li></ul>
+                                <div class="flex flex-wrap mt-4"><span data-i18n class="skill-badge">Teaching</span><span data-i18n class="skill-badge">Communication</span><span data-i18n class="skill-badge">Spatial Data Analysis</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section - COMPLETE ORIGINAL CONTENT -->
+    <section id="projects" class="section-spacing px-4 bg-[--bg-secondary] bg-opacity-30 satellite-track">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-diagram-project mr-2"></i><span data-i18n>RESEARCH PROJECTS</span></h2>
+            <div class="project-grid">
+                <article class="card proj project-card" data-project="mapsam2">
+                    <div class="proj-top"><span data-i18n class="project-tag">Foundation Models</span><span data-i18n class="proj-badge">Published &middot; IEEE TGRS 2026</span></div>
+                    <h3 data-i18n class="proj-title">MapSAM2: Foundation Model for Map Segmentation</h3>
+                    <p data-i18n class="proj-meta">ETH Zurich &middot; Co-author</p>
+                    <p data-i18n class="proj-desc">Adapted and fine-tuned the SAM2 transformer foundation model for automatic segmentation of historical maps, using video-based tile processing to share spatial context across image patches.</p>
+                    <ul class="proj-results"><li data-i18n>SAM2 foundation model</li><li data-i18n>Historical maps and time series</li><li data-i18n>Video-based tile processing</li></ul>
+                    <button data-i18n type="button" class="proj-more" aria-haspopup="dialog">View details <i class="fas fa-arrow-right"></i></button>
+                </article>
+                <article class="card proj project-card" data-project="planttraits">
+                    <div class="proj-top"><span data-i18n class="project-tag">Deep Learning</span></div>
+                    <h3 data-i18n class="proj-title">Better Maps of Plant Functional Traits</h3>
+                    <p data-i18n class="proj-meta">ETH Zurich &middot; Semester Project 2</p>
+                    <p data-i18n class="proj-desc">CNN, Multi-Task Learning and Mixture-of-Experts models mapping 37 plant functional traits globally, fusing 150-channel Earth observation data with GBIF and sPlot biodiversity records.</p>
+                    <ul class="proj-results"><li data-i18n>37 traits</li><li data-i18n>1 km and 22 km global maps</li></ul>
+                    <button data-i18n type="button" class="proj-more" aria-haspopup="dialog">View details <i class="fas fa-arrow-right"></i></button>
+                </article>
+                <article class="card proj project-card" data-project="gnss">
+                    <div class="proj-top"><span data-i18n class="project-tag">Machine Learning</span></div>
+                    <h3 data-i18n class="proj-title">Heavy Precipitation from GNSS Wet Delay</h3>
+                    <p data-i18n class="proj-meta">ETH Zurich &middot; Semester Project 1</p>
+                    <p data-i18n class="proj-desc">Uses GNSS Zenith Wet Delay as a physical proxy for atmospheric water vapour to predict short-term heavy rainfall, benchmarking LSTM, XGBoost and further architectures.</p>
+                    <ul class="proj-results"><li data-i18n>LSTM best: F1 0.70</li><li data-i18n>GNSS + ERA5 data</li></ul>
+                    <button data-i18n type="button" class="proj-more" aria-haspopup="dialog">View details <i class="fas fa-arrow-right"></i></button>
+                </article>
+                <article class="card proj project-card" data-project="sarflood">
+                    <div class="proj-top"><span data-i18n class="project-tag">Deep Learning</span></div>
+                    <h3 data-i18n class="proj-title">Flood Detection from Sentinel-1 SAR</h3>
+                    <p data-i18n class="proj-meta">IIRS, ISRO &middot; 2023</p>
+                    <p data-i18n class="proj-desc">A U-Net in PyTorch on Sentinel-1 radar, which sees through monsoon cloud, with four years of gridded rainfall added as extra input channels.</p>
+                    <ul class="proj-results"><li data-i18n>92% accuracy</li><li data-i18n>F1 0.70</li></ul>
+                    <button data-i18n type="button" class="proj-more" aria-haspopup="dialog">View details <i class="fas fa-arrow-right"></i></button>
+                </article>
+                <article class="card proj project-card" data-project="flood">
+                    <div class="proj-top"><span data-i18n class="project-tag">Hydrology</span></div>
+                    <h3 data-i18n class="proj-title">Flood Risk Mapping with Arc-SWAT</h3>
+                    <p data-i18n class="proj-meta">VIT Vellore &middot; BTech thesis &middot; Dhansiri Basin, India</p>
+                    <p data-i18n class="proj-desc">Hydrological modelling of the Dhansiri River watershed to map flood risk, combining a calibrated SWAT model with satellite imagery.</p>
+                    <ul class="proj-results"><li data-i18n>NSE 0.84</li><li data-i18n>R² 0.90</li></ul>
+                    <button data-i18n type="button" class="proj-more" aria-haspopup="dialog">View details <i class="fas fa-arrow-right"></i></button>
+                </article>
+                <article class="card proj project-card" data-project="groundwater">
+                    <div class="proj-top"><span data-i18n class="project-tag">GIS Analysis</span></div>
+                    <h3 data-i18n class="proj-title">Groundwater Potential Zoning</h3>
+                    <p data-i18n class="proj-meta">Ahmedabad, India</p>
+                    <p data-i18n class="proj-desc">Multi-criteria analysis (AHP) with satellite-derived indicators and GIS to map where groundwater potential is highest.</p>
+                    <ul class="proj-results"><li data-i18n>89% medium to high potential</li><li data-i18n>AHP + GIS</li></ul>
+                    <button data-i18n type="button" class="proj-more" aria-haspopup="dialog">View details <i class="fas fa-arrow-right"></i></button>
+                </article>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="publications" class="section-spacing px-4 satellite-track">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-book mr-2"></i><span data-i18n>RESEARCH PUBLICATIONS</span></h2>
+            <ol class="pub-list">
+                <li class="pub">
+                    <div class="pub-main">
+                        <h3 data-i18n class="pub-title">MapSAM2: Adapting SAM2 for Automatic Segmentation of Historical Map Images and Time Series</h3>
+                        <p data-i18n class="pub-authors">X. Xia, <strong>D. S. Saini</strong> et al.</p>
+                        <p data-i18n class="pub-venue">IEEE Transactions on Geoscience and Remote Sensing • 2026</p>
+                    </div>
+                    <div class="pub-side">
+                        
+                        <a href="https://doi.org/10.1109/TGRS.2026.3678420" target="_blank" rel="noopener" class="pub-link"><i class="fas fa-external-link-alt mr-1"></i><span data-i18n>Read Paper</span></a>
+                    </div>
+                </li>
+                <li class="pub">
+                    <div class="pub-main">
+                        <h3 data-i18n class="pub-title">Land use/cover dynamics and associated impacts on eutrophication, land surface temperature, and ecosystem service values</h3>
+                        <p data-i18n class="pub-authors"><strong>D. S. Saini</strong> et al.</p>
+                        <p data-i18n class="pub-venue">Estuaries and Coasts • 2025</p>
+                    </div>
+                    <div class="pub-side">
+                        <span data-i18n class="first-author-pill">First author</span>
+                        <a href="https://doi.org/10.1007/s12237-025-01509-0" target="_blank" rel="noopener" class="pub-link"><i class="fas fa-external-link-alt mr-1"></i><span data-i18n>Read Paper</span></a>
+                    </div>
+                </li>
+                <li class="pub">
+                    <div class="pub-main">
+                        <h3 data-i18n class="pub-title">Simulation of the hydraulic model HEC-RAS coupled with GIS and remote sensing to study the effect of river cross-section width in detecting flood-prone areas</h3>
+                        <p data-i18n class="pub-authors"><strong>D. S. Saini</strong> et al.</p>
+                        <p data-i18n class="pub-venue">Journal of the Geological Society of India • 2024</p>
+                    </div>
+                    <div class="pub-side">
+                        <span data-i18n class="first-author-pill">First author</span>
+                        <a href="https://doi.org/10.17491/jgsi/2024/173843" target="_blank" rel="noopener" class="pub-link"><i class="fas fa-external-link-alt mr-1"></i><span data-i18n>Read Paper</span></a>
+                    </div>
+                </li>
+                <li class="pub">
+                    <div class="pub-main">
+                        <h3 data-i18n class="pub-title">The impact of short-duration precipitation events over the historic Cauvery Basin</h3>
+                        <p data-i18n class="pub-authors">S. Ghosh, <strong>D. S. Saini</strong> et al.</p>
+                        <p data-i18n class="pub-venue">Scientific Reports, Nature • 2023</p>
+                    </div>
+                    <div class="pub-side">
+                        
+                        <a href="https://doi.org/10.1038/s41598-023-41417-6" target="_blank" rel="noopener" class="pub-link"><i class="fas fa-external-link-alt mr-1"></i><span data-i18n>Read Paper</span></a>
+                    </div>
+                </li>
+                <li class="pub">
+                    <div class="pub-main">
+                        <h3 data-i18n class="pub-title">Wetland Discharge Water Filtration of a Mesotrophic Lake</h3>
+                        <p data-i18n class="pub-authors">A. C. Pereira, <strong>D. S. Saini</strong> et al.</p>
+                        <p data-i18n class="pub-venue">CSCE Annual Conference 2023 • Moncton, Canada</p>
+                    </div>
+                    <div class="pub-side">
+                        <span data-i18n class="conf-pill">Conference paper</span>
+                        <a href="https://doi.org/10.1007/978-3-031-61515-3_22" target="_blank" rel="noopener" class="pub-link"><i class="fas fa-external-link-alt mr-1"></i><span data-i18n>Read Paper</span></a>
+                    </div>
+                </li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="section-spacing px-4 bg-[--bg-secondary] bg-opacity-30 satellite-track">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="section-heading text-center text-[--accent-primary]"><i class="fas fa-graduation-cap mr-2"></i><span data-i18n>EDUCATION</span></h2>
+            <div class="space-y-8">
+                <div class="timeline-item">
+                    <div class="card p-8">
+                        <div class="flex flex-col md:flex-row md:items-center mb-6">
+                            <div class="flex items-center mb-4 md:mb-0 md:w-1/3"><img src="eth.png" alt="ETH Zurich Logo" class="org-logo h-12 mr-4"><div><h3 data-i18n class="text-xl font-bold" style="color: var(--text-primary);">ETH Zurich</h3><p data-i18n class="text-sm" style="color: var(--text-muted);">MSc in Geomatics Engineering &middot; GPA 5.33/6.0</p><div class="exp-meta"><span class="meta-pair"><i class="fas fa-map-marker-alt mr-2 text-[--accent-secondary]"></i><span data-i18n>Zurich, Switzerland</span></span><span class="meta-pair"><i class="fas fa-calendar-alt ml-4 mr-2 text-[--accent-secondary]"></i><span data-i18n>Sept 2024 – Mar 2027</span></span></div></div></div>
+                            <div class="md:w-2/3">
+                                <ul class="list-disc pl-5 space-y-2" style="color: var(--text-secondary);"><li data-i18n><strong>GPA 5.33/6.0</strong>, specialising in Earth observation and geospatial machine learning</li><li data-i18n><strong>Semester Project 1:</strong> Detection of Heavy Precipitation using GNSS Zenith Wet Delay</li><li data-i18n><strong>Semester Project 2:</strong> Better maps of plant functional traits &ndash; towards planttraits.earth v2</li><li data-i18n>Coursework: Deep Learning, Introduction to Machine Learning, Multivariate Statistics and Machine Learning, Space Geodesy, Geospatial Research Methods</li></ul>
+                                <div class="flex flex-wrap mt-4"><span data-i18n class="skill-badge">Deep Learning</span><span data-i18n class="skill-badge">Earth Observation</span><span data-i18n class="skill-badge">Space Geodesy</span><span data-i18n class="skill-badge">Machine Learning</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="card p-8">
+                        <div class="flex flex-col md:flex-row md:items-center mb-6">
+                            <div class="flex items-center mb-4 md:mb-0 md:w-1/3"><img src="vit.png" alt="VIT Logo" class="org-logo h-12 mr-4"><div><h3 data-i18n class="text-xl font-bold" style="color: var(--text-primary);">VIT University</h3><p data-i18n class="text-sm" style="color: var(--text-muted);">BTech in Civil Engineering &middot; CGPA 9.33/10.0</p><div class="exp-meta"><span class="meta-pair"><i class="fas fa-map-marker-alt mr-2 text-[--accent-secondary]"></i><span data-i18n>Vellore, India</span></span><span class="meta-pair"><i class="fas fa-calendar-alt ml-4 mr-2 text-[--accent-secondary]"></i><span data-i18n>July 2019 – May 2023</span></span></div></div></div>
+                            <div class="md:w-2/3">
+                                <ul class="list-disc pl-5 space-y-2" style="color: var(--text-secondary);"><li data-i18n><strong>CGPA 9.33/10.0 &mdash; ranked 2nd of ~150 students</strong>, and named Best Outgoing Student</li><li data-i18n><strong>Thesis:</strong> Flood Risk Analysis using Arc-SWAT in the Dhansiri River Watershed, India</li><li data-i18n>Merit-based scholarship for 3 consecutive years for academic excellence</li><li data-i18n>Coursework: Hydrology, GIS and Remote Sensing, Environmental Engineering</li></ul>
+                                <div class="flex flex-wrap mt-4"><span data-i18n class="skill-badge">GIS &amp; Remote Sensing</span><span data-i18n class="skill-badge">Hydrology</span><span data-i18n class="skill-badge">Environmental Eng.</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Career globe: places live in js/globe.js (GLOBE_PLACES) -->
+    <section id="work-locations" class="section-spacing px-4">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="section-heading section-heading-sm text-center text-[--accent-primary]"><i class="fas fa-globe mr-2"></i><span data-i18n>WHERE I'VE WORKED</span></h2>
+            <p data-i18n class="globe-intro">Drag to spin, pinch or use the buttons to zoom. Select a place, on the globe or in the list, to see what I did there.</p>
+            <div class="career-globe">
+                <div class="globe-stage-wrap card p-0">
+                    <div id="earth-container" aria-hidden="true"></div>
+                    <p data-i18n class="globe-fallback">Loading globe&hellip;</p>
+                    <div class="globe-zoom" role="group" aria-label="Globe zoom">
+                        <button type="button" class="gz-btn" data-zoom="in" aria-label="Zoom in"><i class="fas fa-plus"></i></button>
+                        <button type="button" class="gz-btn" data-zoom="out" aria-label="Zoom out"><i class="fas fa-minus"></i></button>
+                        <button type="button" class="gz-btn" data-zoom="reset" aria-label="Reset view"><i class="fas fa-crosshairs"></i></button>
+                    </div>
+                </div>
+                <div class="globe-panel">
+                    <div id="globe-legend" class="globe-legend"></div>
+                    <div id="globe-info" class="globe-info" aria-live="polite"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="awards" class="section-spacing px-4 bg-[--bg-secondary] bg-opacity-30 satellite-track">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="section-heading section-heading-sm text-center text-[--accent-primary]"><i class="fas fa-trophy mr-2"></i><span data-i18n>AWARDS &amp; TALKS</span></h2>
+            <div class="aw-grid">
+                <div class="aw-col card">
+                    <h3 data-i18n class="aw-col-title">Awards</h3>
+                    <ul class="aw-list">
+                    <li class="aw-item">
+                        <span class="aw-icon"><i class="fas fa-medal"></i></span>
+                        <div class="aw-body">
+                            <div class="aw-head"><h4 data-i18n class="aw-title">MITACS Globalink Research Scholar</h4><span data-i18n class="aw-meta">2022</span></div>
+                            <p data-i18n class="aw-desc">Awarded prestigious MITACS scholarship for international research internship at Concordia University, Canada, selected among top candidates nationwide.</p>
+                            <a href="https://drive.google.com/file/d/1QwDwROCIen6ByBGZaBxa2HMLi5a6QlAM/view" target="_blank" rel="noopener" class="aw-link"><i class="fas fa-external-link-alt mr-1"></i><span data-i18n>View Certificate</span></a>
+                        </div>
+                    </li>
+                    <li class="aw-item">
+                        <span class="aw-icon"><i class="fas fa-trophy"></i></span>
+                        <div class="aw-body">
+                            <div class="aw-head"><h4 data-i18n class="aw-title">Road Safety Hackathon Winner</h4><span data-i18n class="aw-meta">2022</span></div>
+                            <p data-i18n class="aw-desc">1st place in national competition for "Implementable Local Action Plan for Road Safety". Proposal was considered for implementation by IIT Madras.</p>
+                            <a href="https://drive.google.com/file/d/1N3uccDLDTKydMsWo24E_q_mLWODFtH-Q/view" target="_blank" rel="noopener" class="aw-link"><i class="fas fa-external-link-alt mr-1"></i><span data-i18n>View Certificate</span></a>
+                        </div>
+                    </li>
+                    <li class="aw-item">
+                        <span class="aw-icon"><i class="fas fa-award"></i></span>
+                        <div class="aw-body">
+                            <div class="aw-head"><h4 data-i18n class="aw-title">University Rank Holder</h4><span data-i18n class="aw-meta">2023</span></div>
+                            <p data-i18n class="aw-desc">Secured 2nd rank in Civil Engineering department with CGPA of 9.33/10.0, recognized for academic excellence among 150 students.</p>
+                            <a href="https://drive.google.com/file/d/1D6tUMSp7qmryGr5cjzmbHxw8Wj45mLOB/view" target="_blank" rel="noopener" class="aw-link"><i class="fas fa-external-link-alt mr-1"></i><span data-i18n>View Certificate</span></a>
+                        </div>
+                    </li>
+                    <li class="aw-item">
+                        <span class="aw-icon"><i class="fas fa-star"></i></span>
+                        <div class="aw-body">
+                            <div class="aw-head"><h4 data-i18n class="aw-title">Merit Scholarship (3 Years)</h4><span data-i18n class="aw-meta">2020-2023</span></div>
+                            <p data-i18n class="aw-desc">Awarded university merit scholarship for three consecutive years recognizing consistent academic performance in top 5% of class.</p>
+                            <a href="https://drive.google.com/file/d/1misYhC8elOwVaynWjZoDz-48amL2P_bz/view" target="_blank" rel="noopener" class="aw-link"><i class="fas fa-external-link-alt mr-1"></i><span data-i18n>View Certificates</span></a>
+                        </div>
+                    </li>
+                    <li class="aw-item">
+                        <span class="aw-icon"><i class="fas fa-user-graduate"></i></span>
+                        <div class="aw-body">
+                            <div class="aw-head"><h4 data-i18n class="aw-title">Best Outgoing Student</h4><span data-i18n class="aw-meta">VIT Vellore &middot; 2023</span></div>
+                            <p data-i18n class="aw-desc">Named Best Outgoing Student of the Civil Engineering department, recognising academic performance, research output and contribution to the university community.</p>
+                        </div>
+                    </li>
+                    <li class="aw-item">
+                        <span class="aw-icon"><i class="fas fa-medal"></i></span>
+                        <div class="aw-body">
+                            <div class="aw-head"><h4 data-i18n class="aw-title">All India Course Topper</h4><span data-i18n class="aw-meta">Nationwide</span></div>
+                            <p data-i18n class="aw-desc">Ranked first nationally on a certified course, awarded an All India Course Topper certificate.</p>
+                        </div>
+                    </li>
+                    <li class="aw-item">
+                        <span class="aw-icon"><i class="fas fa-mountain"></i></span>
+                        <div class="aw-body">
+                            <div class="aw-head"><h4 data-i18n class="aw-title">AICTE YUVAK Scholar</h4><span data-i18n class="aw-meta">2021</span></div>
+                            <p data-i18n class="aw-desc">Selected among 10 students nationwide for educational tour to ATAL Tunnel, sponsored by Government of India to study advanced construction techniques.</p>
+                        </div>
+                    </li>
+                    </ul>
+                </div>
+                <div class="aw-col card" id="speaking">
+                    <h3 data-i18n class="aw-col-title">Talks</h3>
+                    <ul class="aw-list">
+                    <li class="aw-item">
+                        <span class="aw-icon"><i class="fas fa-microphone-lines"></i></span>
+                        <div class="aw-body">
+                            <div class="aw-head"><h4 data-i18n class="aw-title">Swiss Geoscience Meeting</h4><span data-i18n class="aw-meta">Bern, Switzerland &middot; Dec 2025</span></div>
+                            <p data-i18n class="aw-desc">Presented results on detecting heavy precipitation from GNSS Zenith Wet Delay, carried out with the ETH Zurich Space Geodesy group.</p>
+                        </div>
+                    </li>
+                    <li class="aw-item">
+                        <span class="aw-icon"><i class="fas fa-users"></i></span>
+                        <div class="aw-body">
+                            <div class="aw-head"><h4 data-i18n class="aw-title">CSCE Annual Conference</h4><span data-i18n class="aw-meta">Moncton, Canada &middot; 2023</span></div>
+                            <p data-i18n class="aw-desc">Co-authored and presented work on wetland discharge water filtration of a mesotrophic lake, from the MITACS internship at Concordia University.</p>
+                        </div>
+                    </li>
+                    <li class="aw-item">
+                        <span class="aw-icon"><i class="fas fa-chalkboard-teacher"></i></span>
+                        <div class="aw-body">
+                            <div class="aw-head"><h4 data-i18n class="aw-title">Guest Speaker - Fresher Induction</h4><span data-i18n class="aw-meta">VIT Vellore • 2023</span></div>
+                            <p data-i18n class="aw-desc">Invited to share my academic journey and research experiences with incoming civil engineering students during orientation program.</p>
+                        </div>
+                    </li>
+                    <li class="aw-item">
+                        <span class="aw-icon"><i class="fas fa-chalkboard-teacher"></i></span>
+                        <div class="aw-body">
+                            <div class="aw-head"><h4 data-i18n class="aw-title">Roorkee Water Conclave 2022</h4><span data-i18n class="aw-meta">Roorkee, India &middot; Mar 2022</span></div>
+                            <p data-i18n class="aw-desc">Presented research on flood-prone zone identification in Bihar using HEC-RAS modelling and satellite data analysis.</p>
+                        </div>
+                    </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+
+    <!-- Connect Section -->
+    <!-- Beyond the Work: languages, interests, positions, writing -->
+    <section id="beyond" class="section-spacing px-4">
+        <div class="max-w-7xl mx-auto">
+            <h2 data-i18n class="section-heading section-heading-sm text-center text-[--accent-primary]"><i class="fas fa-compass mr-2"></i>BEYOND THE WORK</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <div class="card p-7" id="languages">
+                    <h3 data-i18n class="beyond-title"><i class="fas fa-language mr-2 text-[--accent-secondary]"></i>Languages</h3>
+                    <div class="mb-4"><div class="flex justify-between items-center mb-2"><span data-i18n class="font-medium" style="color: var(--text-primary);">Hindi</span><span data-i18n class="text-sm" style="color: var(--text-muted);">Native</span></div><div class="language-meter"><div class="language-meter-fill" style="width: 100%"></div></div></div>
+                    <div class="mb-4"><div class="flex justify-between items-center mb-2"><span data-i18n class="font-medium" style="color: var(--text-primary);">English</span><span data-i18n class="text-sm" style="color: var(--text-muted);">C1 &middot; IELTS</span></div><div class="language-meter"><div class="language-meter-fill" style="width: 90%"></div></div></div>
+                    <div><div class="flex justify-between items-center mb-2"><span data-i18n class="font-medium" style="color: var(--text-primary);">German</span><span data-i18n class="text-sm" style="color: var(--text-muted);">A2 &middot; learning</span></div><div class="language-meter"><div class="language-meter-fill" style="width: 30%"></div></div></div>
+                </div>
+
+                <div class="card p-7" id="volunteering">
+                    <h3 data-i18n class="beyond-title"><i class="fas fa-hands-helping mr-2 text-[--accent-secondary]"></i>Positions &amp; Volunteering</h3>
+                    <div class="beyond-row">
+                        <div class="beyond-row-head"><span data-i18n class="font-semibold" style="color: var(--text-primary);">Academic Head, Educational Startup</span><span data-i18n class="beyond-date">Mar 2020 &ndash; Mar 2022</span></div>
+                        <p data-i18n class="beyond-note">Led the academic side of an early-stage education startup, shaping course content and teaching standards.</p>
+                    </div>
+                    <div class="beyond-row">
+                        <div class="beyond-row-head"><span data-i18n class="font-semibold" style="color: var(--text-primary);">Core Member, ASCE University Chapter</span><span data-i18n class="beyond-date">Sept 2019 &ndash; Dec 2022</span></div>
+                        <p data-i18n class="beyond-note">Core committee member of the American Society of Civil Engineers (ASCE) student chapter, organising technical events and student activities.</p>
+                    </div>
+                </div>
+
+                <div class="card p-7" id="hobbies">
+                    <h3 data-i18n class="beyond-title"><i class="fas fa-heart mr-2 text-[--accent-secondary]"></i>Interests</h3>
+                    <div class="grid grid-cols-3 gap-3">
+                        <div class="hobby-item"><i class="fas fa-feather-pointed"></i><span data-i18n class="hobby-name">Hindi Poetry</span><span data-i18n class="hobby-note">Reading &amp; writing</span></div>
+                        <div class="hobby-item"><i class="fas fa-chess"></i><span data-i18n class="hobby-name">Chess</span><span data-i18n class="hobby-note">Long-time player</span></div>
+                        <div class="hobby-item"><i class="fas fa-utensils"></i><span data-i18n class="hobby-name">Cooking</span><span data-i18n class="hobby-note">Indian fusion</span></div>
+                    </div>
+                </div>
+
+                <div class="card p-7" id="blog">
+                    <h3 data-i18n class="beyond-title"><i class="fas fa-pen-nib mr-2 text-[--accent-secondary]"></i>Writing</h3>
+                    <div class="beyond-row-head mb-2"><span data-i18n class="font-semibold" style="color: var(--text-primary);">Geospatial Insights</span><span data-i18n class="beyond-date">In progress</span></div>
+                    <p data-i18n class="beyond-note mb-3">I'm writing up notes on geospatial machine learning, Earth observation pipelines and what actually breaks when you scale them &mdash; from GNSS time series to hyperspectral imagery. Posts will land here as they're finished.</p>
+                    <a data-i18n href="#connect" class="interactive-link inline-flex items-center font-semibold text-sm"><i class="fas fa-paper-plane mr-2"></i>Get in touch about writing or collaborations</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Field Explanation Section -->
+    <section id="field-explanation" class="section-spacing px-4 bg-[--bg-secondary] bg-opacity-30">
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="geospatial-explorer card p-8 max-w-2xl mx-auto cursor-pointer" id="geospatial-explorer-btn">
+                <div class="flex flex-col items-center"><i class="fas fa-question-circle text-4xl mb-4 text-[--accent-secondary]"></i><h3 data-i18n class="text-2xl font-bold mb-2" style="color: var(--text-primary);">New to geospatial engineering?</h3><p data-i18n style="color: var(--text-secondary);">Open a short explainer of what the field covers.</p><div class="animate-bounce mt-4"><i class="fas fa-chevron-down text-xl text-[--accent-primary]"></i></div></div>
+            </div>
+            <div class="hidden" id="field-explanation-content">
+                <h2 class="section-heading section-heading-sm text-center text-[--accent-primary] mt-12"><i class="fas fa-satellite mr-2"></i><span data-i18n>WHAT IS GEOSPATIAL ENGINEERING?</span></h2>
+                <div class="max-w-4xl mx-auto mb-12">
+                    <!-- NASA Blue Marble (public domain): NASA Goddard Space Flight Center, Reto Stöckli -->
+                    <figure class="fig fig-earth">
+                        <div class="fig-earth-frame"><img src="blue-marble.jpg" alt="Earth in full daylight from space, centred on the Indian Ocean, with India, Africa and Europe visible" width="1200" height="1200" loading="lazy"></div>
+                        <figcaption data-i18n>Turning satellite measurements into maps people can act on.</figcaption>
+                        <p data-i18n class="fig-credit">Image: NASA Visible Earth (Blue Marble)</p>
+                    </figure>
+                </div>
+                <div class="space-y-6 max-w-4xl mx-auto">
+                    <div class="card overflow-hidden"><div class="accordion-btn w-full flex justify-between items-center p-6 text-left active"><div class="flex items-center"><i class="fas fa-satellite text-2xl mr-4 text-[--accent-secondary]"></i><h3 data-i18n class="text-xl font-bold" style="color: var(--text-primary);">Satellite Data</h3></div><i class="fas fa-chevron-down transition-transform duration-300 text-[--accent-primary] rotate-180"></i></div><div class="accordion-content px-6 pb-6 open"><p data-i18n style="color: var(--text-secondary);">Like a doctor uses X-rays to see inside the body, we use satellite images to see Earth's health from space. We process data from various satellite sensors (optical, radar, LiDAR) to monitor environmental changes, track deforestation, measure sea level rise, and detect urban expansion.</p></div></div>
+                    <div class="card overflow-hidden"><div class="accordion-btn w-full flex justify-between items-center p-6 text-left active"><div class="flex items-center"><i class="fas fa-map-marked-alt text-2xl mr-4 text-[--accent-secondary]"></i><h3 data-i18n class="text-xl font-bold" style="color: var(--text-primary);">Mapping & Analysis</h3></div><i class="fas fa-chevron-down transition-transform duration-300 text-[--accent-primary] rotate-180"></i></div><div class="accordion-content px-6 pb-6 open"><p data-i18n style="color: var(--text-secondary);">Think of Google Maps, but with superpowers to predict floods, track deforestation, and monitor climate change. We create intelligent maps that help understand complex environmental patterns, analyze spatial relationships, and make data-driven decisions for sustainable development.</p></div></div>
+                    <div class="card overflow-hidden"><div class="accordion-btn w-full flex justify-between items-center p-6 text-left active"><div class="flex items-center"><i class="fas fa-robot text-2xl mr-4 text-[--accent-secondary]"></i><h3 data-i18n class="text-xl font-bold" style="color: var(--text-primary);">AI Solutions</h3></div><i class="fas fa-chevron-down transition-transform duration-300 text-[--accent-primary] rotate-180"></i></div><div class="accordion-content px-6 pb-6 open"><p data-i18n style="color: var(--text-secondary);">Similar to facial recognition, but for Earth's features - identifying floods, droughts, and urban growth patterns. We train computers to automatically detect environmental changes from satellite data using deep learning models like CNNs and transformers, enabling real-time monitoring at global scales.</p></div></div>
+                </div>
+                <div class="why-it-matters-container mt-12">
+                    <div class="card p-8">
+                        <div class="timeline-content">
+                            <div class="md:pr-6"><h3 data-i18n class="text-2xl font-bold mb-4 text-[--accent-primary]">Why It Matters</h3><p data-i18n style="color: var(--text-secondary);">Geospatial engineering helps solve some of the world's most pressing challenges:</p><ul class="list-disc pl-5 space-y-2" style="color: var(--text-secondary);"><li data-i18n>Predicting natural disasters before they happen</li><li data-i18n>Monitoring climate change impacts in real-time</li><li data-i18n>Optimizing renewable energy deployment</li><li data-i18n>Protecting endangered ecosystems</li><li data-i18n>Improving urban planning for sustainable cities</li></ul></div>
+                            <div class="why-it-matters md:pl-6"><div class="bg-[--bg-secondary] rounded-lg p-4 border border-[--border-light] h-full"><h4 class="text-lg font-semibold mb-3 text-[--accent-secondary]"><i class="fas fa-lightbulb mr-2"></i><span data-i18n>Real-World Example</span></h4><p data-i18n style="color: var(--text-secondary);">When a flood occurs, our systems can automatically detect the affected areas from satellite images within hours, helping emergency responders save lives and allocate resources efficiently.</p><div class="mt-4 flex justify-center"><div class="inline-flex items-center px-4 py-2 bg-[--accent-primary] bg-opacity-20 text-[--accent-primary] rounded-full border border-[--accent-primary]"><i class="fas fa-satellite-dish mr-2"></i><span data-i18n>That's what I work on!</span></div></div></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="connect" class="section-spacing px-4 satellite-track">
+        <div class="max-w-7xl mx-auto">
+            <h2 data-i18n class="section-heading text-center text-[--accent-primary]"><i class="fas fa-paper-plane mr-2"></i>GET IN TOUCH</h2>
+            <div class="card p-8 max-w-3xl mx-auto">
+                <p data-i18n class="text-lg text-center mb-8" style="color: var(--text-primary);">Passionate about geospatial technologies and climate solutions. Open to research collaborations and impactful projects.</p>
+                <div class="contact-links">
+                    <a href="mailto:devamss29@gmail.com" class="contact-link"><i class="fas fa-envelope mr-2"></i><span data-i18n>Email Me</span></a>
+                    <a href="https://www.linkedin.com/in/devshreesaini" target="_blank" rel="noopener" class="contact-link"><i class="fab fa-linkedin-in mr-2"></i><span data-i18n>LinkedIn</span></a>
+                    <a href="https://github.com/devam29" target="_blank" rel="noopener" class="contact-link"><i class="fab fa-github mr-2"></i><span data-i18n>GitHub</span></a>
+                    <a href="https://scholar.google.com/citations?user=WFhp_GkAAAAJ&amp;hl=en" target="_blank" rel="noopener" class="contact-link"><i class="fas fa-graduation-cap mr-2"></i><span data-i18n>Google Scholar</span></a>
+                    <a href="tel:+41767519687" class="contact-link"><i class="fas fa-phone mr-2"></i><span data-i18n>Call Me</span></a>
+                </div>
+                <div class="mt-8 flex justify-center"><button class="share-btn" id="share-portfolio"><i class="fas fa-share-alt"></i><span data-i18n>Share Portfolio</span></button></div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-[--bg-secondary] text-center">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-center space-x-6 mb-6">
+                <a href="mailto:devamss29@gmail.com" class="footer-icon" aria-label="Email"><i class="fas fa-envelope text-xl"></i></a>
+                <a href="https://www.linkedin.com/in/devshreesaini" target="_blank" rel="noopener" class="footer-icon" aria-label="LinkedIn"><i class="fab fa-linkedin-in text-xl"></i></a>
+                <a href="https://github.com/devam29" target="_blank" rel="noopener" class="footer-icon" aria-label="GitHub"><i class="fab fa-github text-xl"></i></a>
+                <a href="https://scholar.google.com/citations?user=WFhp_GkAAAAJ&amp;hl=en" target="_blank" rel="noopener" class="footer-icon" aria-label="Google Scholar"><i class="fas fa-graduation-cap text-xl"></i></a>
+                <a href="CV_DevShreeSaini.pdf" class="footer-icon" aria-label="Download CV"><i class="fas fa-file-pdf text-xl"></i></a>
+            </div>
+            <p data-i18n class="text-sm mb-2" style="color: var(--footer-text);"><i class="fas fa-satellite mr-1"></i>Dev Shree Saini | Earth Observation &amp; Geospatial Machine Learning</p>
+            <p data-i18n class="text-xs mb-1" style="color: var(--text-muted);">Last updated September 2026</p>
+            <p data-i18n class="text-xs" style="color: var(--text-muted);">Built with <i class="fas fa-heart text-[--accent-primary]"></i> and <i class="fas fa-code text-[--accent-secondary]"></i> | © 2026 | All systems operational <i class="fas fa-check-circle status-ok"></i></p>
+        </div>
+    </footer>
+
+    <!-- Project Modals -->
+    <div id="project-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true"><div class="modal-content"><button type="button" class="close-modal" aria-label="Close project details">&times;</button><div id="modal-content"></div></div></div>
+    <div data-i18n class="share-tooltip" id="share-tooltip">✅ Link copied to clipboard!</div>
+
+    <a href="#" class="back-to-top" id="back-to-top"><i class="fas fa-arrow-up"></i></a>
+
+    <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/globe.js"></script>
+</body>
+</html>
