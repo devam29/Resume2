@@ -1,0 +1,111 @@
+/* Dev Shree Saini — blog/article styles.
+   Loaded alongside utilities.css and styles.css on posts/*.html.
+   Reuses the site's colour variables so theme + light/dark stay in sync. */
+
+.blog-nav {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: var(--nav-bg); backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-light);
+}
+.blog-nav .back-link {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-weight: 600; font-size: 0.9rem; color: var(--text-primary);
+}
+.blog-nav .back-link:hover { color: var(--accent-primary); }
+.blog-nav .brand { display: flex; align-items: center; gap: 0.5rem; font-weight: 700; color: var(--text-primary); }
+
+.blog-hero {
+  padding: 3.5rem 1.5rem 2.5rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border-light);
+}
+.blog-kicker {
+  display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--accent-secondary); margin-bottom: 0.9rem;
+}
+.blog-title {
+  font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+  font-size: clamp(1.9rem, 1.3rem + 2.6vw, 2.9rem); line-height: 1.15;
+  color: var(--text-primary); max-width: 46rem; margin: 0 auto 1rem;
+}
+.blog-dek {
+  font-size: 1.1rem; color: var(--text-secondary); max-width: 40rem; margin: 0 auto 1.4rem; line-height: 1.55;
+}
+.blog-meta {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.5rem 1rem;
+  font-size: 0.82rem; color: var(--text-muted);
+}
+.blog-meta .dot { opacity: 0.5; }
+
+.blog-body {
+  max-width: 42rem; margin: 0 auto; padding: 3rem 1.5rem 4rem;
+}
+.blog-body p { color: var(--text-secondary); font-size: 1.03rem; line-height: 1.75; margin-bottom: 1.3rem; }
+.blog-body h2 {
+  font-family: 'Space Grotesk', sans-serif; font-weight: 700; color: var(--text-primary);
+  font-size: 1.45rem; margin: 2.6rem 0 1rem; line-height: 1.3;
+}
+.blog-body h2 .h-num { color: var(--accent-primary); font-family: 'Space Mono', monospace; margin-right: 0.5rem; font-size: 0.9em; }
+.blog-body strong { color: var(--text-primary); }
+.blog-body a { color: var(--accent-primary); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+.blog-body ul, .blog-body ol { color: var(--text-secondary); margin: 0 0 1.3rem 1.3rem; line-height: 1.7; }
+.blog-body li { margin-bottom: 0.4rem; }
+.blog-body li::marker { color: var(--accent-primary); }
+
+.blog-lede {
+  font-size: 1.15rem; color: var(--text-primary); line-height: 1.7;
+  margin-bottom: 1.8rem; font-family: 'Inter', sans-serif;
+}
+
+.blog-callout {
+  margin: 1.8rem 0; padding: 1.1rem 1.3rem;
+  border-left: 3px solid var(--accent-primary);
+  background: rgba(47, 145, 200, 0.07); border-radius: 0 10px 10px 0;
+}
+.blog-callout p { margin-bottom: 0; font-size: 0.95rem; }
+.blog-callout p + p { margin-top: 0.6rem; }
+
+.blog-figure { margin: 2rem 0; }
+.blog-figure .diagram-frame {
+  border: 1px solid var(--border-light); border-radius: 12px;
+  padding: 1.25rem 1rem; background: var(--bg-card);
+}
+.blog-figure figcaption {
+  text-align: center; font-size: 0.82rem; color: var(--text-muted);
+  margin-top: 0.75rem; line-height: 1.5;
+}
+
+.blog-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem;
+  margin: 1.5rem 0 2rem;
+}
+.blog-stat {
+  text-align: center; padding: 1rem 0.5rem;
+  border: 1px solid var(--border-light); border-radius: 12px;
+  background: linear-gradient(160deg, rgba(47,145,200,0.10), rgba(47,145,200,0.02));
+}
+.blog-stat .num { display: block; font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--accent-primary); }
+.blog-stat .lbl { display: block; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-muted); margin-top: 0.2rem; }
+@media (max-width: 480px) { .blog-stats { grid-template-columns: 1fr; } }
+
+.blog-footer-nav {
+  max-width: 42rem; margin: 0 auto; padding: 0 1.5rem 4rem;
+  display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center;
+  border-top: 1px solid var(--border-light); padding-top: 2rem;
+}
+.blog-footer-nav .btn-primary { padding: 0.65rem 1.3rem; border-radius: 999px; font-weight: 600; font-size: 0.9rem; }
+
+/* posts index */
+.posts-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; max-width: 46rem; margin: 0 auto; padding: 0 1.5rem; }
+.post-card {
+  display: block; padding: 1.75rem; border: 1px solid var(--border-light); border-radius: 14px;
+  background: var(--bg-card); transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.post-card:hover { border-color: var(--card-hover-border); transform: translateY(-2px); }
+.post-card .pc-kicker { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-secondary); }
+.post-card h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; color: var(--text-primary); margin: 0.5rem 0 0.5rem; }
+.post-card p { color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; margin-bottom: 0.75rem; }
+.post-card .pc-meta { font-size: 0.78rem; color: var(--text-muted); }
+.posts-empty { text-align: center; color: var(--text-muted); padding: 3rem 1.5rem; }

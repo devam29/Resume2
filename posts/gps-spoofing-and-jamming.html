@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Quiet War Over GPS Signals — Dev Shree Saini</title>
+    <meta name="description" content="Hundreds of thousands of flights over the Baltic have hit deliberate GPS interference since 2022, sharply escalating through 2025. Jamming and spoofing are different attacks with very different consequences, and the difference matters.">
+    <meta name="author" content="Dev Shree Saini">
+    <link rel="canonical" href="https://devam29.github.io/Resume2/posts/gps-spoofing-and-jamming.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="The Quiet War Over GPS Signals">
+    <meta property="og:description" content="Jamming and spoofing are different attacks on GNSS with very different consequences, and the Baltic Sea has become the place to watch both.">
+    <meta property="og:url" content="https://devam29.github.io/Resume2/posts/gps-spoofing-and-jamming.html">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="The Quiet War Over GPS Signals">
+    <meta name="twitter:description" content="Jamming and spoofing are different attacks on GNSS with very different consequences.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><text x='0' y='20' font-size='20'>🛰️</text></svg>">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "The Quiet War Over GPS Signals",
+      "description": "Jamming and spoofing are different attacks on GNSS with very different consequences, and the Baltic Sea has become the place to watch both.",
+      "author": { "@type": "Person", "name": "Dev Shree Saini", "url": "https://devam29.github.io/Resume2/" },
+      "url": "https://devam29.github.io/Resume2/posts/gps-spoofing-and-jamming.html"
+    }
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700&family=Space+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/utilities.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/blog.css">
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to content</a>
+
+    <nav class="blog-nav">
+        <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i><span>Back to portfolio</span></a>
+        <div class="brand"><i class="fas fa-satellite text-[--accent-primary]"></i><span>DEV SHREE SAINI</span></div>
+        <button id="theme-toggle" class="theme-btn"><i class="fas fa-sun"></i><span>Light</span></button>
+    </nav>
+
+    <main id="main">
+    <header class="blog-hero">
+        <span class="blog-kicker"><i class="fas fa-tower-broadcast mr-1"></i>Geopolitics &amp; Navigation</span>
+        <h1 class="blog-title">The Quiet War Over GPS Signals</h1>
+        <p class="blog-dek">Over the Baltic Sea, hundreds of thousands of flights have flown through deliberately disrupted GPS since 2022. It's not one problem, it's two, and only one of them tells you it's happening.</p>
+        <div class="blog-meta">
+            <span>Dev Shree Saini</span><span class="dot">&middot;</span>
+            <span>June 2026</span><span class="dot">&middot;</span>
+            <span>6 min read</span>
+        </div>
+    </header>
+
+    <article class="blog-body">
+        <p class="blog-lede">GNSS signals arriving from orbit are extraordinarily weak by the time they reach a receiver on the ground, weaker than background radio noise, recoverable only because receivers know exactly what pattern to correlate against. That faintness is normally invisible and irrelevant. It also means a receiver can be fooled, or simply drowned out, by a transmitter on the ground with a tiny fraction of a satellite's power. Over the last couple of years, that fact has stopped being theoretical for a lot of pilots flying over the Baltic Sea.</p>
+
+        <h2><span class="h-num">01</span>Two different attacks, two different dangers</h2>
+        <p><strong>Jamming</strong> is the blunt version. Flood the GNSS frequency band with noise so a receiver can't lock onto the real signal at all. The receiver knows something is wrong, it loses its fix and says so. <strong>Spoofing</strong> is the dangerous version. Broadcast a fake but structurally convincing GNSS signal, strong enough to override the real one, so the receiver computes a position or time that is wrong but reports it with full confidence. A jammed receiver fails loudly. A spoofed receiver fails silently, and keeps navigating.</p>
+
+        <h2><span class="h-num">02</span>Where this has actually been happening</h2>
+        <p>Since 2022, aircraft and ships in the Baltic Sea region have reported persistent GNSS interference, escalating through 2024 and sharply again in 2025, attributed by multiple governments and independent researchers mainly to sources in Russia's Kaliningrad exclave. The scale isn't marginal. Nearly 123,000 flights over Baltic airspace were affected by interference in just the first four months of 2025, with close to 27% of April 2025 flights in the region experiencing some disruption. Lithuania alone reported hundreds of GNSS interference events a week through 2025, roughly twenty times the rate seen in 2024.</p>
+
+        <h2><span class="h-num">03</span>Why aviation takes this so seriously</h2>
+        <p>Modern aircraft lean on GNSS for far more than the pilot's moving map, including approach guidance, timing synchronisation across other onboard systems, and increasingly the assumptions baked into automated flight systems. A jammed receiver is a known-bad state that a crew can work around using backup navigation. A spoofed receiver is a false-good state, which is a fundamentally harder failure to catch in the moment. The stakes here aren't abstract. On 25 December 2024, Azerbaijan Airlines Flight 8243 was reportedly struck by a Russian air defence system after GPS jamming in the area had already complicated the situation on its approach to Grozny. The crew attempted an emergency diversion across the Caspian Sea before the aircraft crashed near Aktau, Kazakhstan, a sobering illustration of how a contested electromagnetic environment can cascade into a real accident.</p>
+
+        <h2><span class="h-num">04</span>What's being done about it</h2>
+        <p>None of the fixes are exotic, but layering them is what actually helps. Receiver Autonomous Integrity Monitoring (RAIM) checks a GNSS solution for internal inconsistency and can flag a likely spoof. Multi-constellation receivers, pulling from GPS, Galileo, GLONASS and BeiDou simultaneously, are harder to spoof convincingly all at once than a single-constellation receiver. Inertial navigation systems provide a genuinely independent backup that doesn't depend on any external signal at all. On the detection side, time-difference-of-arrival (TDOA) sensor networks are now being deployed around the Baltic specifically to localise jammers and spoofers in near real time, rather than just noting that interference occurred after the fact.</p>
+
+        <h2><span class="h-num">05</span>Where this connects back to my own work</h2>
+        <p>This isn't the GNSS work I do. My own projects have been about extracting millimetre-level precision from a cooperative signal, not defending a receiver against one actively trying to deceive it. But it's the same underlying signal and the same physical layer, and it's a useful reminder that "the GNSS fix looks fine" is doing a lot of unexamined trust in any system, mine included.</p>
+
+        <div class="blog-callout">
+            <p>The uncomfortable part isn't that GPS can be jammed, that's old news and receivers mostly cope. It's that spoofing produces a confidently wrong answer instead of an honest failure, and a huge amount of infrastructure was built assuming that distinction would never matter.</p>
+        </div>
+
+        <p>If you work on GNSS integrity, robust positioning, or resilient navigation, I'd like to compare notes. Details are on the <a href="../index.html#connect">contact section</a>.</p>
+    </article>
+
+    <nav class="blog-footer-nav">
+        <a href="index.html" class="back-link"><i class="fas fa-arrow-left mr-2"></i>All posts</a>
+        <a href="../index.html#connect" class="btn-primary inline-flex items-center"><i class="fas fa-paper-plane mr-2"></i>Get in touch</a>
+    </nav>
+    </main>
+
+    <footer class="py-8 bg-[--bg-secondary] text-center">
+        <div class="max-w-7xl mx-auto px-4">
+            <p class="text-sm mb-1" style="color: var(--footer-text);"><i class="fas fa-satellite mr-1"></i>Dev Shree Saini | Earth Observation &amp; Geospatial Machine Learning</p>
+            <p class="text-xs" style="color: var(--text-muted);">&copy; 2026 Dev Shree Saini</p>
+        </div>
+    </footer>
+
+    <script src="../js/blog.js"></script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Every Map Is a Lie — Dev Shree Saini</title>
+    <meta name="description" content="You can't flatten a sphere without distorting something. That's a mathematical fact, not a limitation of current tools. Every map you've ever used made a choice about what to lie about.">
+    <meta name="author" content="Dev Shree Saini">
+    <link rel="canonical" href="https://devam29.github.io/Resume2/posts/why-every-map-is-a-lie.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Why Every Map Is a Lie">
+    <meta property="og:description" content="You can't flatten a sphere without distorting something. Every map you've ever used made a choice about what to lie about.">
+    <meta property="og:url" content="https://devam29.github.io/Resume2/posts/why-every-map-is-a-lie.html">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Why Every Map Is a Lie">
+    <meta name="twitter:description" content="You can't flatten a sphere without distorting something. Every map made a choice about what to lie about.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><text x='0' y='20' font-size='20'>🛰️</text></svg>">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Why Every Map Is a Lie",
+      "description": "You can't flatten a sphere without distorting something. Every map you've ever used made a choice about what to lie about.",
+      "author": { "@type": "Person", "name": "Dev Shree Saini", "url": "https://devam29.github.io/Resume2/" },
+      "url": "https://devam29.github.io/Resume2/posts/why-every-map-is-a-lie.html"
+    }
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700&family=Space+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/utilities.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/blog.css">
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to content</a>
+
+    <nav class="blog-nav">
+        <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i><span>Back to portfolio</span></a>
+        <div class="brand"><i class="fas fa-satellite text-[--accent-primary]"></i><span>DEV SHREE SAINI</span></div>
+        <button id="theme-toggle" class="theme-btn"><i class="fas fa-sun"></i><span>Light</span></button>
+    </nav>
+
+    <main id="main">
+    <header class="blog-hero">
+        <span class="blog-kicker"><i class="fas fa-map mr-1"></i>Cartography</span>
+        <h1 class="blog-title">Why Every Map Is a Lie</h1>
+        <p class="blog-dek">Not a metaphor, a provable mathematical fact. You cannot flatten a sphere onto a plane without distorting area, angle, distance, or shape. Every map ever made chose which one to sacrifice.</p>
+        <div class="blog-meta">
+            <span>Dev Shree Saini</span><span class="dot">&middot;</span>
+            <span>January 2025</span><span class="dot">&middot;</span>
+            <span>5 min read</span>
+        </div>
+    </header>
+
+    <article class="blog-body">
+        <p class="blog-lede">Every world map you have ever looked at is wrong, in a way that has nothing to do with the skill of whoever made it. It's a consequence of geometry, not craftsmanship. A sphere's surface cannot be flattened onto a plane without stretching, tearing, or distorting it somewhere. Cartographers don't get to avoid that trade-off. They only get to choose which kind of wrong they're willing to live with.</p>
+
+        <h2><span class="h-num">01</span>The impossible problem</h2>
+        <p>Gauss's <em>Theorema Egregium</em>, the "remarkable theorem," proves this formally. The curvature of a surface is an intrinsic property that survives bending but not stretching, and a sphere and a flat plane have different curvature. No amount of clever unrolling turns one into the other without distortion. You can wrap a flat sheet of paper around a cylinder, but never around a ball, without creasing or tearing it somewhere. Every map projection ends up trading off four things a true sphere-to-plane mapping cannot preserve all at once: area, angle (shape locally), distance, and direction.</p>
+
+        <h2><span class="h-num">02</span>Mercator's trade: angles over everything</h2>
+        <p>The Mercator projection, designed in 1569 for ocean navigation, preserves angles. A straight line on a Mercator map is a constant compass bearing, which is exactly what a sailor with a compass needs. The cost is area, and it's a brutal one near the poles. Mercator inflates high-latitude landmasses so much that Greenland looks roughly the size of Africa on a Mercator map, even though Africa is about fourteen times larger in reality. That distortion isn't a flaw someone forgot to fix. It's the direct, unavoidable price of the property the projection was built to preserve. It's also, somewhat awkwardly, still the projection underneath most web maps today, as Web Mercator, chosen mainly because it makes square, seamlessly zoomable map tiles easy to generate. That's a technical convenience, not a claim that it's the best way to see the world.</p>
+
+        <h2><span class="h-num">03</span>Other maps, other trades</h2>
+        <p>Once you accept that every projection is a trade, the interesting question becomes which property you actually need. Equal-area projections like the Mollweide or Gall&ndash;Peters preserve relative land area at the cost of visibly warping shapes. They're the right choice whenever you're mapping a quantity per unit area, population density or deforestation extent for example, where getting area wrong would mislead more than getting shape wrong. Compromise projections like Robinson or the Winkel tripel, used by National Geographic for decades, don't perfectly preserve anything, but they keep every distortion moderate, which is usually what you want for a general reference map nobody is navigating by. Azimuthal projections centred on a pole do the opposite of Mercator: accurate near the centre, distorting more toward the edges. Useful for polar flight paths, useless as a world map.</p>
+
+        <h2><span class="h-num">04</span>The lie you don't even notice</h2>
+        <p>Projection gets all the attention, but there's a second, quieter kind of distortion in every map you use, called <strong>generalization</strong>. At any given zoom level, a "correct" digital map is not showing you literal reality. It's showing you a simplified, selectively labelled version of it. Small roads vanish below a certain zoom. Coastlines are smoothed into simpler curves than their true, near-fractal complexity. Clusters of buildings merge into a single shaded block. Which labels survive at a given zoom level is itself an algorithmic judgement about what counts as "important," made by whoever built the map and applied automatically to the whole planet.</p>
+
+        <h2><span class="h-num">05</span>Why this is more than trivia</h2>
+        <p>None of these choices are neutral, and their effects compound over repeated exposure. Decades of Mercator-dominated world maps are a documented contributor to widespread underestimation of how big Africa and South America really are compared to Europe and North America. In a navigation or disaster-response context, a projection or generalization choice that's wrong for the task, not wrong in the abstract, just mismatched to what the map is being used for, can genuinely mislead someone making a real decision under time pressure. The map was never the territory. The more useful question is always which specific lie a given map is telling, and whether that's a lie you can afford for what you're using it for.</p>
+
+        <div class="blog-callout">
+            <p>Every map is a projection of a choice, not just a projection of geometry. The interesting skill in cartography was never eliminating distortion. It's picking, deliberately, which distortion matters least for the question the map is meant to answer.</p>
+        </div>
+
+        <p>I think about this constantly working with geospatial data day to day. The projection baked into a dataset shapes what analysis is even valid on top of it. If you've been bitten by a projection mismatch in your own work, I'd like to hear the story. Details are on the <a href="../index.html#connect">contact section</a>.</p>
+    </article>
+
+    <nav class="blog-footer-nav">
+        <a href="index.html" class="back-link"><i class="fas fa-arrow-left mr-2"></i>All posts</a>
+        <a href="../index.html#connect" class="btn-primary inline-flex items-center"><i class="fas fa-paper-plane mr-2"></i>Get in touch</a>
+    </nav>
+    </main>
+
+    <footer class="py-8 bg-[--bg-secondary] text-center">
+        <div class="max-w-7xl mx-auto px-4">
+            <p class="text-sm mb-1" style="color: var(--footer-text);"><i class="fas fa-satellite mr-1"></i>Dev Shree Saini | Earth Observation &amp; Geospatial Machine Learning</p>
+            <p class="text-xs" style="color: var(--text-muted);">&copy; 2026 Dev Shree Saini</p>
+        </div>
+    </footer>
+
+    <script src="../js/blog.js"></script>
+</body>
+</html>

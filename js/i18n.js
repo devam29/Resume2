@@ -370,10 +370,7 @@ const I18N_DICT = {
     [`Long-time player`]: [`Langjähriger Spieler`, `Joueur de longue date`],
     [`Cooking`]: [`Kochen`, `Cuisine`],
     [`Indian fusion`]: [`Indische Fusionsküche`, `Cuisine fusion indienne`],
-    [`Writing`]: [`Schreiben`, `Écriture`],
-    [`In progress`]: [`In Arbeit`, `En cours`],
-    [`I'm writing up notes on geospatial machine learning, Earth observation pipelines and what actually breaks when you scale them — from GNSS time series to hyperspectral imagery. Posts will land here as they're finished.`]: [`Ich schreibe Notizen zu maschinellem Lernen für Geodaten, zu Erdbeobachtungs-Pipelines und dazu, was beim Skalieren tatsächlich schiefgeht – von GNSS-Zeitreihen bis zu Hyperspektralbildern. Beiträge erscheinen hier, sobald sie fertig sind.`, `Je rédige des notes sur l'apprentissage automatique géospatial, les chaînes de traitement en observation de la Terre et ce qui casse vraiment quand on les met à l'échelle — des séries temporelles GNSS à l'imagerie hyperspectrale. Les articles paraîtront ici dès qu'ils seront prêts.`],
-    [`Get in touch about writing or collaborations`]: [`Kontakt für Texte oder Kooperationen`, `Me contacter pour des écrits ou des collaborations`],
+    [`Writing`]: [`Schreiben`, `Écriture`],
 
     // ---------- contact, footer ----------
     [`GET IN TOUCH`]: [`KONTAKT`, `CONTACT`],
@@ -472,6 +469,11 @@ const I18N_DICT = {
     [`Awards`]: [`Auszeichnungen`, `Distinctions`],
     [`Talks`]: [`Vorträge`, `Interventions`],
     [`Conference paper`]: [`Konferenzbeitrag`, `Article de conférence`],
+
+    // ---------- writing card update ----------
+    [`5 posts`]: [`5 Beiträge`, `5 articles`],
+    [`Notes on geospatial machine learning, Earth observation pipelines and what actually breaks when you scale them — from GNSS time series to hyperspectral imagery.`]: [`Notizen zu maschinellem Lernen für Geodaten, Erdbeobachtungs-Pipelines und dazu, was beim Skalieren tatsächlich schiefgeht – von GNSS-Zeitreihen bis zu Hyperspektralbildern.`, `Notes sur l'apprentissage automatique géospatial, les chaînes de traitement en observation de la Terre et ce qui casse vraiment quand on les met à l'échelle — des séries temporelles GNSS à l'imagerie hyperspectrale.`],
+    [`Browse all posts`]: [`Alle Beiträge durchsuchen`, `Parcourir tous les articles`],
 };
 
 // Identical in every language: names, tools, paper titles, journals, institutions.

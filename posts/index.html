@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writing — Dev Shree Saini</title>
+    <meta name="description" content="Notes on geospatial machine learning, Earth observation pipelines, and what actually breaks when you scale them.">
+    <meta name="author" content="Dev Shree Saini">
+    <link rel="canonical" href="https://devam29.github.io/Resume2/posts/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Writing — Dev Shree Saini">
+    <meta property="og:description" content="Notes on geospatial machine learning, Earth observation pipelines, and what actually breaks when you scale them.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><text x='0' y='20' font-size='20'>🛰️</text></svg>">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700&family=Space+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/utilities.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/blog.css">
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to content</a>
+
+    <nav class="blog-nav">
+        <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i><span>Back to portfolio</span></a>
+        <div class="brand"><i class="fas fa-satellite text-[--accent-primary]"></i><span>DEV SHREE SAINI</span></div>
+        <button id="theme-toggle" class="theme-btn"><i class="fas fa-sun"></i><span>Light</span></button>
+    </nav>
+
+    <main id="main">
+    <header class="blog-hero">
+        <span class="blog-kicker"><i class="fas fa-pen-nib mr-1"></i>Writing</span>
+        <h1 class="blog-title">Geospatial Insights</h1>
+        <p class="blog-dek">Notes on geospatial machine learning, Earth observation pipelines, and what actually breaks when you scale them, from GNSS time series to hyperspectral imagery.</p>
+    </header>
+
+    <div class="posts-grid" style="padding-top: 3rem; padding-bottom: 4rem;">
+        <!-- ADD NEW POSTS HERE, newest first. Copy this <a> block, point href at the new
+             file, and write a one-paragraph teaser. Each post also needs a data-i18n-free
+             entry here — this listing page is English-only, matching the posts themselves. -->
+        <a class="post-card" href="why-radar-sees-through-clouds.html">
+            <span class="pc-kicker">Remote Sensing</span>
+            <h2>Why Radar Sees Through Clouds</h2>
+            <p>The physics behind mapping floods with Sentinel-1 SAR when monsoon cloud cover blinds optical satellites, and why a U-Net beats a simple brightness threshold.</p>
+            <span class="pc-meta"><i class="fas fa-calendar mr-1"></i>September 2026 &middot; 7 min read</span>
+        </a>
+
+        <a class="post-card" href="gps-spoofing-and-jamming.html">
+            <span class="pc-kicker">Geopolitics &amp; Navigation</span>
+            <h2>The Quiet War Over GPS Signals</h2>
+            <p>Hundreds of thousands of flights over the Baltic have hit deliberate GPS interference since 2022. Jamming and spoofing are different attacks with very different consequences.</p>
+            <span class="pc-meta"><i class="fas fa-calendar mr-1"></i>June 2026 &middot; 6 min read</span>
+        </a>
+
+        <a class="post-card" href="geospatial-foundation-models.html">
+            <span class="pc-kicker">Machine Learning</span>
+            <h2>The Rise of Geospatial Foundation Models</h2>
+            <p>Prithvi, Clay, and AlphaEarth are why Earth observation is moving from one bespoke model per task to a handful of general-purpose models.</p>
+            <span class="pc-meta"><i class="fas fa-calendar mr-1"></i>March 2026 &middot; 6 min read</span>
+        </a>
+
+        <a class="post-card" href="ai-weather-forecasting.html">
+            <span class="pc-kicker">Applied AI</span>
+            <h2>When Machines Started Beating the Weatherman</h2>
+            <p>GraphCast and GenCast now beat ECMWF's gold-standard forecasts on most tested variables, in minutes instead of hours, without solving a single equation of motion.</p>
+            <span class="pc-meta"><i class="fas fa-calendar mr-1"></i>November 2025 &middot; 6 min read</span>
+        </a>
+
+        <a class="post-card" href="why-every-map-is-a-lie.html">
+            <span class="pc-kicker">Cartography</span>
+            <h2>Why Every Map Is a Lie</h2>
+            <p>You can't flatten a sphere without distorting something. That's a mathematical fact. Every map you've ever used made a choice about what to lie about.</p>
+            <span class="pc-meta"><i class="fas fa-calendar mr-1"></i>January 2025 &middot; 5 min read</span>
+        </a>
+    </div>
+    </main>
+
+    <footer class="py-8 bg-[--bg-secondary] text-center">
+        <div class="max-w-7xl mx-auto px-4">
+            <p class="text-sm mb-1" style="color: var(--footer-text);"><i class="fas fa-satellite mr-1"></i>Dev Shree Saini | Earth Observation &amp; Geospatial Machine Learning</p>
+            <p class="text-xs" style="color: var(--text-muted);">&copy; 2026 Dev Shree Saini</p>
+        </div>
+    </footer>
+
+    <script src="../js/blog.js"></script>
+</body>
+</html>

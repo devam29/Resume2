@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Radar Sees Through Clouds — Dev Shree Saini</title>
+    <meta name="description" content="The physics behind mapping floods with Sentinel-1 SAR when monsoon cloud cover blinds optical satellites, covering wavelength, backscatter, and why deep learning beats a simple threshold.">
+    <meta name="author" content="Dev Shree Saini">
+    <link rel="canonical" href="https://devam29.github.io/Resume2/posts/why-radar-sees-through-clouds.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Why Radar Sees Through Clouds">
+    <meta property="og:description" content="The physics behind mapping floods with Sentinel-1 SAR when monsoon cloud cover blinds optical satellites.">
+    <meta property="og:url" content="https://devam29.github.io/Resume2/posts/why-radar-sees-through-clouds.html">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Why Radar Sees Through Clouds">
+    <meta name="twitter:description" content="The physics behind mapping floods with Sentinel-1 SAR when monsoon cloud cover blinds optical satellites.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><text x='0' y='20' font-size='20'>🛰️</text></svg>">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Why Radar Sees Through Clouds",
+      "description": "The physics behind mapping floods with Sentinel-1 SAR when monsoon cloud cover blinds optical satellites, covering wavelength, backscatter, and why deep learning beats a simple threshold.",
+      "author": { "@type": "Person", "name": "Dev Shree Saini", "url": "https://devam29.github.io/Resume2/" },
+      "url": "https://devam29.github.io/Resume2/posts/why-radar-sees-through-clouds.html"
+    }
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700&family=Space+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/utilities.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/blog.css">
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to content</a>
+
+    <nav class="blog-nav">
+        <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i><span>Back to portfolio</span></a>
+        <div class="brand"><i class="fas fa-satellite text-[--accent-primary]"></i><span>DEV SHREE SAINI</span></div>
+        <button id="theme-toggle" class="theme-btn"><i class="fas fa-sun"></i><span>Light</span></button>
+    </nav>
+
+    <main id="main">
+    <header class="blog-hero">
+        <span class="blog-kicker"><i class="fas fa-bolt mr-1"></i>Geospatial Insights</span>
+        <h1 class="blog-title">Why Radar Sees Through Clouds</h1>
+        <p class="blog-dek">The physics behind mapping floods when the satellites you'd normally reach for have gone completely blind.</p>
+        <div class="blog-meta">
+            <span>Dev Shree Saini</span><span class="dot">&middot;</span>
+            <span>September 2026</span><span class="dot">&middot;</span>
+            <span>7 min read</span>
+        </div>
+    </header>
+
+    <article class="blog-body">
+        <p class="blog-lede">Monsoon flooding has an inconvenient timing problem. The rain that causes the flood also fills the sky with exactly the cloud cover that blinds the satellites you'd normally use to map it. By the time the sky clears enough for a clean optical image, the water has often already moved, and the window for an emergency response has often already closed.</p>
+
+        <p>This is why operational flood mapping over South Asia, and most of the tropics, leans on radar rather than cameras. I ran into this directly while building a flood-detection model on Sentinel-1 radar data during an internship at IIRS, ISRO. The model had to work precisely when optical imagery didn't exist. This is the physics that makes that possible, and the reasons it's a harder problem than it first looks.</p>
+
+        <h2><span class="h-num">01</span>A camera that brings its own light</h2>
+        <p>An ordinary satellite image, the kind Google Earth shows you, is <strong>passive</strong>. The sensor is just recording sunlight that has bounced off the ground. No sun, or a cloud in the way, and there is nothing to record.</p>
+        <p>Synthetic Aperture Radar (SAR) doesn't wait for light. It's an <strong>active</strong> sensor: the satellite transmits its own pulses of microwave energy and measures how long the echo takes to return and how strong it is. It has more in common with sonar than with a camera. Sentinel-1, the satellite behind most of the free SAR imagery available today, transmits at a wavelength of about 5.6&nbsp;cm, what's called the C-band.</p>
+        <p>That wavelength is the entire trick.</p>
+
+        <h2><span class="h-num">02</span>Why a cloud is basically invisible at 5.6&nbsp;cm</h2>
+        <p>Whether a wave notices an obstacle depends on how the obstacle's size compares to the wave's own wavelength. Cloud droplets are around 10&ndash;20 micrometres across. Even a heavy raindrop tops out at a few millimetres. Sentinel-1's radar wave is 56,000 micrometres long, several thousand times bigger than the cloud droplets it is flying straight through.</p>
+        <p>Scattering by particles that are small relative to the wavelength falls off sharply as wavelength increases. It's the same effect, incidentally, that makes the sky blue, since short blue light scatters far more than long red light. Radar wavelengths are so much longer than cloud droplets that clouds are, for practical purposes, transparent to them. Even fairly heavy monsoon rain causes only mild attenuation at C-band. That one fact is the entire reason SAR can map a flood on the same day it happens, cloud cover or not.</p>
+
+        <h2><span class="h-num">03</span>What the echo actually tells you</h2>
+        <p>Once the signal reaches the ground, what happens next depends on the surface. A radar image doesn't measure colour. It measures <strong>backscatter</strong>: how much of the transmitted energy bounces straight back up to the satellite.</p>
+        <p>A calm water surface behaves like a mirror. It's smooth relative to the radar wavelength, so almost all of the energy reflects away at an angle, off in the direction of a perfect bounce (this is <strong>specular reflection</strong>), and almost none of it returns to the sensor. Land, by contrast, is rough at that scale, soil clumps, crop rows, buildings, so it scatters energy in every direction, including straight back up. The result is that <strong>water shows up dark, land shows up bright</strong>. A flood, in a SAR image, is a patch of new darkness where the last clear image showed a field.</p>
+
+        <div class="blog-figure">
+            <figure>
+                <div class="diagram-frame">
+                    <svg viewBox="0 0 640 220" role="img" aria-labelledby="specdiag-title" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+                        <title id="specdiag-title">Diagram comparing specular reflection off smooth water with diffuse scattering off rough land</title>
+                        <defs>
+                            <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                <path d="M0,0 L10,5 L0,10 z" fill="var(--accent-primary)"></path>
+                            </marker>
+                        </defs>
+                        <!-- satellite -->
+                        <g transform="translate(160,26)">
+                            <rect x="-14" y="-9" width="28" height="18" rx="3" fill="var(--accent-secondary)"></rect>
+                            <rect x="-30" y="-3" width="14" height="6" fill="var(--accent-secondary)" opacity="0.6"></rect>
+                            <rect x="16" y="-3" width="14" height="6" fill="var(--accent-secondary)" opacity="0.6"></rect>
+                        </g>
+                        <text x="160" y="58" text-anchor="middle" font-size="12" fill="var(--text-muted)" font-family="Inter, sans-serif">Sentinel-1</text>
+
+                        <g transform="translate(480,26)">
+                            <rect x="-14" y="-9" width="28" height="18" rx="3" fill="var(--accent-secondary)" opacity="0.35"></rect>
+                            <rect x="-30" y="-3" width="14" height="6" fill="var(--accent-secondary)" opacity="0.2"></rect>
+                            <rect x="16" y="-3" width="14" height="6" fill="var(--accent-secondary)" opacity="0.2"></rect>
+                        </g>
+                        <text x="480" y="58" text-anchor="middle" font-size="12" fill="var(--text-muted)" opacity="0.6" font-family="Inter, sans-serif">(no echo received)</text>
+
+                        <!-- ground -->
+                        <rect x="20" y="175" width="220" height="26" rx="4" fill="var(--accent-primary)" opacity="0.18"></rect>
+                        <text x="130" y="192" text-anchor="middle" font-size="12" fill="var(--text-secondary)" font-family="Inter, sans-serif">smooth water</text>
+                        <rect x="340" y="175" width="280" height="26" rx="4" fill="var(--accent-secondary)" opacity="0.22"></rect>
+                        <text x="480" y="192" text-anchor="middle" font-size="12" fill="var(--text-secondary)" font-family="Inter, sans-serif">rough land</text>
+
+                        <!-- down pulses -->
+                        <line x1="160" y1="40" x2="130" y2="174" stroke="var(--accent-primary)" stroke-width="2" marker-end="url(#arrow)"></line>
+                        <line x1="480" y1="40" x2="460" y2="174" stroke="var(--accent-secondary)" stroke-width="2" marker-end="url(#arrow)"></line>
+
+                        <!-- specular: bounces away at matching angle -->
+                        <line x1="130" y1="174" x2="80" y2="70" stroke="var(--accent-primary)" stroke-width="2" opacity="0.55" stroke-dasharray="4 3" marker-end="url(#arrow)"></line>
+
+                        <!-- diffuse: scatters every direction incl. back up -->
+                        <line x1="460" y1="174" x2="480" y2="45" stroke="var(--accent-secondary)" stroke-width="2.4" marker-end="url(#arrow)"></line>
+                        <line x1="460" y1="174" x2="410" y2="90" stroke="var(--accent-secondary)" stroke-width="1.6" opacity="0.55" marker-end="url(#arrow)"></line>
+                        <line x1="460" y1="174" x2="540" y2="100" stroke="var(--accent-secondary)" stroke-width="1.6" opacity="0.55" marker-end="url(#arrow)"></line>
+                        <line x1="460" y1="174" x2="560" y2="150" stroke="var(--accent-secondary)" stroke-width="1.4" opacity="0.4" marker-end="url(#arrow)"></line>
+
+                        <text x="130" y="120" text-anchor="middle" font-size="11" fill="var(--accent-primary)" font-family="Inter, sans-serif" font-weight="600">reflects away</text>
+                        <text x="480" y="128" text-anchor="middle" font-size="11" fill="var(--accent-secondary)" font-family="Inter, sans-serif" font-weight="600">scatters back</text>
+                    </svg>
+                </div>
+                <figcaption>Smooth water reflects the radar pulse away in one direction, like a mirror, so little energy returns to the sensor. Rough land scatters it in every direction, including back up, so more energy returns. That contrast is what makes flood water visible as dark patches in SAR imagery.</figcaption>
+            </figure>
+        </div>
+
+        <h2><span class="h-num">04</span>Where it stops being simple</h2>
+        <p>"Water is dark" sounds like it should reduce flood mapping to setting a brightness threshold. In practice, several things break that assumption:</p>
+        <ul>
+            <li><strong>Wind roughens water.</strong> A breeze puts small waves on a flooded field, and rough water scatters more like land than like a mirror. It can lighten up enough to be missed entirely.</li>
+            <li><strong>Flooded vegetation does the opposite.</strong> When water pools under standing crops or trees, the radar pulse can bounce off the water surface, then off a vertical stalk or trunk, and back to the sensor, a <em>double-bounce</em> path that comes back unusually <em>bright</em>, not dark. A flooded rice paddy can look like the last place you'd expect a flood.</li>
+            <li><strong>Coherent imaging brings speckle.</strong> SAR images are formed by combining coherent radar returns, which produces a grainy, salt-and-pepper noise pattern baked into the physics itself, not sensor noise you can average away by taking a better picture.</li>
+            <li><strong>Permanent water isn't news.</strong> A river, a lake, a paddy field under normal irrigation are all dark too. Detecting a <em>flood</em> means comparing against what was already there, not just looking for dark pixels in isolation.</li>
+            <li><strong>Terrain gets in the way.</strong> On sloped ground, radar geometry can compress or invert distances (layover and foreshortening), distorting exactly the areas, low-lying land near hills, where floods concentrate.</li>
+        </ul>
+        <p>None of these are edge cases. In a real monsoon-affected region, they are the majority of the scene.</p>
+
+        <h2><span class="h-num">05</span>Why a U-Net, not just a threshold</h2>
+        <p>This is the point where the problem stops being pure physics and becomes a genuine computer vision task. A single global brightness threshold cannot simultaneously handle wind-roughened water, double-bounce from flooded vegetation, speckle noise, and permanent water bodies. It will misclassify some combination of all four, in every image.</p>
+        <p>A <strong>U-Net</strong>, a convolutional architecture originally built for biomedical image segmentation, is a better fit because it doesn't classify a pixel in isolation. Its encoder learns coarse spatial context (this whole region has been flooding for days) while its decoder recovers fine detail (this specific pixel, at this specific edge), and the skip connections between them let both scales inform the final prediction together. That's closer to how a trained analyst actually reads a SAR image, not pixel by pixel, but by pattern, shape and surrounding context.</p>
+        <p>It also opens the door to feeding the model more than raw backscatter. In the version I built, I added four years of gridded rainfall data as extra input channels alongside the SAR imagery, giving the network hydrological context (has it been raining heavily here recently?) to weigh against the ambiguous pixels that backscatter alone can't resolve.</p>
+
+        <h2><span class="h-num">06</span>What this looked like in practice</h2>
+        <p>Trained and evaluated on Sentinel-1 data over monsoon-affected regions, the model reached:</p>
+        <div class="blog-stats">
+            <div class="blog-stat"><span class="num">92%</span><span class="lbl">Accuracy</span></div>
+            <div class="blog-stat"><span class="num">0.70</span><span class="lbl">F1 Score</span></div>
+            <div class="blog-stat"><span class="num">4 yrs</span><span class="lbl">Rainfall Channels</span></div>
+        </div>
+        <p>The gap between those two numbers is itself informative. Accuracy alone looks great on a problem where most pixels are simply <em>not flooded</em> and therefore easy. F1, which balances precision against recall, is the harder number, and 0.70 reflects a model that is doing real work on the genuinely ambiguous cases, double-bounce paddies, wind-roughened edges, and the boundary between permanent and flood water.</p>
+
+        <div class="blog-callout">
+            <p>The short version. The radio wave is thousands of times bigger than the droplets that make up a cloud, so it barely scatters at all, which is what lets a satellite map a flood while the sky is still full of the storm that caused it. Getting from "water looks dark" to a model you'd actually trust is where the interesting engineering starts.</p>
+        </div>
+
+        <p>This project sits on the <a href="../index.html#projects">Projects</a> section of my portfolio, with the full method and results in the pop-up. If you're working on SAR-based hazard mapping or have questions about the pipeline, I'd like to hear from you. Details are on the <a href="../index.html#connect">contact section</a>.</p>
+    </article>
+
+    <nav class="blog-footer-nav">
+        <a href="index.html" class="back-link"><i class="fas fa-arrow-left mr-2"></i>All posts</a>
+        <a href="../index.html#connect" class="btn-primary inline-flex items-center"><i class="fas fa-paper-plane mr-2"></i>Get in touch</a>
+    </nav>
+    </main>
+
+    <footer class="py-8 bg-[--bg-secondary] text-center">
+        <div class="max-w-7xl mx-auto px-4">
+            <p class="text-sm mb-1" style="color: var(--footer-text);"><i class="fas fa-satellite mr-1"></i>Dev Shree Saini | Earth Observation &amp; Geospatial Machine Learning</p>
+            <p class="text-xs" style="color: var(--text-muted);">&copy; 2026 Dev Shree Saini</p>
+        </div>
+    </footer>
+
+    <script src="../js/blog.js"></script>
+</body>
+</html>

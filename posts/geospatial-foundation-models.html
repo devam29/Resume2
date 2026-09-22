@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Rise of Geospatial Foundation Models — Dev Shree Saini</title>
+    <meta name="description" content="Prithvi, Clay, and AlphaEarth are why Earth observation is moving from one bespoke model per task to a handful of general-purpose models that just get fine-tuned or queried.">
+    <meta name="author" content="Dev Shree Saini">
+    <link rel="canonical" href="https://devam29.github.io/Resume2/posts/geospatial-foundation-models.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="The Rise of Geospatial Foundation Models">
+    <meta property="og:description" content="Prithvi, Clay, and AlphaEarth are why Earth observation is moving from one bespoke model per task to a handful of general-purpose models.">
+    <meta property="og:url" content="https://devam29.github.io/Resume2/posts/geospatial-foundation-models.html">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="The Rise of Geospatial Foundation Models">
+    <meta name="twitter:description" content="Prithvi, Clay, and AlphaEarth are why Earth observation is moving from one bespoke model per task to a handful of general-purpose models.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><text x='0' y='20' font-size='20'>🛰️</text></svg>">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "The Rise of Geospatial Foundation Models",
+      "description": "Prithvi, Clay, and AlphaEarth are why Earth observation is moving from one bespoke model per task to a handful of general-purpose models.",
+      "author": { "@type": "Person", "name": "Dev Shree Saini", "url": "https://devam29.github.io/Resume2/" },
+      "url": "https://devam29.github.io/Resume2/posts/geospatial-foundation-models.html"
+    }
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700&family=Space+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/utilities.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/blog.css">
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to content</a>
+
+    <nav class="blog-nav">
+        <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i><span>Back to portfolio</span></a>
+        <div class="brand"><i class="fas fa-satellite text-[--accent-primary]"></i><span>DEV SHREE SAINI</span></div>
+        <button id="theme-toggle" class="theme-btn"><i class="fas fa-sun"></i><span>Light</span></button>
+    </nav>
+
+    <main id="main">
+    <header class="blog-hero">
+        <span class="blog-kicker"><i class="fas fa-layer-group mr-1"></i>Machine Learning</span>
+        <h1 class="blog-title">The Rise of Geospatial Foundation Models</h1>
+        <p class="blog-dek">For most of the last decade, Earth observation ML meant training a new model for every sensor and every task. That's starting to change.</p>
+        <div class="blog-meta">
+            <span>Dev Shree Saini</span><span class="dot">&middot;</span>
+            <span>March 2026</span><span class="dot">&middot;</span>
+            <span>6 min read</span>
+        </div>
+    </header>
+
+    <article class="blog-body">
+        <p class="blog-lede">If you wanted to detect floods in Sentinel-1 imagery two years ago, you trained a model for that. If you then wanted to map crop types in Sentinel-2 imagery, you started over. New architecture, new labels, new training run, on a different sensor with different bands, different resolution, different noise characteristics. Every task in Earth observation had its own model, trained from close to scratch. That's the norm large language models broke for text years ago, and it's now breaking for satellite imagery too.</p>
+
+        <h2><span class="h-num">01</span>The one-model-per-task era</h2>
+        <p>The reason EO lagged behind vision and language on this isn't a lack of ambition. It's the data. A satellite image isn't one modality, it's several stacked together, optical, radar, thermal, sometimes LiDAR, each with different physical meaning, different resolution, and no guarantee any two of them were captured on the same day. A model pretrained on ordinary photographs has learned almost nothing useful about what a Sentinel-1 backscatter image means. So teams kept building narrow, single-purpose models, and kept paying the full cost of labelling and training every single time.</p>
+
+        <h2><span class="h-num">02</span>What "foundation model" means for a satellite image</h2>
+        <p>The foundation-model idea, borrowed directly from language modelling, is to spend the expensive pretraining once, on a huge amount of unlabelled imagery, using a self-supervised task such as predicting a masked patch, reconstructing a missing band, or matching views of the same location across time. What comes out isn't a classifier. It's a general-purpose <strong>encoder</strong>, something that turns any patch of Earth into a compact numerical representation that already captures useful structure, before you've labelled a single example. Downstream tasks like flood mapping, crop classification, or deforestation detection then become a much smaller problem. You fine-tune a small head, or in some cases just train a simple classifier directly on the frozen representation.</p>
+
+        <h2><span class="h-num">03</span>Three different bets on the same idea</h2>
+        <p>A handful of serious models have shipped in the last couple of years, and they're not all making the same bet:</p>
+        <ul>
+            <li><strong>Prithvi</strong>, from NASA and IBM, is trained on Harmonized Landsat-Sentinel (HLS) data and aimed squarely at open scientific use like wildfire scarring, flood extent, and crop segmentation, with the weights released publicly.</li>
+            <li><strong>Clay</strong> is an open-source model built explicitly to be sensor-agnostic. Rather than committing to one fixed set of input bands, it's designed to flex across resolutions and instruments, so the same backbone can ingest quite different satellite products.</li>
+            <li><strong>AlphaEarth Foundations</strong>, from Google DeepMind, takes the boldest version of the idea. It fuses optical (Sentinel-2, Landsat), radar (Sentinel-1, PALSAR-2), plus LiDAR, climate, topographic and land-cover data through a Space&ndash;Time&ndash;Precision encoder, and outputs a fixed 64-dimensional embedding for every 10&nbsp;metre pixel on the planet, precomputed. There's no GPU inference step left for a downstream user. You pull the embedding for your field polygon and train a simple model on top of it, on a CPU, in minutes.</li>
+        </ul>
+
+        <h2><span class="h-num">04</span>Why that last detail matters more than it sounds</h2>
+        <p>Precomputing planet-scale embeddings and handing them out is a genuinely different shape of product than releasing model weights. It moves the expensive part, running a large model over petabytes of imagery, entirely off the user's plate. For a researcher or a small team without a GPU cluster, that's the difference between "we'd need months of compute to even start" and "we can prototype this afternoon." It's also the part of this trend I find most relevant to my own work. The pipelines I've built rely on task-specific labelled data being the bottleneck, not compute, and a good embedding, precomputed once for the whole planet, attacks exactly that bottleneck.</p>
+
+        <h2><span class="h-num">05</span>What's still not solved</h2>
+        <p>None of this makes Earth observation "solved" the way some framing suggests. A general embedding still has to be good enough at a specific, physically grounded task, and SAR backscatter, thermal anomalies, and hyperspectral signatures each carry information that a model pretrained mostly on optical bands may under-represent. Labelled validation data to actually check performance on a new region or a new crop type is still scarce, and a model that performs well in temperate agricultural regions isn't guaranteed to transfer to, say, monsoon-affected floodplains without local validation. "Foundation" describes the pretraining strategy, not a guarantee of accuracy on your specific problem.</p>
+
+        <div class="blog-callout">
+            <p>I don't currently use any of these in my own pipelines. The projects I've built so far were narrow enough that a purpose-built model made sense. But I'm watching this space closely, because it's aimed directly at the part of EO machine learning that actually costs the most time. Not training a model, but getting from raw imagery to a labelled, trustworthy dataset in the first place.</p>
+        </div>
+
+        <p>If you're experimenting with any of these models, or have a use case where a general embedding did or didn't hold up, I'd like to hear about it. Details are on the <a href="../index.html#connect">contact section</a>.</p>
+    </article>
+
+    <nav class="blog-footer-nav">
+        <a href="index.html" class="back-link"><i class="fas fa-arrow-left mr-2"></i>All posts</a>
+        <a href="../index.html#connect" class="btn-primary inline-flex items-center"><i class="fas fa-paper-plane mr-2"></i>Get in touch</a>
+    </nav>
+    </main>
+
+    <footer class="py-8 bg-[--bg-secondary] text-center">
+        <div class="max-w-7xl mx-auto px-4">
+            <p class="text-sm mb-1" style="color: var(--footer-text);"><i class="fas fa-satellite mr-1"></i>Dev Shree Saini | Earth Observation &amp; Geospatial Machine Learning</p>
+            <p class="text-xs" style="color: var(--text-muted);">&copy; 2026 Dev Shree Saini</p>
+        </div>
+    </footer>
+
+    <script src="../js/blog.js"></script>
+</body>
+</html>

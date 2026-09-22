@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>When Machines Started Beating the Weatherman — Dev Shree Saini</title>
+    <meta name="description" content="GraphCast and GenCast now beat ECMWF's gold-standard forecasts on the majority of tested variables, running on a single chip in minutes instead of a supercomputer cluster for hours. Here's how, and why it's stranger than it sounds.">
+    <meta name="author" content="Dev Shree Saini">
+    <link rel="canonical" href="https://devam29.github.io/Resume2/posts/ai-weather-forecasting.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="When Machines Started Beating the Weatherman">
+    <meta property="og:description" content="GraphCast and GenCast now beat ECMWF's gold-standard forecasts on the majority of tested variables. Here's how, and why it's stranger than it sounds.">
+    <meta property="og:url" content="https://devam29.github.io/Resume2/posts/ai-weather-forecasting.html">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="When Machines Started Beating the Weatherman">
+    <meta name="twitter:description" content="GraphCast and GenCast now beat ECMWF's gold-standard forecasts on the majority of tested variables.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><text x='0' y='20' font-size='20'>🛰️</text></svg>">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "When Machines Started Beating the Weatherman",
+      "description": "GraphCast and GenCast now beat ECMWF's gold-standard forecasts on the majority of tested variables. Here's how, and why it's stranger than it sounds.",
+      "author": { "@type": "Person", "name": "Dev Shree Saini", "url": "https://devam29.github.io/Resume2/" },
+      "url": "https://devam29.github.io/Resume2/posts/ai-weather-forecasting.html"
+    }
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700&family=Space+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/utilities.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/blog.css">
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to content</a>
+
+    <nav class="blog-nav">
+        <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i><span>Back to portfolio</span></a>
+        <div class="brand"><i class="fas fa-satellite text-[--accent-primary]"></i><span>DEV SHREE SAINI</span></div>
+        <button id="theme-toggle" class="theme-btn"><i class="fas fa-sun"></i><span>Light</span></button>
+    </nav>
+
+    <main id="main">
+    <header class="blog-hero">
+        <span class="blog-kicker"><i class="fas fa-cloud-bolt mr-1"></i>Applied AI</span>
+        <h1 class="blog-title">When Machines Started Beating the Weatherman</h1>
+        <p class="blog-dek">Weather forecasting is one of the oldest, most physics-heavy problems computers have ever tackled. Neural networks are now doing it better, without solving a single equation of motion.</p>
+        <div class="blog-meta">
+            <span>Dev Shree Saini</span><span class="dot">&middot;</span>
+            <span>November 2025</span><span class="dot">&middot;</span>
+            <span>6 min read</span>
+        </div>
+    </header>
+
+    <article class="blog-body">
+        <p class="blog-lede">Operational weather forecasting has run on the same basic idea for seventy years. Take the current state of the atmosphere, and numerically integrate the physical equations that govern how fluids and heat move, forward in time, on a supercomputer. It works. It's why forecasts are dramatically better than they were a generation ago, and centres like the European Centre for Medium-Range Weather Forecasts (ECMWF) have spent decades refining it into the closest thing the field has to a gold standard. So it's a genuinely strange moment when a model that never solves those equations starts beating it.</p>
+
+        <h2><span class="h-num">01</span>The old way: simulate the atmosphere</h2>
+        <p>Traditional numerical weather prediction (NWP) discretises the atmosphere into a 3D grid and solves the physical equations of fluid motion and thermodynamics at every grid point, every few minutes of simulated time, for days of forecast horizon. It's an enormous, physically principled computation, and it needs a dedicated supercomputer cluster running for hours to produce a single global forecast.</p>
+
+        <h2><span class="h-num">02</span>The new way: learn the pattern, skip the equations</h2>
+        <p>GraphCast, released by Google DeepMind, takes a completely different approach. Instead of simulating physics, it's a graph neural network trained on 39 years of historical reanalysis data (ERA5) to learn, directly from examples, what tends to happen next given the current state of the atmosphere. No equations of motion get solved at inference time at all. It's closer to pattern completion than simulation. And yet, tested across more than a thousand variable and lead-time combinations out to 10 days, GraphCast outperformed ECMWF's high-resolution deterministic forecast (HRES) on over 90% of them, running a full 10-day global forecast in under a minute on a single TPU.</p>
+
+        <h2><span class="h-num">03</span>GenCast: doing it with uncertainty, not just a single guess</h2>
+        <p>A single deterministic forecast was never the full picture. Operational forecasting relies on <em>ensembles</em>, dozens of slightly perturbed simulations run in parallel, because the atmosphere is chaotic and a single trajectory can't capture that. ECMWF's ensemble system, ENS, is the benchmark here. GenCast, DeepMind's diffusion-based follow-up to GraphCast, generates an ensemble of forecasts the same way image diffusion models generate pictures, starting from noise and iteratively refining it, and was tested against ENS on 1,320 targets. It won on 97.2% of them, a figure that climbed to 99.8% at lead times beyond 36 hours. It also produces a full 15-day global forecast in about eight minutes on a single TPU v5 chip, next to a conventional run that needs hours on a dedicated cluster consuming megawatts.</p>
+
+        <div class="blog-stats">
+            <div class="blog-stat"><span class="num">97.2%</span><span class="lbl">of Targets Won vs ECMWF ENS</span></div>
+            <div class="blog-stat"><span class="num">~8 min</span><span class="lbl">for a 15-Day Global Forecast</span></div>
+            <div class="blog-stat"><span class="num">1</span><span class="lbl">TPU Chip, not a Cluster</span></div>
+        </div>
+
+        <h2><span class="h-num">04</span>Why this is stranger than it sounds</h2>
+        <p>Weather is governed by well-understood physics, the Navier&ndash;Stokes equations, thermodynamics, radiative transfer. It's not a domain where you'd expect a model with no explicit physical knowledge built in to out-forecast the people who spent decades encoding exactly that physics into a simulator. The resolution to the paradox isn't that physics stopped mattering. It's that the historical reanalysis data these models train on was itself generated by assimilating decades of real observations into physical models, so the physics is baked into the training signal even though it's never solved at inference time. These systems aren't a replacement for physical understanding of the atmosphere, they're a very efficient way of reusing it. ECMWF has already made its own AI model, AIFS, fully operational since February 2025, running it side by side with the traditional physics-based IFS rather than treating machine learning as a rival to be beaten.</p>
+
+        <h2><span class="h-num">05</span>What's not solved yet</h2>
+        <p>Extreme, rare events are under-represented in any historical training set almost by definition, which is exactly the case where a forecast being wrong matters most. Local, fine-grained forecasting, the kind that matters for a specific valley or a specific storm cell, still leans heavily on physical models at finer resolution than these global systems currently run at. There's also a quieter dependency worth noting. These models are trained on reanalysis data produced by traditional physical simulation in the first place, so the two approaches are still more entangled than the "AI beats physics" headlines suggest.</p>
+
+        <div class="blog-callout">
+            <p>The short version. A model that has never once solved an equation of atmospheric motion is now beating the forecasting system built on exactly those equations, on most of the metrics that matter, in a fraction of the time and compute. That's not a small result. It's a genuine shift in how one of the oldest applied physics problems in computing gets solved.</p>
+        </div>
+
+        <p>I don't work in atmospheric science, but this sits close enough to my own interest in what neural networks can absorb from physically grounded data that I keep coming back to it. If you've used GraphCast, GenCast, or ECMWF's AIFS directly, I'd be curious to hear how they held up. Details are on the <a href="../index.html#connect">contact section</a>.</p>
+    </article>
+
+    <nav class="blog-footer-nav">
+        <a href="index.html" class="back-link"><i class="fas fa-arrow-left mr-2"></i>All posts</a>
+        <a href="../index.html#connect" class="btn-primary inline-flex items-center"><i class="fas fa-paper-plane mr-2"></i>Get in touch</a>
+    </nav>
+    </main>
+
+    <footer class="py-8 bg-[--bg-secondary] text-center">
+        <div class="max-w-7xl mx-auto px-4">
+            <p class="text-sm mb-1" style="color: var(--footer-text);"><i class="fas fa-satellite mr-1"></i>Dev Shree Saini | Earth Observation &amp; Geospatial Machine Learning</p>
+            <p class="text-xs" style="color: var(--text-muted);">&copy; 2026 Dev Shree Saini</p>
+        </div>
+    </footer>
+
+    <script src="../js/blog.js"></script>
+</body>
+</html>
